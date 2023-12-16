@@ -8,39 +8,47 @@
 	<body>
 
 <?php
-function connectDB()
-{
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "db1";
 
-	try {
-		$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-		// set the PDO error mode to exception
-		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		echo "Connected successfully";
-		return $conn;
-	} catch (PDOException $e) {
-		echo "Connection failed: " . $e->getMessage();
-		return FALSE;
-	}
-}
+require_once "tablex.php";
+require_once "database.php";
+require_once "google2fa.php";
+/*
+$db = connectDB();
+$result = $db->query("select * from user");
 
 echo "<table>";
-for ($x = 0; $x <= 10; $x++) {
+foreach ($result as $asd => $value) {
 	echo "<tr>";
-	for ($y = 0; $y <= 10; $y++) {
-		if ($y % 2){
-			continue;
+	$asd += 1;
+		echo "<th>".$asd.")</th>";
+		for ($y = 0; $y < 7; $y++) {
+			echo "<th>".$value[$y]."</th>";
 		}
-		echo "<th>Hola ".$x."-".$y."</th>";
-	}
 	echo "</tr>";
 }
-echo "</table>";
+echo "</table><br><br>";
+ */
 
-echo "<h1>gola</h1>";
+ echo "<div>";
+if ($_POST["user"] && $_POST["key"]){
+	if(Google2FA::verify_key(DB::getSecretFromUsername($_POST["user"]),$_POST["key"])){
+		echo "totp verificado";
+	}
+}
+
+//connectDB();
+DB::getSecretFromUsername("Admin");
 ?>
+<h1>LOGIN</h1>
+<form action="" method="post">
+	<label for="user">username:</label><br>
+	<input type="text" id="user" name="user"><br>
+
+	<label for="key">totp key:</label><br>
+	<input type="text" id="key" name="key">
+
+	<button>Login</button>
+</form> 
+</div>
 	</body>
 </html>

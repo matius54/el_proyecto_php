@@ -1,2 +1,17 @@
-html { color-scheme: dark; }
-body { font-family: Tahoma, Verdana, Arial, sans-serif; }
+* {
+    color-scheme: dark;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+div * {
+    margin: 8px 0px;
+    font-size: larger;
+}

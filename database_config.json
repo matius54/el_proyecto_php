@@ -53,20 +53,20 @@
         "offset":0,
         "orderBy":"id",
         "order":"desc",
-        "user_type":"id"
+        "userType":"id"
     },
     "limits":{
-        "name_min_length":64,
-        "name_max_length":0,
-        "session_length":64,
-        "private_length":16,
-        "totp_key_length":6,
-        "access_min":-1,
-        "access_max":3,
-        "limit_min":0,
-        "limit_max":1000,
-        "offset_min":0,
-        "offset_max":1000
+        "nameMaxLength":64,
+        "nameMinLength":0,
+        "sessionLength":64,
+        "privateLength":16,
+        "totpKeyLength":6,
+        "accessMin":-1,
+        "accessMax":3,
+        "limitMin":0,
+        "limitMax":1000,
+        "offsetMin":0,
+        "offsetMax":1000
     },
     "queries":{
         "getAllUsers":"SELECT * FROM user",

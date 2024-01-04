@@ -30,7 +30,9 @@
 
     echo "<div>";
     if (isset($_POST["user"]) && isset($_POST["key"])){
-        if(Google2FA::verify_key(DB::getSecretFromUsername($_POST["user"]),$_POST["key"])){
+        $token = DB::getSecretFromUsername($_POST["user"]);
+        $key = $_POST["key"];
+        if(!empty($token) && !empty($key) && Google2FA::verify_key($token,$key)){
             echo "totp verificado";
         }
     }

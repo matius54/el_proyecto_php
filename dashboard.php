@@ -20,7 +20,7 @@ body {
     grid-template-rows: 80px auto;
 }
 header {
-    
+    margin: 0;
 }
 .frame {
     height: 100%;

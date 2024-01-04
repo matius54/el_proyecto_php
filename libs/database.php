@@ -4,7 +4,7 @@ class DBConfig {
 	private static $instance = null;
 	private $config;
 	private function __construct(){
-		$this->config = json_decode(file_get_contents("database_config.json"),true);
+		$this->config = json_decode(file_get_contents("config\database_config.json"),true);
 	}
 	public static function getInstance(){
 		if (self::$instance == null){

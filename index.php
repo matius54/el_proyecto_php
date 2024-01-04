@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="es">
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -6,49 +7,17 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-
+		<h3>Redireccionando a 
 <?php
-
-require_once "tablex.php";
-require_once "database.php";
-require_once "google2fa.php";
-/*
-$db = connectDB();
-$result = $db->query("select * from user");
-
-echo "<table>";
-foreach ($result as $asd => $value) {
-	echo "<tr>";
-	$asd += 1;
-		echo "<th>".$asd.")</th>";
-		for ($y = 0; $y < 7; $y++) {
-			echo "<th>".$value[$y]."</th>";
-		}
-	echo "</tr>";
-}
-echo "</table><br><br>";
- */
-
- echo "<div>";
-if ($_POST["user"] && $_POST["key"]){
-	if(Google2FA::verify_key(DB::getSecretFromUsername($_POST["user"]),$_POST["key"])){
-		echo "totp verificado";
+	$head = "Location: ".$_SERVER['REQUEST_URI'];
+	if(true){
+		echo "Login";
+		header($head."login.php");
+	}else{
+		echo "Panel de control";
+		header($head."dashboard.php");
 	}
-}
-
-//connectDB();
-DB::getSecretFromUsername("Admin");
 ?>
-<h1>LOGIN</h1>
-<form action="" method="post">
-	<label for="user">username:</label><br>
-	<input type="text" id="user" name="user"><br>
-
-	<label for="key">totp key:</label><br>
-	<input type="text" id="key" name="key">
-
-	<button>Login</button>
-</form> 
-</div>
+		</h3>
 	</body>
 </html>

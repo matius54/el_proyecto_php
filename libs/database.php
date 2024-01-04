@@ -1,10 +1,26 @@
 <?php
 
+class DBConfig {
+	private static $instance = null;
+	private $config;
+	private function __construct(){
+		$this->config = json_decode(file_get_contents("database_config.json"),true);
+	}
+	public static function getInstance(){
+		if (self::$instance == null){
+			self::$instance = new DBConfig();
+		}
+		return self::$instance;
+	}
+	public function config(){
+		return $this->config;
+	}
+}
+
 class DB {
 	private static function loadConfig() : Array {
-		return json_decode(file_get_contents("database_config.json"),true);
+		return DBConfig::getInstance()->config();
 	}
-
 	private static function createDatabase(){
 		$config = DB::loadConfig()["connection"];
 		$servername = $config["url"];
@@ -71,30 +87,25 @@ class DB {
 		}
 	}
 
-	/**
-	* 
-	*
-	* @param string $sql
-	* @param Array $paramList
-	* @return Array | bool
-	**/
 	private static function execute($sql, $paramList = []){
 		$conn = DB::connect();
-		if(is_array($paramList) && sizeof($paramList) > 0){
-			$ps = $conn->prepare($sql);
-			$ps->execute($paramList);
-			return $ps->fetchAll();
-		}else{
-			return $conn->exec($sql);
+		try{
+			if(is_array($paramList) && sizeof($paramList) > 0){
+				$ps = $conn->prepare($sql);
+				$ps->execute($paramList);
+				return $ps->fetchAll();
+			}else{
+				return $conn->exec($sql);
+			}
+		} catch (PDOException $e){
+			if($e->getCode() === "42S02"){
+				DB::checkAllTables();
+				return DB::execute($sql,$paramList);
+			}else{
+				DB::showException($e);
+			}
 		}
 	}
-
-	/**
-	* 
-	*
-	* @param string $username
-	* @return Array | null
-	**/
 
 	public static function getSecretFromUsername($username) {
 		if(!isset($username) || !is_string($username)) return null;

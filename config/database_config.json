@@ -46,6 +46,18 @@
         "department":[
             "name VARCHAR(64)",
             "description VARCHAR(256)"
+        ],
+        "access":[
+            "name VARCHAR(64)",
+            "description VARCHAR(256)"
+        ]
+    },
+    "database_defaults":{
+        "user":[
+            "AABBCCDDEE","Admin","The Lord","Administrator"
+        ],
+        "access":[
+            ""
         ]
     },
     "defaults":{

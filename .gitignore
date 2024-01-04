@@ -1,2 +1,5 @@
 test/
 data/
+libs/jspdf.umd.min.js
+libs/qr-scanner.umd.min.js
+libs/tinycolor.js

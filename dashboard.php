@@ -42,8 +42,8 @@ ul {
     <header>
         <nav>
             <ul>
-                <li><a href="pag1.html" target="frame">Pagina1</a></li>
-                <li><a href="pag2.html" target="frame">Pagina2</a></li>
+                <li><a href="#">Pagina1</a></li>
+                <li><a href="#">Pagina2</a></li>
                 <input id="color" type="color" onchange="updateColor()">
             </ul>
         </nav>
@@ -52,7 +52,7 @@ ul {
         
     </div>
     <main>
-        <iframe class="frame" name="frame"></iframe>
+        
     </main>
 </body>
 <script>

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>PHP - index.php</title>
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="styles/default.css">
 	</head>
 	<body>
 		<h3>Redireccionando a 

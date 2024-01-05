@@ -1,10 +1,15 @@
 <?php
 
+const CONFIG_PATH = [
+	"DATABASE"=>"config\database_config.json",
+	"DEFAULT_USERS"=>"config\default_users.json"
+];
+
 class DBConfig {
 	private static $instance = null;
 	private $config;
 	private function __construct(){
-		$this->config = json_decode(file_get_contents("config\database_config.json"),true);
+		$this->config = json_decode(file_get_contents(CONFIG_PATH["DATABASE"]),true);
 	}
 	public static function getInstance(){
 		if (self::$instance == null){
@@ -42,6 +47,29 @@ class DB {
 		$conn->exec("SELECT * FROM $table LIMIT 1");
 	}
 	
+	private static function TableIsEmpty($table){
+		$result = DB::execute("SELECT COUNT(*) FROM $table");
+		if($result === 0){
+			return true;
+		}
+		return false;
+	}
+
+	private static function createDefaultUsers() {
+		if(DB::TableIsEmpty("user")){
+			$users = json_decode(file_get_contents(CONFIG_PATH["DEFAULT_USERS"]),true);
+			$query = DB::loadConfig()["queries"]["setNewUser"];
+			foreach ($users as $user) {
+				$private = $user["private"];
+				$username = $user["username"];
+				$fname = $user["first_name"];
+				$lname = $user["last_name"];
+				$access = $user["access"];
+				DB::execute($query,[$private,$username,$fname,$lname,$access,null,null]);
+			}
+		}
+	}	
+
 	private static function showException($PDOException) : void {
 		die("Error con la base de datos: " .$PDOException->getMessage());
 	}
@@ -55,6 +83,7 @@ class DB {
 				if($e->getCode() === "42S02"){
 					//si no existe la tabla, la crea
 					DB::createTable($k);
+					if($k==="user") DB::createDefaultUsers();
 				}else{
 					DB::showException($e);
 				}
@@ -109,7 +138,8 @@ class DB {
 
 	public static function getSecretFromUsername($username) {
 		if(!isset($username) || !is_string($username)) return null;
-		$result = DB::execute(DB::loadConfig()["queries"]["getPrivateFromUsername"],[$username]);
+		$query = DB::loadConfig()["queries"]["getPrivateFromUsername"];
+		$result = DB::execute($query,[$username]);
 		if(sizeof($result)!==0)return $result[0][0];
 	}
 }

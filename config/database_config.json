@@ -23,8 +23,7 @@
         ],
         "session_token": [
             "user_id UUID",
-            "FOREIGN KEY (user_id) REFERENCES user(id)",
-            "token CHAR(64) NOT NULL UNIQUE"
+            "FOREIGN KEY (user_id) REFERENCES user(id)"
         ],
         "event_in": [
             "user_id UUID",

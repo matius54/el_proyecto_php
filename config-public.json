@@ -1,0 +1,10 @@
+{
+    "baseURL":"http://localhost/el_proyecto_php/",
+    "faviconRelativePath":"favicon.ico",
+    "name":"Work Log",
+    "shortName":"WL",
+    "internalName":"work_log",
+    "fullName":"Work Log",
+    "langs":["ES_419","EN_US"],
+    "qrUserPrefix":"WL: "
+}

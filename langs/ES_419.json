@@ -1,0 +1,15 @@
+{
+    "ES_419":"Español Latino",
+    "EN_US":"Inglés Estadounidense",
+    "GREETINGS":"Hola",
+    "LOGIN_TITLE":"Inicia Sesion",
+    "LOGIN_SUBMIT":"Iniciar Sesion",
+    "DNI":"Cedula",
+    "FIRST_NAME":"Nombre",
+    "LAST_NAME":"Apellido",
+    "USERNAME":"Usuario",
+    "TOTP_KEY":"totp",
+    "TOTP_TOKEN":"totp",
+    "QR_CODE":"Codigo QR",
+    "QR_NOT_YET_DETECTED":"No se ha detectado un codigo QR valido aun"
+}

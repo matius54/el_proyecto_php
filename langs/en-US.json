@@ -1,0 +1,26 @@
+{
+    "THIS":"EN_US",
+    "HTML_LANG":{
+        "lang":"en"
+    },
+    
+    "ES_419":"Latin Spanish",
+    "EN_US":"US English",
+
+    "GREETINGS":"Hello",
+
+    "LOGIN_PAGE_TITLE":"WL - LOGIN",
+    "LOGIN_TITLE":"LOGIN",
+    "LOGIN_SUBMIT":"Login",
+    "USERNAME_OR_CI":"Username or ID",
+    "FIRST_NAME":"Name",
+    "LAST_NAME":"Last Name",
+    "TOTP_KEY":"totp",
+    "TOTP_TOKEN":"totp",
+    "QR_CODE":"QR Code",
+
+    "QR_NOT_YET_DETECTED":"A valid QR code has not been detected.",
+
+    "DATABASE_INTERNAL_ERROR":"Database internal error",
+    "LOGIN_AS_ADMINISTRATOR":"Login as administrator?"
+}

@@ -1,8 +1,32 @@
-* {
+:root {
     color-scheme: dark;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    --main-color-hex: #000000;
+
+    --second-color-hex: #0000FF;
+
+    --over-main-color-hex: #FFFFFF;
+
+    --over-second-color-hex: #FFFFFF;
+
+    --error-color-hex: #FF0000;
+    --ok-color-hex: #00FF00;
+
+    --main-color-r: 0;
+    --main-color-g: 0;
+    --main-color-b: 0;
+
+    --second-color-r: 0;
+    --second-color-g: 0;
+    --second-color-b: 255;
+
+    --blur-config: blur(10px);
+}
+button:hover {
+    filter: brightness(85%);
 }
 body {
     font-family: Tahoma, Verdana, Arial, sans-serif;
@@ -10,8 +34,101 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin: 0;
+    background-color: var(--main-color-hex);
 }
-div * {
-    margin: 8px 0px;
-    font-size: larger;
+.login-page {
+    overflow: hidden;
+}
+.svg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: 1020px;
+    z-index: -1;
+  }
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(var(--main-color-r),var(--main-color-g),var(--main-color-b),0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all ease 1s;
+}
+.card.login {
+    min-width: 350px;
+    transform: none;
+}
+.card.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+}
+.card > h1 {
+    padding: 30px;
+    text-align: center;
+}
+.card > .form {
+    position: relative;
+    margin: 0 30px;
+}
+.card > .form > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card > .form > form > * {
+    width: 100%;
+    user-select: none;
+    padding: 0.2rem 0;
+    border-radius: 0;
+    border: none;
+    margin: 2px 0;
+}
+.card > .form > form > input.error {
+    border: 1px solid red;
+}
+.card > .form > form > input[type="text"] {
+    font-size: 20px;
+}
+.card > .form > form > input[type="text"].totp {
+    text-align: center;
+    font-size: 40px;
+    width: 4.2em;
+    border-radius: 0.5em;
+    margin: 20px;
+}
+.card > .form > form > input[type="text"].token {
+    text-align: center;
+    font-size: 25px;
+}
+.card > .form > .status {
+    background-color: black;
+    padding: 1em;
+    border-radius: 2em;
+    margin-bottom: 2em;
+}
+.card > .form > form > button {
+    font-size: 15px;
+    margin: 20px;
+    padding: 1em;
+    border-radius: 0.5em;
+    width: fit-content;
+    height: 3.5em;
+}
+.card > .options {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: row;
+}
+.card > .options > button:hover {
+    filter: brightness(85%);
+}
+.card > .options > button {
+    flex: 1;
+    height: 3rem;
+    border-radius: 0;
+    border: none;
 }

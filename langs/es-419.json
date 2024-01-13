@@ -1,0 +1,27 @@
+{
+    "THIS":"ES_419",
+    "HTML_LANG":{"lang":"es"},
+
+    "ES_419":"Español Latino",
+    "EN_US":"Inglés Estadounidense",
+
+    "GREETINGS":"Hola",
+
+    "LOGIN_PAGE_TITLE":"WL - Inicia Sesion",
+    "LOGIN_TITLE":"Inicia Sesion",
+    "LOGIN_SUBMIT":"Iniciar Sesion",
+    "USERNAME_OR_CI":{"placeholder":"Usuario o Cedula"},
+    "FIRST_NAME":"Nombre",
+    "LAST_NAME":"Apellido",
+    "TOTP_KEY":{"placeholder":"totp"},
+    "TOTP_TOKEN":{"placeholder":"token totp"},
+    "QR_CODE":"Codigo QR",
+
+    "QR_NOT_YET_DETECTED":"No se ha detectado un codigo QR valido aun",
+
+    "DATABASE_INTERNAL_ERROR":"Error con la base de datos",
+    "LOGIN_AS_ADMINISTRATOR":"¿Iniciar sesion como administrador?",
+    "LOGIN_WITH_USER_CI":"Usuario o CI",
+    "LOGIN_WITH_TOKEN":"Token",
+    "SCAN_QR":"Escanear QR"
+}

@@ -4,7 +4,7 @@
         "port":3306,
         "user":"root",
         "pass":"",
-        "database":"db_test_1"
+        "database":"db_test_2"
     },
     "structure":{
         "*":[
@@ -19,6 +19,8 @@
             "access TINYINT NOT NULL DEFAULT 0",
             "created_by UUID",
             "dni VARCHAR(32)",
+            "birth_date DATE",
+            "color CHAR(6)",
             "FOREIGN KEY (created_by) REFERENCES user(id)"
         ],
         "session_token": [
@@ -86,6 +88,6 @@
         "getUsernameFromToken":"SELECT username FROM user JOIN session_token ON user_id = user.id WHERE token = ?",
         "getIdFromUserWithAccess":"SELECT id FROM user WHERE access <= ?",
         "setSession":"INSERT INTO session_token (user_id, token) VALUES (?, ?)",
-        "setNewUser":"INSERT INTO user (private, username, first_name, last_name, access, created_by, dni) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        "setNewUser":"INSERT INTO user (private, username, first_name, last_name, access, created_by, dni, birth_date, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     }
 }

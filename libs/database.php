@@ -65,13 +65,13 @@ class DB {
 				$fname = $user["first_name"];
 				$lname = $user["last_name"];
 				$access = $user["access"];
-				DB::execute($query,[$private,$username,$fname,$lname,$access,null,null]);
+				DB::execute($query,[$private,$username,$fname,$lname,$access,null,null,null,null]);
 			}
 		}
 	}	
 
 	private static function showException($PDOException) : void {
-		die("Error con la base de datos: " .$PDOException->getMessage());
+		die("<span data-i18n=\"DATABASE_INTERNAL_ERROR\" class=\"error-message-title\">Error con la base de datos</span>: " .$PDOException->getMessage());
 	}
 
 	private static function checkAllTables(){

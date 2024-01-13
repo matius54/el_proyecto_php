@@ -1,0 +1,10 @@
+{
+    "langs":[
+        "es-419",
+        "en-US"
+    ],
+    "langsDirURL":"./langs/",
+    "htmlAtributeName":"data-i18n",
+    "optionalLangKey":"INNER_TEXT",
+    "localStorageKey":"i18nLang"
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <form action="" method="post" autocomplete="off" class="card login hidden">
+            <h1>Iniciar sesion</h1>
+            <input type="text" name="username" placeholder="Nombre de usuario" match required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <div class="options">
+                <button type="submit">Iniciar sesion</button>
+                <button type="reset">Limpiar</button>
+            </div>
+        </form>
+    </main>
+</body>
+<script src="validate.js">
+</script>
+<script>
+    document.querySelector(".card.hidden").classList.remove("hidden");
+</script>
+</html>

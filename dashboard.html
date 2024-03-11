@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEC dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        html {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+        body {
+            background-color: var(--background-color);
+            margin: 0;
+        }
+        body.main, body > main {
+            max-width: min(673px,100%);
+            margin: 0 0 50vh 0;
+        }
+        .navbar {
+            position: fixed;
+            background-color: var(--main-color);
+            transition: width 200ms;
+        }
+
+        nav.navbar > ul {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        nav.navbar > ul > li {
+            margin: 0;
+            padding: 0;
+            transition: background-color 200ms;
+        }
+
+        nav.navbar > ul > li:hover , nav.navbar > ul > li.selected {
+            background-color: purple;
+        }
+
+        nav.navbar > ul > li > a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 5rem;
+            text-decoration: none;
+            color: var(--over-main-color);
+            max-width: min-content;
+        }
+
+        nav.navbar > ul > li > a > .icon {
+            min-width: 5rem;
+            max-width: 5rem;
+            min-height: 100%;
+            margin: 0 0.5rem;
+        }
+
+        nav.navbar > ul > li > a > span {
+            display: none;
+            margin-left: 1rem;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        @media only screen and (min-width: 601px) {
+            .navbar {
+                width: 6rem;
+                height: 100vh;
+                left: 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            nav.navbar:hover {
+                width: 18rem;
+            }
+            nav.navbar:hover > ul > li > a > span {
+                display: block;
+            }
+            .viewer {
+                margin-left: 6rem;
+            }
+            nav.navbar > ul {
+                min-height: 100vh;
+                align-items: center;
+            }
+            nav.navbar > ul > li:last-child {
+                margin-top: auto;
+            }
+            nav.navbar > ul > li {
+                width: 100%;
+            }
+            nav.navbar > ul > li > a {
+                min-width: 100%;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .navbar {
+                width: 100vw;
+                height: min-content;
+                bottom: 0;
+                left: 0;
+                transition: none;
+                overflow-y: hidden;
+                overflow-x: auto;
+            }
+            nav.navbar > ul {
+                flex-direction: row;
+                justify-content: flex-start;
+            }
+            nav.navbar > ul > li:last-child {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li class="selected">
+                <a href="./" class="logo" title="volver a la pagina principal" name="logo">
+                    <h3 class="icon">THE ENIGMA CODE</h3>
+                    <span>Pagina principal</span>
+                </a>
+            </li>
+            <li class="option" onclick="listHandler(this)" name="posts">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18" /><path d="M13 8l2 0" /><path d="M13 12l2 0" /></svg>
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li class="option" onclick="listHandler(this)" name="tags">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z" /><path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" /><path d="M7 10h-.01" /></svg>
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li class="option" onclick="listHandler(this)" name="logs">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                    <span>Registro de cambios</span>
+                </a>
+            </li>
+            <li class="option" onclick="listHandler(this)" name="profile"> 
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" /></svg>
+                    <span>Mi perfil</span>
+                </a>
+            </li>
+            <li name="logout">
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+                    <span>Cerrar sesion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div class="viewer"></div>
+    </main>
+    <!--
+    <div class="notif"><ul></ul></div>
+    <div class="screen"></div>
+    -->
+</body>
+<!--
+<script src="./json.js"></script>
+<script src="./notif.js"></script>
+<script src="./dash.js"></script>
+-->
+</html>

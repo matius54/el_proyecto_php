@@ -5,38 +5,38 @@ class ThemeUI {
     #localStorageKey = "_themeUI";
     #allowedThemes = ["light","dark","auto","custom"];
     #theme = "auto";
+    #isDark;
     #customOverColors = false;
 
     #setDefaultTheme(){
-        if(this.#theme!=="auto")return;
+        if(this.#theme !== "auto")return;
         if(window.matchMedia && 
             window.matchMedia('(prefers-color-scheme: dark)').matches){
             this.#theme = this.#allowedThemes[1];
+            this.#isDark = true;
         }else{
             this.#theme = this.#allowedThemes[0];
+            this.#isDark = false;
         }
     }
 
     #colors = {
         mainColor:{
             css:"--main-color",
-            default:"black",
             light:"#FFFFFF",
-            dark:"#1c1b22",
+            dark:"#8a2be2",
             hex:true,
             rgb:true
         },
         secondColor:{
             css:"--second-color",
-            default:"black",
-            light:"#797EF6",
+            light:"#c8c8ff",
             dark:"#3f1f7a",
             hex:true,
             rgb:true
         },
         overMainColor:{
             css:"--over-main-color",
-            default:"white",
             light:"#000000",
             dark:"#FFFFFF",
             hex:true,
@@ -44,20 +44,24 @@ class ThemeUI {
         },
         overSecondColor:{
             css:"--over-second-color",
-            default:"white",
             light:"#000000",
             dark:"#FFFFFF",
             hex:true,
             rgb:false
+        },
+        backgroudColor:{
+            css:"--background-color",
+            light:"#d3d3d3",
+            dark:"#1c1b22",
+            hex:true,
+            rgb:false
         }/*,
         errorColor:{
-            default:"red",
             css:"--error-color",
             hex:true,
             rgb:false
         },
         okColor:{
-            default:"green",
             css:"--ok-color",
             hex:true,
             hex:false
@@ -72,7 +76,9 @@ class ThemeUI {
         }
     };
     constructor() {
-        for(let color in this.#colors) this[color] = new tinycolor(this.#colors[color].default);
+        this.load();
+        this.#setDefaultTheme();
+        for(let color in this.#colors) this[color] = new tinycolor(this.#colors[color][this.#theme]);
         for(let ex in this.#extra){
             switch(ex){
                 case "blur":
@@ -83,6 +89,8 @@ class ThemeUI {
                 break;
             }
         }
+        this.save();
+        this.apply();
     }
     getAllPropierties(){
         let propierties = [];
@@ -132,14 +140,24 @@ class ThemeUI {
         }
     }
     setTheme(theme){
-        if(typeof(theme)==="string" && this.#allowedThemes.includes(theme))
+        if(typeof(theme)==="string" && this.#allowedThemes.includes(theme)){
             this.#theme = theme;
+            this.save();
+            this.apply();
+        }
+    }
+    getValue(input){
+        switch(input){
+            case "theme":
+                return this.#theme;
+            break;
+        }
     }
     save(){
         let saveColorsObj = {};
         let saveExtraObj = {};
         let key;
-        for(key in this.#colors) saveColorsObj[key] = this[key].toString();
+        for(key in this.#colors) saveColorsObj[key] = `#${this[key].toHex()}`;
         for(key in this.#extra) saveExtraObj[key] = this[key];
         localStorage.setItem(this.#localStorageKey,JSON.stringify({
             colors: saveColorsObj,
@@ -156,13 +174,17 @@ class ThemeUI {
             let element = savedObj[el];
             switch (el){
                 case "colors":
-                    for(let color in element)this[color] = new tinycolor(element[color]);
+                    for(let color in element)
+                        this[color] = new tinycolor(element[color]);
                 break;
                 case "extra":
                     for(let extra in element)this[extra] = element[extra];
                 break;
-                default:
-                    this[el] = element;
+                case "theme":
+                    this.#theme = element;
+                break;
+                case "customOverColors":
+                    this.#customOverColors = element;
                 break;
             }
         }
@@ -181,8 +203,8 @@ class ThemeUI {
                 break;
             }
             if(this.#colors[color]["hex"]){
-                styleSelector.setProperty(`${cssString}-hex`,`#${colorSelected.toHex()}`);
-                console.debug(`${cssString}-hex: #${colorSelected.toHex()};`)
+                styleSelector.setProperty(`${cssString}`,`#${colorSelected.toHex()}`);
+                console.debug(`${cssString}: #${colorSelected.toHex()};`)
             }
             if(this.#colors[color]["rgb"]){
                 let colorRGB = colorSelected.toRgb();

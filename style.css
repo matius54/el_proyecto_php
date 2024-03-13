@@ -1,41 +1,69 @@
 :root {
-    color-scheme: dark;
+    color-scheme: light;
+    /*color-scheme: dark;*/
+
     margin: 0;
     padding: 0;
     font-family: Tahoma, Verdana, Arial, sans-serif;
 
-    --main-color: rgb(138, 43, 226);
+    --main-color: #fff;
+    /*--main-color: #8a2be2*/
 
-    --second-color: rgb(0, 0, 255);
+    --second-color: #c8c8ff;
+    /*--second-color: #3f1f7a;*/
 
-    --over-main-color: rgb(255, 255, 255);
+    --over-main-color: #000;
+    /*--over-main-color: #fff;*/
 
-    --over-second-color: rgb(255, 255, 255);
+    --over-second-color: #000;
+    /*--over-second-color: #fff*/
 
-    --background-color: rgb(28, 27, 34);
-    
-    --blur-config: blur(10px);
+    --background-color: #d3d3d3;
+    /*--background-color: #1c1b22;*/
+
+    --blur-config: none;
+    /*--blur-config: blur(10px);*/
 }
 button:hover {
     filter: brightness(85%);
 }
 body {
     display: flex;
-    justify-content: center;
+    justify-content: start;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     background-color: var(--background-color);
+    gap: 2rem; 
 }
+
+header.nav {
+    background-color: var(--main-color);
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header.nav h1 {
+    white-space: nowrap;
+    color: var(--over-main-color);
+}
+
 .card {
     display: flex;
     flex-direction: column;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(10px);
+    background-color: var(--main-color);
     border-radius: 20px;
     overflow: hidden;
     transform: none;
-    transition: all ease 1s;
+}
+.padd {
+    padding: 2rem;
 }
 .card.login {
     min-width: 350px;
@@ -48,6 +76,7 @@ body {
 .card h1 {
     padding: 30px 0;
     text-align: center;
+    color: var(--over-main-color)
 }
 .card {
     display: flex;
@@ -59,15 +88,15 @@ body {
     width: 100%;
     border-radius: 0;
     border: none;
+    color: var(--over-main-color);
 }
 .card input {
     font-size: 1.5rem;
     border-radius: 10px;
-    border: 1px solid var(--main-color);
+    border: 1px solid var(--over-main-color);
     width: 80%;
     padding: 0.5rem;
     background-color: transparent;
-    
 }
 .card .status {
     background-color: black;
@@ -100,7 +129,7 @@ body {
     border: none;
     cursor: pointer;
     background-color: transparent;
-    color: var(--main-color);
+    color: var(--over-main-color);
 }
 input.valid , textarea.valid {
     border: 1px solid var(--second-color);
@@ -121,4 +150,122 @@ input:focus , textarea:focus {
 }
 .card label {
     text-align: center;
+}
+.navbar {
+    position: fixed;
+    background-color: var(--main-color);
+    transition: width 200ms;
+}
+
+nav.navbar > ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+nav.navbar > ul > li {
+    margin: 0;
+    padding: 0;
+    transition: background-color 200ms;
+}
+
+nav.navbar > ul > li:hover , nav.navbar > ul > li.selected {
+    background-color: var(--second-color);
+}
+
+nav.navbar > ul > li > a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 5rem;
+    text-decoration: none;
+    color: var(--over-main-color);
+    max-width: min-content;
+}
+
+nav.navbar > ul > li > a > .icon {
+    min-width: 5rem;
+    max-width: 5rem;
+    min-height: 100%;
+    margin: 0 0.5rem;
+}
+
+nav.navbar > ul > li > a > span {
+    display: none;
+    margin-left: 1rem;
+    white-space: nowrap;
+    user-select: none;
+}
+
+@media only screen and (min-width: 601px) {
+    .navbar {
+        width: 6rem;
+        height: 100vh;
+        left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    nav.navbar:hover {
+        width: 18rem;
+    }
+    nav.navbar:hover > ul > li > a > span {
+        display: block;
+    }
+    .viewer {
+        margin-left: 6rem;
+    }
+    nav.navbar > ul {
+        min-height: 100vh;
+        align-items: center;
+    }
+    nav.navbar > ul > li:last-child {
+        margin-top: auto;
+    }
+    nav.navbar > ul > li {
+        width: 100%;
+    }
+    nav.navbar > ul > li > a {
+        min-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        width: 100vw;
+        height: min-content;
+        bottom: 0;
+        left: 0;
+        transition: none;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+    nav.navbar > ul {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    nav.navbar > ul > li:last-child {
+        margin-left: auto;
+    }
+}
+
+.button {
+    background-color: rgba(1,1,1,0.25);
+    padding: 0.8rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--over-main-color);
+    transition: background-color 200ms;
+    white-space: nowrap;
+    
+}
+
+.button:hover {
+    background-color: rgba(255,255,255,0.25);
+}
+
+a {
+    color: var(--over-main-color);
+    text-decoration: none;
 }

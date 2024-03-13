@@ -5,38 +5,54 @@ class Validate {
             form.querySelectorAll("textarea").forEach((e) => this.addListeners(e));
         });
     }
-    addListeners(element){
-        element.addEventListener("click",this.validate);
-        element.addEventListener("input",this.validate);
-        element.addEventListener("blur",this.validate);
+    listeners(element,listener = this.validate){
+        let same;
+        if(same = this.same(element)){
+                this.addListeners(element,(e)=>{
+                const element = e.target;
+                this.same({target: element});
+            });
+        }else{
+            element.addEventListener("click",listener);
+            element.addEventListener("input",listener);
+            element.addEventListener("blur",listener);
+        }
     }
-    same(elem1, elem2){
-        validate.updateDOM(elem2,(elem1.value === elem2.value))
+    addListeners(element,listener = this.validate){
+        element.addEventListener("click",listener);
+        element.addEventListener("input",listener);
+        element.addEventListener("blur",listener);
+    }
+    same(element){
+        const value = element.value;
+        let same;
+        if(typeof (same = element.getAttribute("same")) === "string"){
+            const form = element.closest("form");
+            const el2 = form.querySelector(`input[name="${same}"]`);
+            if(el2 && value){
+                validate.updateDOM(element,(element.value === el2.value))
+                return el2;
+            }
+        }
+        console.log(element);
+        console.log("hola buenas");
     }
     validate(event){
         //valores de configuracion
         const MATCH = "match";
         const DIVIDER = "_";
         const regex = {
-            text : /[A-Za-z| ]+/g,
+            text : /[A-Za-z ñáéíóúÑÁÉÍÓÚ]+/g,
             username : /^\w{1,64}/,
-            name : /^\w+( \w+)?$/,
+            name : /^[\wñáéíóúÑÁÉÍÓÚ]+( [\wñáéíóúÑÁÉÍÓÚ]+)?$/,
             email : /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/,
-            password : /^(\w| )+$/,
+            password : /^.{8,}$/,
             date : /^(20|19)\d{2,2}-[0-1]\d-[0-3]\d$/
         };
         //constantes y variables
         const element = event.target;
+        //if(validate.same(element)) return;
         const value = element.value;
-        let same;
-        if(typeof (same = element.getAttribute("same")) === "string"){
-            const form = element.closest("form");
-            const el2 = form.querySelector(`input[name="${same}"]`);
-            if(el2){
-                validate.updateDOM(element,validate.same(el2,element));
-                return;
-            }
-        }
         let key = element.type;
         let valid;
         let test;
@@ -63,8 +79,6 @@ class Validate {
         const VALID = "valid";
         const INVALID = "invalid";
         const classL = element.classList;
-        console.log(element);
-        console.log(result);
         if(result === true){
             classL.add(VALID);
             classL.remove(INVALID);

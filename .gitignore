@@ -1,3 +1,5 @@
 test/
 data/
 login_old.php
+libs/csvdecode.php
+libs/efemerides.csv

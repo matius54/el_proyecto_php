@@ -25,6 +25,9 @@
 
     --blur-config: blur(10px);
 }
+* {
+    /*border: red 1px solid !important;*/
+}
 button:hover {
     filter: brightness(85%);
 }
@@ -35,7 +38,6 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: var(--main-color-hex);
 }
 .login-page {
     overflow: hidden;
@@ -100,9 +102,11 @@ body {
     border-radius: 0.5em;
     margin: 20px;
 }
-.card > .form > form > input[type="text"].token {
-    text-align: center;
-    font-size: 25px;
+.card > .form > form > .firstField {
+
+}
+.card > .form > form > input[type="text"]:last-child {
+    border: #0000FF;
 }
 .card > .form > .status {
     background-color: black;
@@ -114,9 +118,11 @@ body {
     font-size: 15px;
     margin: 20px;
     padding: 1em;
-    border-radius: 0.5em;
     width: fit-content;
     height: 3.5em;
+    width: 168px;
+    border-radius: 20px;
+    margin: 20px;
 }
 .card > .options {
     padding-top: 40px;

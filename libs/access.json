@@ -1,0 +1,12 @@
+[
+    {
+        "k":"login",
+        "n":"Iniciar sesion",
+        "d":"Permite al usuario iniciar su propia sesion en el sistema"
+    },
+    {
+        "k":"access2",
+        "n":"prueba 1",
+        "d":"Esto solo es una prueba"
+    }
+]

@@ -18,37 +18,37 @@
 
 <body class="login-page">
     <div class="svg-container">
-    <svg viewBox="0 0 1010 655" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin slice">
-        <g clip-path="url(#clip0_1_15)">
-            <rect x="127.022" y="-182" width="355.901" height="355.901" rx="43" transform="rotate(45.3109 127.022 -182)" fill="url(#paint0_linear_1_15)" />
-            <rect x="-95" y="449.546" width="203.005" height="203.005" rx="20" transform="rotate(-45 -95 449.546)" fill="url(#paint1_linear_1_15)" />
-            <rect x="832.497" y="588.4" width="381.976" height="91.0749" rx="45.5374" transform="rotate(135 832.497 588.4)" fill="url(#paint2_linear_1_15)" />
-            <rect x="791" y="399.391" width="430.474" height="102.638" rx="51.3192" transform="rotate(-45 791 399.391)" fill="url(#paint3_linear_1_15)" />
-            <path d="M133.212 64.7119C113.17 44.6705 113.17 12.177 133.212 -7.86437L365.027 -239.679C385.068 -259.72 417.562 -259.721 437.603 -239.679V-239.679C457.644 -219.638 457.644 -187.144 437.603 -167.103L205.788 64.7119C185.747 84.7532 153.253 84.7533 133.212 64.7119V64.7119Z" fill="url(#paint4_linear_1_15)" />
-        </g>
-        <defs>
-            <linearGradient id="paint0_linear_1_15" x1="467.106" y1="-121.25" x2="113.552" y2="140.18" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA00FF" />
-                <stop offset="1" stop-color="#00F0FF" />
-            </linearGradient>
-            <linearGradient id="paint1_linear_1_15" x1="98.9828" y1="484.198" x2="-102.683" y2="633.317" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA00FF" />
-                <stop offset="1" stop-color="#00F0FF" />
-            </linearGradient>
-            <linearGradient id="paint2_linear_1_15" x1="830.547" y1="628.624" x2="1222.07" y2="633.016" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA00FF" />
-                <stop offset="1" stop-color="#00F0FF" />
-            </linearGradient>
-            <linearGradient id="paint3_linear_1_15" x1="788.802" y1="444.723" x2="1230.04" y2="449.673" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA00FF" />
-                <stop offset="1" stop-color="#00F0FF" />
-            </linearGradient>
-            <linearGradient id="paint4_linear_1_15" x1="103.5" y1="111" x2="419" y2="-197.5" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FA00FF" />
-                <stop offset="1" stop-color="#00F0FF" />
-            </linearGradient>
-        </defs>
-    </svg>
+        <svg viewBox="0 0 1010 655" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin slice">
+            <g clip-path="url(#clip0_1_15)">
+                <rect x="127.022" y="-182" width="355.901" height="355.901" rx="43" transform="rotate(45.3109 127.022 -182)" fill="url(#paint0_linear_1_15)" />
+                <rect x="-95" y="449.546" width="203.005" height="203.005" rx="20" transform="rotate(-45 -95 449.546)" fill="url(#paint1_linear_1_15)" />
+                <rect x="832.497" y="588.4" width="381.976" height="91.0749" rx="45.5374" transform="rotate(135 832.497 588.4)" fill="url(#paint2_linear_1_15)" />
+                <rect x="791" y="399.391" width="430.474" height="102.638" rx="51.3192" transform="rotate(-45 791 399.391)" fill="url(#paint3_linear_1_15)" />
+                <path d="M133.212 64.7119C113.17 44.6705 113.17 12.177 133.212 -7.86437L365.027 -239.679C385.068 -259.72 417.562 -259.721 437.603 -239.679V-239.679C457.644 -219.638 457.644 -187.144 437.603 -167.103L205.788 64.7119C185.747 84.7532 153.253 84.7533 133.212 64.7119V64.7119Z" fill="url(#paint4_linear_1_15)" />
+            </g>
+            <defs>
+                <linearGradient id="paint0_linear_1_15" x1="467.106" y1="-121.25" x2="113.552" y2="140.18" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FA00FF" />
+                    <stop offset="1" stop-color="#00F0FF" />
+                </linearGradient>
+                <linearGradient id="paint1_linear_1_15" x1="98.9828" y1="484.198" x2="-102.683" y2="633.317" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FA00FF" />
+                    <stop offset="1" stop-color="#00F0FF" />
+                </linearGradient>
+                <linearGradient id="paint2_linear_1_15" x1="830.547" y1="628.624" x2="1222.07" y2="633.016" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FA00FF" />
+                    <stop offset="1" stop-color="#00F0FF" />
+                </linearGradient>
+                <linearGradient id="paint3_linear_1_15" x1="788.802" y1="444.723" x2="1230.04" y2="449.673" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FA00FF" />
+                    <stop offset="1" stop-color="#00F0FF" />
+                </linearGradient>
+                <linearGradient id="paint4_linear_1_15" x1="103.5" y1="111" x2="419" y2="-197.5" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FA00FF" />
+                    <stop offset="1" stop-color="#00F0FF" />
+                </linearGradient>
+            </defs>
+        </svg>
     </div>
     <?php
     require_once "libs/tablex.php";
@@ -78,12 +78,13 @@
         }
     }
     if(isset($_POST)){
-        echo "Informacion recibida por PHP<br>{<br>";
+        echo "Informacion recibida<br>{<br>";
         foreach($_POST as $k => $v){
             echo "$k : \"$v\"<br>";
         }
         echo "<br>}";
     }
+    
     //$status = "ok";
     //$statusI18n = "LOGIN_STATUS_ALL_OK";
     //echo $_POST["admin"];
@@ -111,54 +112,41 @@
     </div>
 </body>
 <script>
-    const user = document.getElementsByName("user")[0];
-    const key = document.getElementsByName("key")[0];
-    const token = document.getElementsByName("token")[0];
+    const inputs = document.querySelectorAll("form input[type=text]");
+    inputs.forEach(element => {
+        element.addEventListener("input",event=>verify(event));
+        element.addEventListener("blur",event=>verify(event));
+        element.addEventListener("focus",event=>verify(event));
+    });
+    document.querySelector("form").addEventListener("submit",(e)=>{e.preventDefault()});
+    const verify = (event) => {
+        let element = event.target;
+        let name = element.name;
+        console.log(event);
+    };
     const hiddenCheck = document.getElementsByName("isNotToken")[0];
-    const formButton = document.getElementById("formButton");
     const loginButton = document.getElementById("loginButton");
-    const currentForm = document.getElementById("form");
-    var isTotpToken = true;
-    hiddenCheck.checked = !isTotpToken;
+
     if(document.querySelector(".status"))document.querySelectorAll("input").forEach(element => addError(element));
 
     const addError = element => element.classList.add("error");
-    const removeError = element => {
-        let status = document.querySelector(".status");
-        if(status)status.setAttribute("hidden","hidden");
-        element.classList.remove("error");
-    };
+    const removeError = element => element.classList.remove("error");
+
     document.getElementById("form").addEventListener("submit", event => {
         event.preventDefault();
         verifyAndSubmit(event.target);
     });
-    const i18n_Magic = {
-        true:"LOGIN_WITH_USER_CI",
-        false:"LOGIN_WITH_TOKEN"
-    }
     function togleForms(element){
-        if(isTotpToken){
-            hiddenCheck.checked = false;
-            user.setAttribute("hidden","hidden");
-            key.setAttribute("hidden","hidden");
-            user.value = "";
-            key.value = "";
-            removeError(user);
-            removeError(key);
-            loginButton.removeAttribute("hidden");
-            token.removeAttribute("hidden");
-        }else{
-            hiddenCheck.checked = true;
-            loginButton.setAttribute("hidden","hidden");
-            token.setAttribute("hidden","hidden");
-            token.value = "";
-            removeError(key);
-            user.removeAttribute("hidden");
-            key.removeAttribute("hidden");
-        }
-        formButton.setAttribute("data-i18n",i18n_Magic[isTotpToken]);
-        isTotpToken = !isTotpToken;
+        inputs.forEach(element => {
+            element.toggleAttribute("hidden");
+            element.value = "";
+            removeError(element);
+        });
+        loginButton.toggleAttribute("hidden");
+        formButton.setAttribute("data-i18n",hiddenCheck.checked ? "LOGIN_WITH_USER_CI" : "LOGIN_WITH_TOKEN");
+        hiddenCheck.checked = !hiddenCheck.checked;
         i18n.updateDOM(element);
+        //console.log(hiddenCheck.checked);
     }
     function showQrReader(){
         alert("no implementado aun");

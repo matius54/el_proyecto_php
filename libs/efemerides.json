@@ -1,0 +1,666 @@
+[
+    {
+        "day": 1,
+        "month": 1,
+        "name": "Año nuevo"
+    },
+    {
+        "day": 3,
+        "month": 1,
+        "name": "ascenso de Alejandro de Humbolt y Aimé Bonpland al pico El Ávila"
+    },
+    {
+        "day": 4,
+        "month": 1,
+        "name": "muerte de Rafael María Baralt"
+    },
+    {
+        "day": 6,
+        "month": 1,
+        "name": "Día de Reyes"
+    },
+    {
+        "day": 10,
+        "month": 1,
+        "name": "muerte del General Ezequiel Zamora"
+    },
+    {
+        "day": 14,
+        "month": 1,
+        "name": "día de la Virgen de la Divina Pastora"
+    },
+    {
+        "day": 15,
+        "month": 1,
+        "name": "Día del Maestro"
+    },
+    {
+        "day": 16,
+        "month": 1,
+        "name": "muerte Juan Vicente Bolívar y Ponte padre del Libertador Simón Bolívar"
+    },
+    {
+        "day": 23,
+        "month": 1,
+        "name": "natalicio de José Francisco Bermúdez"
+    },
+    {
+        "day": 23,
+        "month": 1,
+        "name": "caída de dictadura de Marcos Pérez Jiménez"
+    },
+    {
+        "day": 24,
+        "month": 1,
+        "name": "natalicio de Rafael Caldera"
+    },
+    {
+        "day": 27,
+        "month": 1,
+        "name": "natalicio de Juan Crisóstomo Falcón"
+    },
+    {
+        "day": 31,
+        "month": 1,
+        "name": "muerte de José Félix Ribas"
+    },
+    {
+        "day": 1,
+        "month": 2,
+        "name": "natalicio de Cecilio Acosta"
+    },
+    {
+        "day": 2,
+        "month": 2,
+        "name": "día de la Virgen de la Candelaria"
+    },
+    {
+        "day": 3,
+        "month": 2,
+        "name": "natalicio del Mariscal Antonio José de Sucre"
+    },
+    {
+        "day": 7,
+        "month": 2,
+        "name": "natalicio de Almirante Cristóbal Colón"
+    },
+    {
+        "day": 7,
+        "month": 2,
+        "name": "muerte de General Agustín Codazzi"
+    },
+    {
+        "day": 11,
+        "month": 2,
+        "name": "muerte del General Carlos Soublette"
+    },
+    {
+        "day": 12,
+        "month": 2,
+        "name": "Batalla de La Victoria"
+    },
+    {
+        "day": 14,
+        "month": 2,
+        "name": "día de San Valentin"
+    },
+    {
+        "day": 20,
+        "month": 2,
+        "name": "día de la Federación"
+    },
+    {
+        "day": 22,
+        "month": 2,
+        "name": "natalicio de Rómulo Betancourt"
+    },
+    {
+        "day": 24,
+        "month": 2,
+        "name": "natalicio de Daniel Florencio O'Leary"
+    },
+    {
+        "day": 25,
+        "month": 2,
+        "name": "muerte del General Jacinto Lara"
+    },
+    {
+        "day": 28,
+        "month": 2,
+        "name": "natalicio del General Antonio Guzmán Blanco"
+    },
+    {
+        "day": 28,
+        "month": 2,
+        "name": "natalicio de José María España"
+    },
+    {
+        "day": 28,
+        "month": 2,
+        "name": "muerte de Simón Rodríguez"
+    },
+    {
+        "day": 1,
+        "month": 3,
+        "name": "fundación de San Carlos"
+    },
+    {
+        "day": 5,
+        "month": 3,
+        "name": "muerte de Hugo Chávez"
+    },
+    {
+        "day": 10,
+        "month": 3,
+        "name": "natalicio de José María Vargas"
+    },
+    {
+        "day": 14,
+        "month": 3,
+        "name": "natalicio de Luis Beltrán Prieto Figueroa"
+    },
+    {
+        "day": 15,
+        "month": 3,
+        "name": "natalicio de Juan Bautista Arismendi"
+    },
+    {
+        "day": 17,
+        "month": 3,
+        "name": "muerte de Vicente Campo Elías"
+    },
+    {
+        "day": 19,
+        "month": 3,
+        "name": "día de San José"
+    },
+    {
+        "day": 25,
+        "month": 3,
+        "name": "fundación de Valencia (1814)"
+    },
+    {
+        "day": 25,
+        "month": 3,
+        "name": "Muerte Antonio Ricaurte"
+    },
+    {
+        "day": 27,
+        "month": 3,
+        "name": "natalicio de Antonio Arraiz"
+    },
+    {
+        "day": 28,
+        "month": 3,
+        "name": "natalicio de Francisco de Miranda"
+    },
+    {
+        "day": 31,
+        "month": 3,
+        "name": "fundación de San Cristóbal (1561)"
+    },
+    {
+        "day": 7,
+        "month": 4,
+        "name": "día Mundial de la Salud"
+    },
+    {
+        "day": 11,
+        "month": 4,
+        "name": "día de la Batalla de San Félix"
+    },
+    {
+        "day": 14,
+        "month": 4,
+        "name": "Día del Panamericanismo"
+    },
+    {
+        "day": 19,
+        "month": 4,
+        "name": "Primer movimiento preindependentista. Destitución de Vicente Emparan, el 19 de abril de 1810"
+    },
+    {
+        "day": 22,
+        "month": 4,
+        "name": "día de La Tierra"
+    },
+    {
+        "day": 23,
+        "month": 4,
+        "name": "Día del Idioma y del Libro"
+    },
+    {
+        "day": 25,
+        "month": 4,
+        "name": "Natalicio del general Marcos Pérez Jiménez"
+    },
+    {
+        "day": 26,
+        "month": 4,
+        "name": "Natalicio de Raúl Leoni"
+    },
+    {
+        "day": 28,
+        "month": 4,
+        "name": "Natalicio de Manuel Carlos Piar"
+    },
+    {
+        "day": 1,
+        "month": 5,
+        "name": "día Internacional del Trabajador"
+    },
+    {
+        "day": 3,
+        "month": 5,
+        "name": "día de Cruz de Mayo"
+    },
+    {
+        "day": 5,
+        "month": 5,
+        "name": "natalicio de Eleazar López Contreras"
+    },
+    {
+        "day": 6,
+        "month": 5,
+        "name": "muerte del General José Antonio Páez"
+    },
+    {
+        "day": 20,
+        "month": 5,
+        "name": "muerte del Almirante Cristóbal Colón"
+    },
+    {
+        "day": 21,
+        "month": 5,
+        "name": "muerte de Andrés Eloy Blanco"
+    },
+    {
+        "day": 25,
+        "month": 5,
+        "name": "día del Himno Nacional"
+    },
+    {
+        "day": 28,
+        "month": 5,
+        "name": "natalicio del General Jacinto Lara"
+    },
+    {
+        "month": 5,
+        "week": 2,
+        "weekDay": 7,
+        "name": "dia de la madre"
+    },
+    {
+        "day": 2,
+        "month": 6,
+        "name": "muerte de Luisa Cáceres de Arismendi"
+    },
+    {
+        "day": 3,
+        "month": 6,
+        "name": "muerte del Mariscal Antonio José de Sucre"
+    },
+    {
+        "day": 5,
+        "month": 6,
+        "name": "natalicio del artista Jesús Soto"
+    },
+    {
+        "day": 5,
+        "month": 6,
+        "name": "día Internacional del Ambiente"
+    },
+    {
+        "day": 13,
+        "month": 6,
+        "name": "natalicio de José Antonio Páez"
+    },
+    {
+        "day": 15,
+        "month": 6,
+        "name": "Decreto de Guerra a Muerte"
+    },
+    {
+        "day": 16,
+        "month": 6,
+        "name": "natalicio de Arturo Michelena"
+    },
+    {
+        "day": 22,
+        "month": 6,
+        "name": "instalación del Congreso Anfictionico de Panamá"
+    },
+    {
+        "day": 22,
+        "month": 6,
+        "name": "muerte del General Juan Bautista Arismendi"
+    },
+    {
+        "day": 24,
+        "month": 6,
+        "name": "Batalla de Carabobo (1821)"
+    },
+    {
+        "day": 24,
+        "month": 6,
+        "name": "día del Ejército"
+    },
+    {
+        "day": 24,
+        "month": 6,
+        "name": "Festividad de San Juan"
+    },
+    {
+        "day": 29,
+        "month": 6,
+        "name": "muerte de José Gregorio Hernández"
+    },
+    {
+        "month": 6,
+        "week": 3,
+        "weekDay": 7,
+        "name": "dia del padre"
+    },
+    {
+        "day": 5,
+        "month": 7,
+        "name": "Declaración de Independencia y día de la Fuerza Armada Nacional Bolivariana."
+    },
+    {
+        "day": 8,
+        "month": 7,
+        "name": "muerte de Cecilio Acosta"
+    },
+    {
+        "day": 10,
+        "month": 7,
+        "name": "natalicio de Antonio Ricaurte"
+    },
+    {
+        "day": 13,
+        "month": 7,
+        "name": "muerte de José María Vargas"
+    },
+    {
+        "day": 14,
+        "month": 7,
+        "name": "muerte del Generalísimo Francisco de Miranda"
+    },
+    {
+        "day": 16,
+        "month": 7,
+        "name": "día de la Virgen del Carmen"
+    },
+    {
+        "day": 19,
+        "month": 7,
+        "name": "natalicio de Juan José Flores"
+    },
+    {
+        "day": 23,
+        "month": 7,
+        "name": "natalicio de Cristóbal Mendoza"
+    },
+    {
+        "day": 24,
+        "month": 7,
+        "name": "natalicio del Libertador Simón Bolívar"
+    },
+    {
+        "day": 24,
+        "month": 7,
+        "name": "natalicio de Juan Vicente Gómez"
+    },
+    {
+        "day": 24,
+        "month": 7,
+        "name": "Combate naval del Lago de Maracaibo"
+    },
+    {
+        "day": 25,
+        "month": 7,
+        "name": "natalicio de Santiago Mariño"
+    },
+    {
+        "day": 25,
+        "month": 7,
+        "name": "Fundación de Caracas"
+    },
+    {
+        "day": 26,
+        "month": 7,
+        "name": "fundación de Coro"
+    },
+    {
+        "day": 28,
+        "month": 7,
+        "name": "muerte del General Antonio Guzmán Blanco"
+    },
+    {
+        "day": 28,
+        "month": 7,
+        "name": "natalicio de Hugo Chávez"
+    },
+    {
+        "day": 29,
+        "month": 7,
+        "name": "muerte de Arturo Michelena"
+    },
+    {
+        "month": 7,
+        "week": 3,
+        "weekDay": 7,
+        "name": "Día del niño"
+    },
+    {
+        "day": 2,
+        "month": 8,
+        "name": "Cristóbal Colón llega a Venezuela"
+    },
+    {
+        "day": 3,
+        "month": 8,
+        "name": "día de la Bandera"
+    },
+    {
+        "day": 6,
+        "month": 8,
+        "name": "natalicio de Andrés Eloy Blanco"
+    },
+    {
+        "day": 8,
+        "month": 8,
+        "name": "natalicio de Simón Díaz"
+    },
+    {
+        "day": 10,
+        "month": 8,
+        "name": "natalicio de Juan Manuel Cajigal"
+    },
+    {
+        "day": 6,
+        "month": 9,
+        "name": "la Carta de Jamaica, escrita por Simón Bolívar en 1815"
+    },
+    {
+        "day": 8,
+        "month": 9,
+        "name": "día de la Virgen del Valle"
+    },
+    {
+        "day": 10,
+        "month": 9,
+        "name": "fundación de la OPEP"
+    },
+    {
+        "day": 11,
+        "month": 9,
+        "name": "aparición de la Virgen de Coromoto"
+    },
+    {
+        "day": 19,
+        "month": 9,
+        "name": "natalicio de José Félix Ribas"
+    },
+    {
+        "day": 23,
+        "month": 9,
+        "name": "natalicio de Fermín Toro"
+    },
+    {
+        "day": 24,
+        "month": 9,
+        "name": "día de la Virgen de las Mercedes"
+    },
+    {
+        "day": 25,
+        "month": 9,
+        "name": "natalicio de Luisa Cáceres de Arismendi"
+    },
+    {
+        "day": 28,
+        "month": 9,
+        "name": "muerte de Rómulo Betancourt"
+    },
+    {
+        "month": 10,
+        "week": 1,
+        "weekDay": 1,
+        "name": "día Mundial del Hábitat."
+    },
+    {
+        "day": 4,
+        "month": 10,
+        "name": "muerte de Juan Antonio Pérez Bonalde"
+    },
+    {
+        "day": 5,
+        "month": 10,
+        "name": "natalicio de Teresa de la Parra"
+    },
+    {
+        "day": 7,
+        "month": 10,
+        "name": "día de la Virgen Nuestra Señora del Rosario"
+    },
+    {
+        "day": 10,
+        "month": 10,
+        "name": "natalicio de Francisco Antonio Rísquez"
+    },
+    {
+        "day": 12,
+        "month": 10,
+        "name": "Día de la resistencia indígena"
+    },
+    {
+        "day": 26,
+        "month": 10,
+        "name": "natalicio de José Gregorio Hernández"
+    },
+    {
+        "day": 27,
+        "month": 10,
+        "name": "natalicio de Carlos Andrés Pérez"
+    },
+    {
+        "day": 28,
+        "month": 10,
+        "name": "natalicio de Jose Tadeo Monagas y de Simón Rodríguez"
+    },
+    {
+        "day": 2,
+        "month": 11,
+        "name": "día de los fieles difuntos"
+    },
+    {
+        "day": 14,
+        "month": 11,
+        "name": "natalicio del General José Antonio Anzoátegui"
+    },
+    {
+        "day": 15,
+        "month": 11,
+        "name": "muerte del General José Antonio Anzoátegui"
+    },
+    {
+        "day": 20,
+        "month": 11,
+        "name": "conmemoración de la Convención Internacional de los derechos del niño"
+    },
+    {
+        "day": 21,
+        "month": 11,
+        "name": "día del Estudiante Universitario"
+    },
+    {
+        "day": 25,
+        "month": 11,
+        "name": "Día Internacional de la Eliminación de la Violencia contra la Mujer"
+    },
+    {
+        "day": 25,
+        "month": 11,
+        "name": "natalicio de José Gil Fortoul"
+    },
+    {
+        "day": 27,
+        "month": 11,
+        "name": "aniversario de la Aviación Militar Bolivariana"
+    },
+    {
+        "day": 29,
+        "month": 11,
+        "name": "natalicio de Andrés Bello"
+    },
+    {
+        "day": 1,
+        "month": 12,
+        "name": "Día mundial de la lucha contra el SIDA"
+    },
+    {
+        "day": 5,
+        "month": 12,
+        "name": "día del profesor universitario"
+    },
+    {
+        "day": 8,
+        "month": 12,
+        "name": "día de la Inmaculada Concepción"
+    },
+    {
+        "day": 10,
+        "month": 12,
+        "name": "día de la Declaración Universal de los Derechos Humanos"
+    },
+    {
+        "day": 12,
+        "month": 12,
+        "name": "día de Nuestra Señora de Guadalupe"
+    },
+    {
+        "day": 17,
+        "month": 12,
+        "name": "muerte de Simón Bolívar"
+    },
+    {
+        "day": 17,
+        "month": 12,
+        "name": "muerte de Juan Vicente Gómez. Víspera de Navidad"
+    },
+    {
+        "day": 24,
+        "month": 12,
+        "name": "Navidad\/Natividad"
+    },
+    {
+        "day": 25,
+        "month": 12,
+        "name": "día de los Inocentes"
+    },
+    {
+        "day": 28,
+        "month": 12,
+        "name": "fin de año"
+    }
+]

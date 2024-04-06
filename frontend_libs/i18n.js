@@ -37,6 +37,8 @@ class I18n {
                     console.error(`Max retry cycle of '${this.#retryFails}' reached`);
                     this.#retryCount = 0;
                     this.#busy = false;
+                    //TODO falta probar este callback
+                    callback();
                     throw err;
                 }else{
                     this.#retryCount ++;

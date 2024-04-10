@@ -1,0 +1,10 @@
+{
+    "login":{
+        "name":"Iniciar sesion",
+        "description":"Permite al usuario iniciar su propia sesion en el sistema"
+    },
+    "access2":{
+        "name":"prueba 1",
+        "description":"Esto solo es una prueba"
+    }
+}

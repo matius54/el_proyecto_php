@@ -7,68 +7,111 @@
     "showErrors":true,
 
     "structure":{
-        "user": [
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
-            "private CHAR(16) NOT NULL UNIQUE",
-            "username VARCHAR(64) NOT NULL UNIQUE",
-            "first_name VARCHAR(64)",
-            "last_name VARCHAR(64)",
-            "access TINYINT NOT NULL DEFAULT 0",
-            "created_by UUID",
-            "dni VARCHAR(32)",
-            "birth_date DATE",
-            "color CHAR(6)",
-            "FOREIGN KEY (created_by) REFERENCES user(id)"
-        ],
-        "session_token": [
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
-            "user_id UUID",
-            "FOREIGN KEY (user_id) REFERENCES user(id)"
-        ],
-        "event_in": [
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
-            "user_id UUID",
-            "FOREIGN KEY (user_id) REFERENCES user(id)"
-        ],
-        "event_out": [
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
-            "event_in_id UUID NOT NULL UNIQUE",
-            "user_id UUID",
-            "FOREIGN KEY (user_id) REFERENCES user(id)"
+        "file":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "data BLOB NOT NULL",
+            "original_hash BINARY(64) NOT NULL",
+            "hash BINARY(64) NOT NULL"
         ],
         "image":[
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "data_id INT NOT NULL",
+            "created_at BIGINT UNSIGNED NOT NULL",
             "name VARCHAR(64)",
             "description VARCHAR(256)",
             "format VARCHAR(64) NOT NULL",
             "height BIGINT NOT NULL",
             "width BIGINT NOT NULL",
-            "created_by UUID",
-            "FOREIGN KEY (created_by) REFERENCES user(id)"
+            "FOREIGN KEY (data_id) REFERENCES file(id)"
+        ],
+        "role":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "name VARCHAR(128) NOT NULL",
+            "description TEXT"
+        ],
+        "role_node":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "role_id INT NOT NULL",
+            "node_key VARCHAR(256)",
+            "allow BOOL NOT NULL DEFAULT TRUE",
+            "FOREIGN KEY (role_id) REFERENCES role(id)"
+        ],
+        "chronogram":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "name VARCHAR(64) NOT NULL"
+        ],
+        "cal_event":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "name VARCHAR(128)",
+            "description TEXT",
+            "chronogram_id INT",
+            "d INT",
+            "m INT",
+            "y INT",
+            "rep INT",
+            "_count INT",
+            "active BOOL",
+            "FOREIGN KEY (chronogram_id) REFERENCES chronogram(id)"
         ],
         "department":[
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "created_at BIGINT UNSIGNED NOT NULL",
             "name VARCHAR(64)",
-            "description VARCHAR(256)"
+            "description VARCHAR(256)",
+            "chronogram_id INT NOT NULL",
+            "FOREIGN KEY (chronogram_id) REFERENCES chronogram(id)"
+        ],
+        "2fa":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "hash BINARY(64)",
+            "salt BINARY(64)"
+        ],
+        "user": [
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "profile_img INT",
+            "department_id INT",
+            "2fa_id INT",
+            "private CHAR(16) NOT NULL UNIQUE",
+            "user VARCHAR(64) NOT NULL UNIQUE",
+            "first_name VARCHAR(64)",
+            "last_name VARCHAR(64)",
+            "ci VARCHAR(32)",
+            "birthday VARCHAR(32)",
+            "color CHAR(6)",
+            "created_at BIGINT UNSIGNED NOT NULL",
+            "FOREIGN KEY (profile_img) REFERENCES image(id)",
+            "FOREIGN KEY (department_id) REFERENCES department(id)",
+            "FOREIGN KEY (2fa_id) REFERENCES 2fa(id)"
+        ],
+        "event": [
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "created_at BIGINT UNSIGNED NOT NULL",
+            "user_id INT",
+            "is_exit BOOL NOT NULL",
+            "FOREIGN KEY (user_id) REFERENCES user(id)"
+        ],
+        "user_role":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "level INT NOT NULL UNIQUE",
+            "user_id INT NOT NULL",
+            "role_id INT NOT NULL",
+            "FOREIGN KEY (user_id) REFERENCES user(id)",
+            "FOREIGN KEY (role_id) REFERENCES role(id)"
+        ],
+        "log":[
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "user_id INT NOT NULL",
+            "ip VARCHAR(64)",
+            "agent VARCHAR(1024)",
+            "uri VARCHAR(256)",
+            "action VARCHAR(64)",
+            "FOREIGN KEY (user_id) REFERENCES user(id)"
         ],
         "access":[
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
+            "id INT PRIMARY KEY AUTO_INCREMENT",
+            "created_at BIGINT UNSIGNED NOT NULL",
             "name VARCHAR(64)",
             "description VARCHAR(256)"
-        ],
-        "email":[
-            "id UUID DEFAULT UUID() PRIMARY KEY",
-            "created_at BIGINT UNSIGNED NOT NULL DEFAULT FLOOR(UNIX_TIMESTAMP(CURRENT_TIMESTAMP(3))*1000)",
-            "email VARCHAR(64)",
-            "added_by UUID",
-            "FOREIGN KEY (added_by) REFERENCES user(id)"
         ]
     },
     

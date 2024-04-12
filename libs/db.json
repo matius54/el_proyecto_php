@@ -26,6 +26,7 @@
         ],
         "role":[
             "id INT PRIMARY KEY AUTO_INCREMENT",
+            "level INT NOT NULL UNIQUE",
             "name VARCHAR(128) NOT NULL",
             "description TEXT"
         ],
@@ -92,7 +93,6 @@
         ],
         "user_role":[
             "id INT PRIMARY KEY AUTO_INCREMENT",
-            "level INT NOT NULL UNIQUE",
             "user_id INT NOT NULL",
             "role_id INT NOT NULL",
             "FOREIGN KEY (user_id) REFERENCES user(id)",

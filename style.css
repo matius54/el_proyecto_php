@@ -108,6 +108,7 @@ header.nav h1 {
     font-size: 15px;
     margin: 20px;
     padding: 1em;
+    border-radius: 0.5em;
     width: fit-content;
     height: 3.5em;
     cursor: pointer;
@@ -189,6 +190,7 @@ nav.navbar > ul > li > a > .icon {
     max-width: 5rem;
     min-height: 100%;
     margin: 0 0.5rem;
+    text-align: center;
 }
 
 nav.navbar > ul > li > a > span {

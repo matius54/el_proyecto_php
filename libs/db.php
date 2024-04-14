@@ -1,5 +1,5 @@
 <?php
-require_once "./file.php";
+require_once "./bytes.php";
 /*
     DB es una clase wrapper para la clase PDO de php, su funcion principal es abtraer el proceso de conexion
     e interaccion con la base de datos, ademas de facilitar una forma para automatizar la creacion automatica
@@ -134,11 +134,11 @@ class DB
      * Este metodo se usa exclusivamente al ligar (bind) los parametros de entrada a los prepared statemets, se necesita obtener el valor del tipo a ligar
      * A partir de un parametro detecta su tipo y usando el enum dentro de la clase PDO se selecciona la opcion correspondiente.
      *
-     * @param int|string|bool|File|null $param El valor a analizar.
+     * @param int|string|bool|Bytes|null $param El valor a analizar.
      *
      * @return int valor del `PDO::PARAM` correspondiente al `$param`.
      */
-    private function getBindType(int|string|bool|File|null $param): int
+    private function getBindType(int|string|bool|Bytes|null $param): int
     {
         if (is_int($param)) {
             return PDO::PARAM_INT;
@@ -146,15 +146,7 @@ class DB
             return PDO::PARAM_STR;
         } else if (is_bool($param)) {
             return PDO::PARAM_BOOL;
-            /*
-            NOTE:
-            el tipo de archivo no puedo detectarlo de manera convencional en php ya que no existe una funcion
-            todos los archivos se guardan como un string de bytes, asi que pense en hacerle una clase que lo contenga
-            esta es la unica dependencia de esta clase ademas de PDO y algunas otras funciones de php
-
-            y claro tambien falta probar a ver si esto funciona o no
-            */
-        } else if ($param instanceof File) {
+        } else if ($param instanceof Bytes) {
             return PDO::PARAM_LOB;
         }
         return PDO::PARAM_NULL;
@@ -260,7 +252,7 @@ class DB
      *
      * @return void
      */
-    public function execute(string $sql, string|int|float|bool|array|null|File ...$arg): void
+    public function execute(string $sql, string|int|float|bool|array|null|Bytes ...$arg): void
     {
         //esto es un arreglo para hacer que se
         //puedan insertar float en la base de datos.
@@ -415,8 +407,87 @@ class DB
     {
         return $this->error;
     }
+    //obtiene el id del ultimo registro añadido a la tabla que indiques
     public function getLastId(string $tableName, string $idName = "id") : int|null {
-        $this->execute("SELECT $idName FROM $tableName ORDER BY id DESC LIMIT 1 OFFSET 0",[]);
+        $this->execute("SELECT `$idName` FROM `$tableName` ORDER BY `$idName` DESC LIMIT 1 OFFSET 0",[]);
         return $this->fetch()[$idName] ?? null;
+    }
+    // 1 => (?), 4 => (?,?,?,?), 6 => (?,?,?,?,?,?)
+    private static function getPlaceholders(int $amount) : string {
+        //return  "(".implode(", ", array_fill(0, $amount, "?")).")";
+        //this is more efficient
+        $placeholders = "(";
+        for($i = 1; $i < $amount * 2; $i++)
+            $placeholders[$i] = $i % 2 ? "?" : ",";
+        return $placeholders . ")";
+    }
+    private static function quoteBT(array $arr) : array {
+        return array_map(function ($col) {return "`$col`";}, $arr);
+    }
+    //no soporta joins (aun)
+    public function select(
+        string $table,
+        array $columns = [],
+        string $condition = "",
+        array $args = [],
+        int $limit = 1024,
+        int $offset = 0,
+        bool $all = false,
+        bool $htmlspecialchars = false
+    ): array {
+        $sql = "SELECT ";
+        $sql .= $columns ? implode(", ", self::quoteBT($columns)) : "*";
+        $sql .= " FROM `$table`";
+        if ($condition) $sql .= " WHERE $condition";
+        if (!$all) $limit = 1;
+        $sql .= " LIMIT $limit OFFSET $offset";
+        $this->execute($sql, $args);
+        if ($all) {
+            return $this->fetchAll($htmlspecialchars);
+        } else {
+            return $this->fetch($htmlspecialchars);
+        }
+    }
+    public function insert(
+        string $table,
+        array $data
+    ): int|null {
+        $sql = "INSERT INTO `$table` (";
+        $sql .= implode(
+            ", ",
+            self::quoteBT(array_keys($data))
+        );
+        $sql .= ") VALUES " . self::getPlaceholders(sizeof($data));
+        $this->execute($sql, $data);
+        return $this->rowCount();
+    }
+    public function update(
+        string $table,
+        array $data,
+        string $condition,
+        array $args = []
+    ): int|null {
+        $sql = "UPDATE `$table` SET ";
+        $sql .= implode(
+            ", ",
+            array_map(
+                function ($col) {
+                    return "`$col` = ?";
+                },
+                array_keys($data)
+            )
+        );
+        if ($condition) $sql .= " WHERE $condition";
+        $this->execute($sql, array_merge($data, $args));
+        return $this->rowCount();
+    }
+    public function delete(
+        string $table,
+        string $condition,
+        array $args = []
+    ): int|null {
+        $sql = "DELETE FROM `$table` WHERE $condition";
+        $this->execute($sql, $args);
+        return $this->rowCount();
     }
 }

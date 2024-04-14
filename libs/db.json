@@ -3,7 +3,6 @@
     "username":"root",
     "password":"",
     "database":"db_test_2",
-    "port":3306,
     "showErrors":true,
 
     "structure":{

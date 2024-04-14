@@ -3,6 +3,9 @@
         private static function hexChar(){
             return dechex(mt_rand(0,15));
         }
+        private static function byte(){
+            return chr(mt_rand(0, 255));
+        }
         public static function randomHexStr($length = 32){
             $arr = [];
             for ($i = 0; $i < $length; $i++) {
@@ -10,14 +13,21 @@
             }
             return implode($arr);
         }
-        public static function password($password,&$hash,&$salt){
-            if(!VALIDATE::password($password))return null;
-            if($salt === null || !is_string($salt)){
-                $salt = self::randomHexStr();
-            }else{
-                $salt = strtolower($salt);
+        public static function randomByteStr($length = 16){
+            $arr = [];
+            for ($i = 0; $i < $length; $i++) {
+                $arr[$i] = self::byte();
             }
-            $hash = hash('sha256',$password.$salt);
+            return implode($arr);
+        }
+        public static function password(
+            string $password,
+            ?string &$hash,
+            ?string &$salt
+        ) : null|string
+        {
+            if(!$salt) $salt = self::randomByteStr();
+            $hash = hash('sha256',$password.bin2hex($salt), binary: true);
             return $hash;
         }
     }

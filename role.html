@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM-CRM-WEB dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./theme.js"></script>
+    <script defer>const THEME = new ThemeUI;</script>
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li class="selected">
+                <a href="./" class="logo" title="volver a la pagina principal" name="logo">
+                    <h3 class="icon">TCS CRM WEB</h3>
+                    <span>Pagina principal</span>
+                </a>
+            </li>
+            <li class="option">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                    <span>Registros</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main class="viewer">
+        <header class="nav">
+            <h1>Roles</h1>
+        </header>
+        <ul class="list">
+            <li>
+                <div class="head">
+                    <a title="Expandir">
+                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
+                    </a>
+                    <h2>Acceso administrado</h2>
+                    <div class="options">
+                        <a>X</a>
+                        <a>/</a>
+                        <a>√</a>
+                    </div>
+                </div>
+                <div class="body">
+                    <a href="./" class="logo" title="volver a la pagina principal" name="logo">
+                        <h3 class="icon">TCS CRM WEB</h3>
+                        <span>Pagina principal</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="head">
+                    <a title="Expandir">
+                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
+                    </a>
+                    <div class="options">
+                        <a>X</a>
+                        <a>/</a>
+                        <a>√</a>
+                    </div>
+                </div>
+                <div class="body">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                    <span>Registros</span>
+                </a>
+                </div>
+            </li>
+        </ul>
+    </main>
+</body>
+<script src="frontend_libs/list.js"></script>
+</html>

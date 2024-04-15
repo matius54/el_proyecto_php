@@ -42,16 +42,20 @@ header.nav {
     background-color: var(--main-color);
     width: calc(100% - 20px);
     padding: 0 10px;
-    height: 4rem;
+    height: 5rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 header.nav h1 {
     white-space: nowrap;
     color: var(--over-main-color);
+}
+
+.fixed {
+    position: fixed;
 }
 
 .card {
@@ -155,6 +159,7 @@ input:focus , textarea:focus {
     position: fixed;
     background-color: var(--main-color);
     transition: width 200ms;
+    z-index: 20;
 }
 
 nav.navbar > ul {
@@ -200,6 +205,11 @@ nav.navbar > ul > li > a > span {
     user-select: none;
 }
 
+.viewer {
+    width: 100%;
+    height: 100vh;
+}
+
 @media only screen and (min-width: 601px) {
     .navbar {
         width: 6rem;
@@ -215,13 +225,15 @@ nav.navbar > ul > li > a > span {
         display: block;
     }
     .viewer {
-        margin-left: 6rem;
+        width: calc(100% - 6rem);
+        padding-left: 6rem;
+        height: 100vh;
     }
     nav.navbar > ul {
         min-height: 100vh;
         align-items: center;
     }
-    nav.navbar > ul > li:last-child {
+    nav.navbar > ul > li.last {
         margin-top: auto;
     }
     nav.navbar > ul > li {
@@ -246,7 +258,7 @@ nav.navbar > ul > li > a > span {
         flex-direction: row;
         justify-content: flex-start;
     }
-    nav.navbar > ul > li:last-child {
+    nav.navbar > ul > li.last {
         margin-left: auto;
     }
 }
@@ -269,4 +281,142 @@ nav.navbar > ul > li > a > span {
 a {
     color: var(--over-main-color);
     text-decoration: none;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    max-width: min(40rem, calc(100% - 5rem));
+    margin: 2rem auto;
+}
+
+.list > li {
+    background-color: var(--main-color);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 5px;
+}
+
+.list > li {
+    transition: max-height 200ms;
+    max-height: 40px;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+.list .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+}
+
+.list .head h2 {
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin: 0;
+    color: var(--over-main-color);
+}
+
+.list .head h2.completed {
+    text-decoration: line-through;
+}
+
+.list .body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0.5rem 2rem;
+    text-align: left;
+}
+
+.list .options {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border-radius: 1rem;
+    min-width: fit-content;
+}
+
+.list .options a {
+    padding: 0.4rem 1rem;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 200ms;
+    background-color: rgba(1,1,1,0.25);
+}
+
+.list .options a:first-child:hover ,
+.list .options a:first-child.selected {
+    background-color: rgba(256, 0, 0, 0.5);
+}
+
+.list .options a:hover ,
+.list .options a.selected {
+    background-color: rgba(256, 256, 256, 0.5);
+}
+
+.list .options a:last-child:hover ,
+.list .options a:last-child.selected
+{
+    background-color: rgba(0, 256, 0, 0.5);
+}
+
+.icon {
+    min-width: 2rem;
+    min-height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
+    overflow: visible;
+}
+
+.icon.button {
+    background-color: rgba(1,1,1,0.25);
+    border-radius: 50%;
+    padding: .30rem;
+    cursor: pointer;
+}
+
+.list .button.disabled {
+    background-color: rgba(1,1,1,0.5);
+    color: grey;
+}
+
+.list .button.accordion {
+    transform: rotate(0);
+    transition: transform 200ms;
+}
+
+.list .button.accordion.open {
+    transform: rotate(-180deg);
+    background-color: rgba(255,255,255,0.25);
+}
+
+.navigator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.navigator li {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+.navigator li a {
+    background-color: var(--main-color);
+    padding: 0.5rem;
+    border-radius: 25%;
+}
+
+.navigator .selected {
+    border: 2px white solid;
 }

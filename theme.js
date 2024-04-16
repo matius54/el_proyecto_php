@@ -7,6 +7,7 @@ class ThemeUI {
     #theme = "auto";
     #isDark;
     #customOverColors = false;
+    #icons = {};
 
     #setDefaultTheme(){
         if(this.#theme !== "auto")return;
@@ -89,6 +90,7 @@ class ThemeUI {
                 break;
             }
         }
+        document.querySelectorAll(".icon").forEach(e => this.addIcon(e, e.id));
         this.save();
         this.apply();
     }
@@ -225,6 +227,26 @@ class ThemeUI {
                     console.debug(`${cssString}: ${value};`);
                 break;
             }
+        }
+        for(let icon in this.#icons){
+            const dark = this.isDark();
+            this.#icons[icon].forEach(element => {
+                element.setAttribute("src",`icons/${icon}${dark ? "_dark" : ""}.svg`);
+            });
+        }
+    }
+    isDark(){
+        return this.getValue("theme") === "dark";
+    }
+    addIcon(element, key){
+        element.setAttribute("src",`icons/${key}${this.isDark() ? "_dark" : ""}.svg`);
+        if(!this.#icons[key]) this.#icons[key] = [];
+        this.#icons[key].push(element);
+    }
+    removeIcon(element) {
+        for (const key in this.#icons) {
+            const index = this.#icons[key].indexOf(element);
+            if (index !== -1) this.#icons[key].splice(index, 1);
         }
     }
 }

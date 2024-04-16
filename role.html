@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCM-CRM-WEB dashboard</title>
+    <title>TCM-CRM-WEB role</title>
     <link rel="stylesheet" href="./style.css">
     <script src="./theme.js"></script>
     <script defer>const THEME = new ThemeUI;</script>
@@ -23,53 +23,6 @@
         <header class="nav">
             <h1>Roles</h1>
         </header>
-        <ul class="list">
-            <li>
-                <div class="head">
-                    <a title="Expandir">
-                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
-                    </a>
-                    <h2>Acceso administrado</h2>
-                    <div class="options">
-                        <a>X</a>
-                        <a>/</a>
-                        <a class="selected">√</a>
-                    </div>
-                </div>
-                <div class="body">
-                </div>
-            </li>
-            <li>
-                <div class="head">
-                    <a title="Expandir">
-                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
-                    </a>
-                    <h2>Iniciar sesion</h2>
-                    <div class="options">
-                        <a class="selected">X</a>
-                        <a>/</a>
-                        <a>√</a>
-                    </div>
-                </div>
-                <div class="body">
-                </div>
-            </li>
-            <li>
-                <div class="head">
-                    <a title="Expandir">
-                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
-                    </a>
-                    <h2>Subir foto de perfil</h2>
-                    <div class="options">
-                        <a>X</a>
-                        <a class="selected">/</a>
-                        <a>√</a>
-                    </div>
-                </div>
-                <div class="body">
-                </div>
-            </li>
-        </ul>
     </main>
 </body>
 <script src="frontend_libs/ajax.js"></script>
@@ -89,7 +42,7 @@
         "profile"
     ];
     class Role {
-        #link = BASE + "?a=getRole";
+        #link = BASE;
         #pageKey = "p";
         #InterObs;
         #page = 0;
@@ -105,7 +58,7 @@
         }
         load(){
             this.#InterObs.unobserve(this.#lastElement);
-            ajax(this.#link + `&${this.#pageKey}=${this.#page + 1}`)
+            ajax(`${this.#link}?a=getRole&${this.#pageKey}=${this.#page + 1}`)
             .then(res => {
                 if(typeof res === "number") return;
                 const roles = res.items;
@@ -116,42 +69,49 @@
         }
         add(json){
             //TODO
-            let dark = true;
             let icon = "edit";
 
             const li = document.createElement("li");
             li.classList.add("options");
-            li.setAttribute("id",json.id);
-                const inn = document.createElement("a");
-                    const svg = document.createElement("img");
-                    svg.setAttribute("src",`icons/${icon}${dark ? "_dark" : ""}.svg`);
-                    svg.classList.add("icon");
-                    const span = document.createElement("span");
-                    span.innerText = json.name,
-                inn.appendChild(svg);
-                inn.appendChild(span);
+            li.id = json.id;
+
+            const inn = document.createElement("a");
+            const svg = document.createElement("img");
+            svg.setAttribute("src", `icons/${icon}${THEME.isDark() ? "_dark" : ""}.svg`);
+            svg.classList.add("icon");
+            svg.id = icon;
+            
+            THEME.addIcon(svg, icon);
+            const span = document.createElement("span");
+            span.innerText = json.name;
+            inn.appendChild(svg);
+            inn.appendChild(span);
+            inn.title = `Editar el rol ${json.name}`;
             li.appendChild(inn);
-            this.#lastElement.insertAdjacentElement("afterend",li);
+            li.setAttribute("name",json.name);
+            this.#lastElement.insertAdjacentElement("afterend", li);
             this.#lastElement = li;
             li.addEventListener("click", e => {
                 const urlParams = new URLSearchParams(window.location.search);
                 if(urlParams.get("id") == json.id) return;
                 history.pushState(null, null, `?id=${json.id}`);
-                //loadRole(e.target);
+                //this.select(json.id);
+                NODE.update();
             });
         }
     }
     class Node {
         #allNodes;
-        #link = BASE + "?a=getNodes";
+        #link = BASE;
         constructor (){
             this.getAll();
         }
         getAll(){
-            ajax(this.#link)
+            ajax(`${this.#link}?a=getNodes`)
             .then(nodes => {
                 this.#allNodes = typeof nodes === "object" ? nodes : {};
                 this.generate();
+                this.update();
             });
         }
         generate(){
@@ -168,12 +128,12 @@
             main.appendChild(list);
         }
         li(json){
-            
             const open = document.createElement("a");
             open.title = "Expandir";
             const openIcon = document.createElement("img");
             openIcon.classList.add("icon","button","accordion");
-            openIcon.setAttribute("src","./icons/accordion_dark.svg");
+            openIcon.id = "accordion";
+            THEME.addIcon(openIcon, "accordion");
             List.addListener(openIcon);
             open.appendChild(openIcon);
 
@@ -185,14 +145,17 @@
 
             const no = document.createElement("a");
             no.innerText = "X";
+            no.title = "Denegado";
             options.appendChild(no);
 
             const maybe = document.createElement("a");
             maybe.innerText = "/";
+            maybe.title = "Indefinido";
             options.appendChild(maybe);
 
             const yes = document.createElement("a");
             yes.innerText = "√";
+            maybe.title = "Permitido";
             options.appendChild(yes);
 
             const head = document.createElement("div");
@@ -202,7 +165,7 @@
             head.appendChild(options); 
 
             const li = document.createElement("li");
-            li.setAttribute("id",json.key);
+            li.id = json.key;
             li.appendChild(head);
             
             const body = document.createElement("div");
@@ -217,15 +180,24 @@
         }
         update(){
             //modificar los nodos dependiendo del rol
+            const urlParams = new URLSearchParams(window.location.search);
+            let id = parseInt(urlParams.get("id"));
+            const list = document.querySelector("main.viewer ul");
+            document.querySelectorAll(".navbar li.options.selected").forEach(e => e.classList.toggle("selected", false));
+            if(id){
+                ajax()
+                const listItem = document.querySelector(`.navbar li[id=\"${id}\"].options`);
+                if(listItem){
+                    listItem.classList.toggle("selected", true);
+                }
+                list.removeAttribute("style");
+            }else{
+                list.setAttribute("style","display: none;");
+            }
         }
     }
-    window.addEventListener('pushstate', e => console.log(e));
-    new Role(document.querySelector(".navbar li:last-child"));
-    function loadRole(element){
-        const li = element.closest("li");
-        document.querySelectorAll(".navbar li.options").forEach(e => e.classList.remove("selected"));
-        li.classList.add("selected");
-    }
-    new Node;
+    const NODE = new Node;
+    const ROLE = new Role(document.querySelector(".navbar li:last-child"));
+    window.addEventListener('popstate', e => NODE.update());
 </script>
 </html>

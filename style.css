@@ -360,7 +360,7 @@ a {
 
 .list .options a:hover ,
 .list .options a.selected {
-    background-color: rgba(256, 256, 256, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .list .options a:last-child:hover ,

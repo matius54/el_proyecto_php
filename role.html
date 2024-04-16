@@ -17,12 +17,6 @@
                     <span>Pagina principal</span>
                 </a>
             </li>
-            <li class="option">
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-                    <span>Registros</span>
-                </a>
-            </li>
         </ul>
     </nav>
     <main class="viewer">
@@ -39,14 +33,10 @@
                     <div class="options">
                         <a>X</a>
                         <a>/</a>
-                        <a>√</a>
+                        <a class="selected">√</a>
                     </div>
                 </div>
                 <div class="body">
-                    <a href="./" class="logo" title="volver a la pagina principal" name="logo">
-                        <h3 class="icon">TCS CRM WEB</h3>
-                        <span>Pagina principal</span>
-                    </a>
                 </div>
             </li>
             <li>
@@ -54,21 +44,188 @@
                     <a title="Expandir">
                         <img src="./icons/accordion_dark.svg" class="icon button accordion">
                     </a>
+                    <h2>Iniciar sesion</h2>
                     <div class="options">
-                        <a>X</a>
+                        <a class="selected">X</a>
                         <a>/</a>
                         <a>√</a>
                     </div>
                 </div>
                 <div class="body">
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>
-                    <span>Registros</span>
-                </a>
+                </div>
+            </li>
+            <li>
+                <div class="head">
+                    <a title="Expandir">
+                        <img src="./icons/accordion_dark.svg" class="icon button accordion">
+                    </a>
+                    <h2>Subir foto de perfil</h2>
+                    <div class="options">
+                        <a>X</a>
+                        <a class="selected">/</a>
+                        <a>√</a>
+                    </div>
+                </div>
+                <div class="body">
                 </div>
             </li>
         </ul>
     </main>
 </body>
+<script src="frontend_libs/ajax.js"></script>
 <script src="frontend_libs/list.js"></script>
+<script>
+    const BASE = "./libs/access.php";
+    const ICONS = [
+        "accordion",
+        "adjustments-pause",
+        "check",
+        "check-on",
+        "delete",
+        "drawerIcon",
+        "edit",
+        "login",
+        "new",
+        "profile"
+    ];
+    class Role {
+        #link = BASE + "?a=getRole";
+        #pageKey = "p";
+        #InterObs;
+        #page = 0;
+        #lastElement;
+
+        constructor(element){
+            this.#InterObs = new IntersectionObserver(e => {
+                if(e[0]?.isIntersecting) this.load();
+            });
+
+            this.#lastElement = element;
+            this.#InterObs.observe(element);
+        }
+        load(){
+            this.#InterObs.unobserve(this.#lastElement);
+            ajax(this.#link + `&${this.#pageKey}=${this.#page + 1}`)
+            .then(res => {
+                if(typeof res === "number") return;
+                const roles = res.items;
+                for(let rol in roles) this.add(roles[rol]);
+                this.#page++;
+                if(!res.isLast) this.#InterObs.observe(this.#lastElement);
+            });
+        }
+        add(json){
+            //TODO
+            let dark = true;
+            let icon = "edit";
+
+            const li = document.createElement("li");
+            li.classList.add("options");
+            li.setAttribute("id",json.id);
+                const inn = document.createElement("a");
+                    const svg = document.createElement("img");
+                    svg.setAttribute("src",`icons/${icon}${dark ? "_dark" : ""}.svg`);
+                    svg.classList.add("icon");
+                    const span = document.createElement("span");
+                    span.innerText = json.name,
+                inn.appendChild(svg);
+                inn.appendChild(span);
+            li.appendChild(inn);
+            this.#lastElement.insertAdjacentElement("afterend",li);
+            this.#lastElement = li;
+            li.addEventListener("click", e => {
+                const urlParams = new URLSearchParams(window.location.search);
+                if(urlParams.get("id") == json.id) return;
+                history.pushState(null, null, `?id=${json.id}`);
+                //loadRole(e.target);
+            });
+        }
+    }
+    class Node {
+        #allNodes;
+        #link = BASE + "?a=getNodes";
+        constructor (){
+            this.getAll();
+        }
+        getAll(){
+            ajax(this.#link)
+            .then(nodes => {
+                this.#allNodes = typeof nodes === "object" ? nodes : {};
+                this.generate();
+            });
+        }
+        generate(){
+            const main = document.querySelector("main.viewer");
+            const list = document.createElement("ul");
+            list.classList.add("list");
+            for(let node in this.#allNodes)
+            list.appendChild(
+                this.li({
+                    key: node,
+                    ...this.#allNodes[node]
+                })
+            );
+            main.appendChild(list);
+        }
+        li(json){
+            
+            const open = document.createElement("a");
+            open.title = "Expandir";
+            const openIcon = document.createElement("img");
+            openIcon.classList.add("icon","button","accordion");
+            openIcon.setAttribute("src","./icons/accordion_dark.svg");
+            List.addListener(openIcon);
+            open.appendChild(openIcon);
+
+            const title = document.createElement("h2");
+            title.innerText = json.name;
+            
+            const options = document.createElement("div");
+            options.classList.add("options");
+
+            const no = document.createElement("a");
+            no.innerText = "X";
+            options.appendChild(no);
+
+            const maybe = document.createElement("a");
+            maybe.innerText = "/";
+            options.appendChild(maybe);
+
+            const yes = document.createElement("a");
+            yes.innerText = "√";
+            options.appendChild(yes);
+
+            const head = document.createElement("div");
+            head.classList.add("head");
+            head.appendChild(open);
+            head.appendChild(title);
+            head.appendChild(options); 
+
+            const li = document.createElement("li");
+            li.setAttribute("id",json.key);
+            li.appendChild(head);
+            
+            const body = document.createElement("div");
+            body.classList.add("body");
+
+            const description = document.createElement("span");
+            description.innerText = json.description;
+
+            body.appendChild(description);
+            li.appendChild(body);
+            return li;
+        }
+        update(){
+            //modificar los nodos dependiendo del rol
+        }
+    }
+    window.addEventListener('pushstate', e => console.log(e));
+    new Role(document.querySelector(".navbar li:last-child"));
+    function loadRole(element){
+        const li = element.closest("li");
+        document.querySelectorAll(".navbar li.options").forEach(e => e.classList.remove("selected"));
+        li.classList.add("selected");
+    }
+    new Node;
+</script>
 </html>

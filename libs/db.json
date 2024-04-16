@@ -25,9 +25,10 @@
         ],
         "role":[
             "id INT PRIMARY KEY AUTO_INCREMENT",
-            "level INT NOT NULL UNIQUE",
+            "level FLOAT NOT NULL UNIQUE",
             "name VARCHAR(128) NOT NULL",
-            "description TEXT"
+            "description TEXT",
+            "icon VARCHAR(128) DEFAULT \"edit\""
         ],
         "role_node":[
             "id INT PRIMARY KEY AUTO_INCREMENT",

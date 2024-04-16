@@ -1,6 +1,7 @@
 <?php
     require_once "db.php";
     require_once "utils.php";
+    require_once "paginator.php";
 
     class Node {
         private static string $filename = "nodes.json";
@@ -62,12 +63,16 @@
 
     class Role {
         public function __construct(int $role_id) {
+            /*
             $db = DB::getInstance();
             $result = $db->select(table: "role", condition: "id = ?", args: [$role_id]);
+            */
         }
 
-        public static function getAll(){
-
+        public static function getAll() : array {
+            $sql = "SELECT id, level, name FROM role ORDER BY level DESC";
+            $pag = new Paginator($sql, itemsPerPage: 5, pageKey: "p");
+            return $pag->toArray();
         }
     }
 
@@ -90,17 +95,13 @@
         }
     }
 
-    //var_dump(Node::getAll());
-    $db = DB::getInstance();
-    //var_dump($db->update(table: "user", data: ["username"=>"XD"], condition: "id = ?", args: [4]));
-    /*
-    var_dump(
-    $db->insert("user",[
-        "username" => SC::randomHexStr(),
-        "hash" => new Bytes(SC::randomByteStr(32)),
-        "salt" => new Bytes(SC::randomByteStr(16)),
-        "email" => SC::randomHexStr(),
-        "created_at" => 4512323
-    ]));
-    */
+    //a --> access
+    switch (URL::decode("a")){
+        case "getRole":
+            if(URL::isGet()) JSON::sendJson(Role::getAll());
+        break;
+        case "getNodes":
+            if(URL::isGet()) JSON::sendJson(Node::getAll());
+        break;
+    }
 ?>

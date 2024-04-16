@@ -298,7 +298,7 @@ class DB
         if (!is_array($result)) $result = [];
         if ($htmlspecialchars) {
             foreach ($result as $key => $value) {
-                $result[$key] = htmlspecialchars($value);
+                $result[$key] = is_string($value) ? htmlspecialchars($value) : $value;
             }
         }
         return $result;
@@ -322,7 +322,7 @@ class DB
             foreach ($data as $index => $element) {
                 if (!is_array($data)) continue;
                 foreach ($element as $key => $value) {
-                    $element[$key] = htmlspecialchars($value);
+                    $element[$key] = is_string($value) ? htmlspecialchars($value) : $value;
                 }
                 $data[$index] = $element;
             }

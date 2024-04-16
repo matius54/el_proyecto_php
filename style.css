@@ -284,6 +284,7 @@ a {
 }
 
 .list {
+    color: var(--over-main-color);
     display: flex;
     flex-direction: column;
     gap: 1rem;

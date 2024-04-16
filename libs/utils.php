@@ -277,19 +277,25 @@
     }
 
     class URL {
+        public static function isPost() : bool {
+            return $_SERVER["REQUEST_METHOD"] === "POST";
+        }
+        public static function isGet() : bool {
+            return $_SERVER["REQUEST_METHOD"] === "GET";
+        }
         public static function baseURL() : String {
-            return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
+            return (empty($_SERVER["HTTPS"]) ? "http" : "https") . "://$_SERVER[HTTP_HOST]";
         }
         public static function URL() : String {
             return self::baseURL() . self::baseURI();
         }
         public static function baseURI($base = null) : String {
-            if($base === null)$base = $_SERVER['REQUEST_URI'];
+            if($base === null)$base = $_SERVER["REQUEST_URI"];
             $url = explode("?", $base)[0];
             return $url;
         }
         public static function URI() : String {
-            return $_SERVER['REQUEST_URI'];
+            return $_SERVER["REQUEST_URI"];
         }
         public static function query($args = null, $keep = null, $unset = null, $ref = null) : String {
             $array = [];

@@ -4,6 +4,7 @@
     require_once "paginator.php";
 
     class Node {
+        
         private static string $filename = "nodes.json";
 
         private string $key;
@@ -56,6 +57,22 @@
             $this->description = $node["description"]; 
         }
 
+        public static function set(array $data) : bool {
+            $id = $data["id"] ?? null;
+            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
+            if(!isset($data["value"])) throw new HTTPException("value was not provided", 422);
+            
+            $value = $data["value"];
+
+            $db = DB::getInstance();
+            if(is_bool($value)){
+                return $db->update("role_node",["allow"=>$value],"role_id = ?",[$id]);
+            }elseif($value === null){
+                return $db->delete("role_node","role_id = ?",[$id]);
+            }
+            throw new HTTPException("value $value is not valid", 422);
+        }
+
         public function __toString() : string {
             return json_encode($this->get());
         }
@@ -73,6 +90,33 @@
             $sql = "SELECT id, level, name FROM role ORDER BY level DESC";
             $pag = new Paginator($sql, itemsPerPage: 5, pageKey: "p");
             return $pag->toArray();
+        }
+
+        public static function get($id) : array {
+            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
+
+            $db = DB::getInstance();
+            $role = $db->select("role",["name","description"],"id = ?",[$id], htmlspecialchars: true);
+
+            if(!$role) throw new HTTPException("Role with id $id not found", 404);
+
+            $nodes = $db->select("role_node",["node_key","allow"],"role_id = ?",[$id], all: true, htmlspecialchars: true);
+
+            $sql = "SELECT user.id, user FROM user_role JOIN user ON user_id = user.id WHERE role_id = ?";
+            $db->execute($sql,$id);
+            $users = $db->fetchAll(htmlspecialchars: true);
+
+            foreach($nodes as $key => $node){
+                $nodes[$node["node_key"]] = VALIDATE::int2bool($node["allow"]);
+                unset($nodes[$key]);
+            }
+
+            return [
+                "id" => $id,
+                ...$role,
+                "nodes" => $nodes,
+                "users" => $users
+            ];
         }
     }
 
@@ -96,12 +140,37 @@
     }
 
     //a --> access
-    switch (URL::decode("a")){
-        case "getRole":
-            if(URL::isGet()) JSON::sendJson(Role::getAll());
-        break;
-        case "getNodes":
-            if(URL::isGet()) JSON::sendJson(Node::getAll());
-        break;
+    try{
+        switch (URL::decode("a")){
+            case "getRole":
+                if(URL::isGet()){
+                    if($id = URL::decode("id")){
+                        JSON::sendJson(Role::get($id));
+                    }else{
+                        JSON::sendJson(Role::getAll());
+                    }
+                }
+            break;
+            case "getNodes":
+                if(URL::isGet()) JSON::sendJson(Node::getAll());
+            break;
+            case "setRole":
+                if(!URL::isPost()){
+                    throw new HTTPException("unsupported method, you should use POST", 405);
+                }elseif($json = JSON::getJson()){
+                    http_response_code(Node::set($json) ? 200 : 304);
+                }else{
+                    throw new HTTPException("json was not provided", 422);
+                }
+            break;
+            default:
+                //do nothing
+            break;
+        }
+    }catch(HTTPException $e){
+        http_response_code($e->getCode());
+        JSON::sendJson(["error"=>$e->getMessage()]);
+    }catch(Exception $e){
+        http_response_code(500);
     }
 ?>

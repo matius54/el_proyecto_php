@@ -42,7 +42,6 @@
         "profile"
     ];
     class Role {
-        #link = BASE;
         #pageKey = "p";
         #InterObs;
         #page = 0;
@@ -55,16 +54,18 @@
 
             this.#lastElement = element;
             this.#InterObs.observe(element);
+            sessionStorage.clear();
         }
         load(){
             this.#InterObs.unobserve(this.#lastElement);
-            ajax(`${this.#link}?a=getRole&${this.#pageKey}=${this.#page + 1}`)
+            ajax(`${BASE}?a=getRole&${this.#pageKey}=${this.#page + 1}`)
             .then(res => {
                 if(typeof res === "number") return;
                 const roles = res.items;
                 for(let rol in roles) this.add(roles[rol]);
                 this.#page++;
                 if(!res.isLast) this.#InterObs.observe(this.#lastElement);
+                NODE.update();
             });
         }
         add(json){
@@ -102,22 +103,21 @@
     }
     class Node {
         #allNodes;
-        #link = BASE;
         constructor (){
             this.getAll();
         }
         getAll(){
-            ajax(`${this.#link}?a=getNodes`)
+            ajax(`${BASE}?a=getNodes`)
             .then(nodes => {
                 this.#allNodes = typeof nodes === "object" ? nodes : {};
                 this.generate();
-                this.update();
             });
         }
         generate(){
             const main = document.querySelector("main.viewer");
             const list = document.createElement("ul");
             list.classList.add("list");
+            list.setAttribute("style","display: none;");
             for(let node in this.#allNodes)
             list.appendChild(
                 this.li({
@@ -184,14 +184,29 @@
             let id = parseInt(urlParams.get("id"));
             const list = document.querySelector("main.viewer ul");
             document.querySelectorAll(".navbar li.options.selected").forEach(e => e.classList.toggle("selected", false));
+            const title = document.querySelector("header.nav h1");
+            title.innerText = "Roles";
+            //guarda el id en el sessionstorage
+            //y recuperalo en cada cambio, para saber cuando realizar otro ajax
+            //o separa la logica del cambio visual del seleccionar un rol
+            //y la de la carga asincrona y modificacion del dom
+            //recuerda
             if(id){
-                ajax()
+                //no puedo usar el id y nombre de el dom,
+                //porque no sabemos si esta paginado y cargado totalmente o no,
+                //tirare de la api mejor
                 const listItem = document.querySelector(`.navbar li[id=\"${id}\"].options`);
-                if(listItem){
-                    listItem.classList.toggle("selected", true);
-                }
-                list.removeAttribute("style");
+                if(listItem)listItem.classList.toggle("selected", true);
+                
+                ajax(`${BASE}?a=getRole&id=${id}`)
+                .then(json => {
+                    console.log(json);
+                    list.removeAttribute("style");
+                    title.innerText = `Nodos en el rol ${listItem.getAttribute("name")}`
+                });
+
             }else{
+                history.replaceState({}, '', window.location.origin + window.location.pathname);
                 list.setAttribute("style","display: none;");
             }
         }

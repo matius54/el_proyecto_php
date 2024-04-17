@@ -1,4 +1,14 @@
 <?php
+    class HTTPException extends Exception {
+        public function __construct(string $message, int $statusCode) {
+            parent::__construct($message, $statusCode);
+        }
+
+        public function getStatusCode() {
+            return parent::getCode();
+        }
+    }
+
     class SC {
         private static function hexChar(){
             return dechex(mt_rand(0,15));

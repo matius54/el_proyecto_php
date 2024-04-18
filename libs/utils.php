@@ -191,15 +191,12 @@
             $intValue = intval($value);
             if($intValue == $value)
                 return $intValue;
-
             return null;
         }
-        public static function int2bool(int $value){
-            $value = self::toInt($value);
-            $boolTable = [1=>true,0=>false];
-            if($value!=null){
-                return $boolTable[$value];
-            }
+        public static function int2bool(string|int $value){
+            $value = abs(self::toInt($value));
+            if($value !== null)
+                return $value === 0 ? false : true;
             return null;
         }
     }

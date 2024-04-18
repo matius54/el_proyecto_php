@@ -210,59 +210,6 @@ nav.navbar > ul > li > a > span {
     height: 100vh;
 }
 
-@media only screen and (min-width: 601px) {
-    .navbar {
-        width: 6rem;
-        height: 100vh;
-        left: 0;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-    nav.navbar:hover {
-        width: 18rem;
-    }
-    nav.navbar:hover > ul > li > a > span {
-        display: block;
-    }
-    .viewer {
-        width: calc(100% - 6rem);
-        padding-left: 6rem;
-        height: 100vh;
-    }
-    nav.navbar > ul {
-        min-height: 100vh;
-        align-items: center;
-    }
-    nav.navbar > ul > li.last {
-        margin-top: auto;
-    }
-    nav.navbar > ul > li {
-        width: 100%;
-    }
-    nav.navbar > ul > li > a {
-        min-width: 100%;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    .navbar {
-        width: 100vw;
-        height: min-content;
-        bottom: 0;
-        left: 0;
-        transition: none;
-        overflow-y: hidden;
-        overflow-x: auto;
-    }
-    nav.navbar > ul {
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-    nav.navbar > ul > li.last {
-        margin-left: auto;
-    }
-}
-
 .button {
     background-color: rgba(1,1,1,0.25);
     padding: 0.8rem;
@@ -271,7 +218,8 @@ nav.navbar > ul > li > a > span {
     border: 1px solid var(--over-main-color);
     transition: background-color 200ms;
     white-space: nowrap;
-    
+    color: var(--over-main-color);
+    cursor: pointer;
 }
 
 .button:hover {
@@ -290,7 +238,7 @@ a {
     gap: 1rem;
     padding: 0;
     max-width: min(40rem, calc(100% - 5rem));
-    margin: 2rem auto;
+    margin: 4rem auto;
 }
 
 .list > li {
@@ -399,6 +347,62 @@ a {
     background-color: rgba(255,255,255,0.25);
 }
 
+@media only screen and (min-width: 601px) {
+    .navbar {
+        width: 6rem;
+        height: 100vh;
+        left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    nav.navbar:hover {
+        width: 18rem;
+    }
+    nav.navbar:hover > ul > li > a > span {
+        display: block;
+    }
+    .viewer {
+        width: calc(100% - 6rem);
+        padding-left: 6rem;
+        height: 100vh;
+    }
+    nav.navbar > ul {
+        min-height: 100vh;
+        align-items: center;
+    }
+    nav.navbar > ul > li.last {
+        margin-top: auto;
+    }
+    nav.navbar > ul > li {
+        width: 100%;
+    }
+    nav.navbar > ul > li > a {
+        min-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        width: 100vw;
+        height: min-content;
+        bottom: 0;
+        left: 0;
+        transition: none;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+    .list {
+        max-width: 100%;
+    }
+    nav.navbar > ul {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    nav.navbar > ul > li.last {
+        margin-left: auto;
+    }
+}
+
 .navigator {
     display: flex;
     flex-direction: row;
@@ -420,4 +424,86 @@ a {
 
 .navigator .selected {
     border: 2px white solid;
+}
+
+.left-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: var(--main-color);
+    border-radius: 0 0 0 2rem;
+    padding: 1rem;
+    z-index: 2;
+}
+
+.left-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+}
+
+dialog {
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    color: var(--over-main-color);
+    border: 5px var(--background-color) solid;
+    overflow: hidden;
+}
+
+dialog::backdrop {
+    background-color: var(--second-color);
+    opacity: .25;
+}
+
+dialog div {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+}
+
+dialog .options {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+}
+
+dialog .options .close:hover {
+    background-color: red;
+}
+
+dialog .icons {
+    display: flex;
+    flex-direction: row;
+    gap: .15rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+    max-width: 16rem;
+}
+
+dialog .icons a {
+    padding: .15rem;
+}
+
+dialog .icons a:hover, dialog .icons a.selected {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+input , textarea {
+    background-color: var(--second-color);
+    color: var(--over-second-color);
+    font-size: 1.5rem;
+    border-radius: 5px;
+    width: 16rem;
+    border: 1px var(--over-main-color) solid;
+}
+
+textarea {
+    min-width: 16rem;
+    min-height: 1em;
+    max-width: 60vw;
+    max-height: 50vh;
 }

@@ -6,5 +6,9 @@
     "access2":{
         "name":"prueba 1",
         "description":"Esto solo es una prueba"
+    },
+    "register":{
+        "name":"Registrarse",
+        "description":"permite registrarse en el sistema"
     }
 }

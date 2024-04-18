@@ -58,17 +58,27 @@
         }
 
         public static function set(array $data) : bool {
-            $id = $data["id"] ?? null;
-            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
-            if(!isset($data["value"])) throw new HTTPException("value was not provided", 422);
+            $id = $data["id"] ?? null;//int > 1
+            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid or was not provided", 422);
+            if(!array_key_exists("key",$data)) throw new HTTPException("key was not provided", 422);
+            if(!array_key_exists("value",$data)) throw new HTTPException("value was not provided", 422);
             
-            $value = $data["value"];
+            $key = $data["key"]; //string
+            if(!VALIDATE::string($key) or !(Node::getAll()[$key] ?? null))
+                throw new HTTPException("key $key is not valid", 422);
+
+            $value = $data["value"]; //bool|null
 
             $db = DB::getInstance();
             if(is_bool($value)){
-                return $db->update("role_node",["allow"=>$value],"role_id = ?",[$id]);
+                if($db->select("role_node",condition: "role_id = ? AND node_key = ?", args: [$id, $key])){
+                    //si el registro existe, se actualiza
+                    return $db->update("role_node",["allow"=>$value],"role_id = ? AND node_key = ?",[$id, $key]);
+                }
+                //si no existe se crea
+                return $db->insert("role_node",["role_id" => $id, "node_key" => $key, "allow" => $value]);
             }elseif($value === null){
-                return $db->delete("role_node","role_id = ?",[$id]);
+                return $db->delete("role_node","role_id = ? AND node_key = ?",[$id, $key]);
             }
             throw new HTTPException("value $value is not valid", 422);
         }
@@ -87,7 +97,7 @@
         }
 
         public static function getAll() : array {
-            $sql = "SELECT id, level, name FROM role ORDER BY level DESC";
+            $sql = "SELECT id, level, name, icon FROM role ORDER BY level DESC";
             $pag = new Paginator($sql, itemsPerPage: 5, pageKey: "p");
             return $pag->toArray();
         }
@@ -96,7 +106,7 @@
             if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
 
             $db = DB::getInstance();
-            $role = $db->select("role",["name","description"],"id = ?",[$id], htmlspecialchars: true);
+            $role = $db->select("role",["name","description","icon"],"id = ?",[$id], htmlspecialchars: true);
 
             if(!$role) throw new HTTPException("Role with id $id not found", 404);
 
@@ -164,6 +174,7 @@
                 }
             break;
             default:
+                //var_dump(Node::set(["id"=>1,"key"=>"login","value"=>null]));
                 //do nothing
             break;
         }

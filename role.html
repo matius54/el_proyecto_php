@@ -19,200 +19,53 @@
             </li>
         </ul>
     </nav>
+    <nav class="left-panel">
+        <ul>
+            <li>
+                <a title="Nuevo rol" onclick="document.querySelector('dialog.new.role').showModal()">
+                    <img class="icon button" id="new" src="icons/new_dark.svg">
+                </a>
+            </li>
+            <li>
+                <a title="Editar rol" onclick="document.querySelector('dialog.edit.role').showModal()">
+                    <img class="icon button" id="edit" src="icons/edit_dark.svg">
+                </a>
+            </li>
+        </ul>
+    </nav>
     <main class="viewer">
         <header class="nav">
             <h1>Roles</h1>
         </header>
     </main>
+    <dialog class="role new">
+        <div>
+            <h2>Nuevo rol</h2>
+            <input name="name" placeholder="Nombre">
+            <textarea name="description" placeholder="Descripcion"></textarea>
+            <input name="level" type="number" placeholder="Nivel">
+            <div class="icons"></div>
+            <div class="options">
+                <button type="button" class="button close">Cerrar</button>
+                <button type="button" class="button submit">Guardar</button>
+            </div>
+        </div>
+    </dialog>
+    <dialog class="role edit">
+        <div>
+            <h2>Editar rol</h2>
+            <input name="name" placeholder="Nombre">
+            <textarea name="description" placeholder="Descripcion"></textarea>
+            <input name="level" type="number" placeholder="Nivel">
+            <div class="icons"></div>
+            <div class="options">
+                <button type="button" class="button close">Cerrar</button>
+                <button type="button" class="button submit">Guardar</button>
+            </div>
+        </div>
+    </dialog>
 </body>
 <script src="frontend_libs/ajax.js"></script>
 <script src="frontend_libs/list.js"></script>
-<script>
-    const BASE = "./libs/access.php";
-    const ICONS = [
-        "accordion",
-        "adjustments-pause",
-        "check",
-        "check-on",
-        "delete",
-        "drawerIcon",
-        "edit",
-        "login",
-        "new",
-        "profile"
-    ];
-    class Role {
-        #pageKey = "p";
-        #InterObs;
-        #page = 0;
-        #lastElement;
-
-        constructor(element){
-            this.#InterObs = new IntersectionObserver(e => {
-                if(e[0]?.isIntersecting) this.load();
-            });
-
-            this.#lastElement = element;
-            this.#InterObs.observe(element);
-            sessionStorage.clear();
-        }
-        load(){
-            this.#InterObs.unobserve(this.#lastElement);
-            ajax(`${BASE}?a=getRole&${this.#pageKey}=${this.#page + 1}`)
-            .then(res => {
-                if(typeof res === "number") return;
-                const roles = res.items;
-                for(let rol in roles) this.add(roles[rol]);
-                this.#page++;
-                if(!res.isLast) this.#InterObs.observe(this.#lastElement);
-                NODE.update();
-            });
-        }
-        add(json){
-            //TODO
-            let icon = "edit";
-
-            const li = document.createElement("li");
-            li.classList.add("options");
-            li.id = json.id;
-
-            const inn = document.createElement("a");
-            const svg = document.createElement("img");
-            svg.setAttribute("src", `icons/${icon}${THEME.isDark() ? "_dark" : ""}.svg`);
-            svg.classList.add("icon");
-            svg.id = icon;
-            
-            THEME.addIcon(svg, icon);
-            const span = document.createElement("span");
-            span.innerText = json.name;
-            inn.appendChild(svg);
-            inn.appendChild(span);
-            inn.title = `Editar el rol ${json.name}`;
-            li.appendChild(inn);
-            li.setAttribute("name",json.name);
-            this.#lastElement.insertAdjacentElement("afterend", li);
-            this.#lastElement = li;
-            li.addEventListener("click", e => {
-                const urlParams = new URLSearchParams(window.location.search);
-                if(urlParams.get("id") == json.id) return;
-                history.pushState(null, null, `?id=${json.id}`);
-                //this.select(json.id);
-                NODE.update();
-            });
-        }
-    }
-    class Node {
-        #allNodes;
-        constructor (){
-            this.getAll();
-        }
-        getAll(){
-            ajax(`${BASE}?a=getNodes`)
-            .then(nodes => {
-                this.#allNodes = typeof nodes === "object" ? nodes : {};
-                this.generate();
-            });
-        }
-        generate(){
-            const main = document.querySelector("main.viewer");
-            const list = document.createElement("ul");
-            list.classList.add("list");
-            list.setAttribute("style","display: none;");
-            for(let node in this.#allNodes)
-            list.appendChild(
-                this.li({
-                    key: node,
-                    ...this.#allNodes[node]
-                })
-            );
-            main.appendChild(list);
-        }
-        li(json){
-            const open = document.createElement("a");
-            open.title = "Expandir";
-            const openIcon = document.createElement("img");
-            openIcon.classList.add("icon","button","accordion");
-            openIcon.id = "accordion";
-            THEME.addIcon(openIcon, "accordion");
-            List.addListener(openIcon);
-            open.appendChild(openIcon);
-
-            const title = document.createElement("h2");
-            title.innerText = json.name;
-            
-            const options = document.createElement("div");
-            options.classList.add("options");
-
-            const no = document.createElement("a");
-            no.innerText = "X";
-            no.title = "Denegado";
-            options.appendChild(no);
-
-            const maybe = document.createElement("a");
-            maybe.innerText = "/";
-            maybe.title = "Indefinido";
-            options.appendChild(maybe);
-
-            const yes = document.createElement("a");
-            yes.innerText = "√";
-            maybe.title = "Permitido";
-            options.appendChild(yes);
-
-            const head = document.createElement("div");
-            head.classList.add("head");
-            head.appendChild(open);
-            head.appendChild(title);
-            head.appendChild(options); 
-
-            const li = document.createElement("li");
-            li.id = json.key;
-            li.appendChild(head);
-            
-            const body = document.createElement("div");
-            body.classList.add("body");
-
-            const description = document.createElement("span");
-            description.innerText = json.description;
-
-            body.appendChild(description);
-            li.appendChild(body);
-            return li;
-        }
-        update(){
-            //modificar los nodos dependiendo del rol
-            const urlParams = new URLSearchParams(window.location.search);
-            let id = parseInt(urlParams.get("id"));
-            const list = document.querySelector("main.viewer ul");
-            document.querySelectorAll(".navbar li.options.selected").forEach(e => e.classList.toggle("selected", false));
-            const title = document.querySelector("header.nav h1");
-            title.innerText = "Roles";
-            //guarda el id en el sessionstorage
-            //y recuperalo en cada cambio, para saber cuando realizar otro ajax
-            //o separa la logica del cambio visual del seleccionar un rol
-            //y la de la carga asincrona y modificacion del dom
-            //recuerda
-            if(id){
-                //no puedo usar el id y nombre de el dom,
-                //porque no sabemos si esta paginado y cargado totalmente o no,
-                //tirare de la api mejor
-                const listItem = document.querySelector(`.navbar li[id=\"${id}\"].options`);
-                if(listItem)listItem.classList.toggle("selected", true);
-                
-                ajax(`${BASE}?a=getRole&id=${id}`)
-                .then(json => {
-                    console.log(json);
-                    list.removeAttribute("style");
-                    title.innerText = `Nodos en el rol ${listItem.getAttribute("name")}`
-                });
-
-            }else{
-                history.replaceState({}, '', window.location.origin + window.location.pathname);
-                list.setAttribute("style","display: none;");
-            }
-        }
-    }
-    const NODE = new Node;
-    const ROLE = new Role(document.querySelector(".navbar li:last-child"));
-    window.addEventListener('popstate', e => NODE.update());
-</script>
+<script src="frontend_libs/role.js"></script>
 </html>

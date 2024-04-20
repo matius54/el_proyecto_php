@@ -201,7 +201,7 @@
             //puede que este en la base de datos pero sino f.
             
             $db = DB::getInstance();
-            $sql = "SELECT r.id FROM user_role JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY level ASC";
+            $sql = "SELECT r.id FROM user_role JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY level DESC";
             $db->execute($sql, $user_id);
             $roles = $db->fetchAll();
             //por defecto si no tiene ningun permiso este sera negado

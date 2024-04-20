@@ -120,8 +120,8 @@
             return self::int($value) && $value > 0;
         }
         public static function float(&$value){
-            $regex_dot = "/^\d+(\.\d+)?$/";
-            $regex_comma = "/^\d+(,\d+)?$/";
+            $regex_dot = "/^\-?\d+(\.\d+)?$/";
+            $regex_comma = "/^\-?\d+(,\d+)?$/";
             if(preg_match($regex_comma, $value))$value = implode(".",explode(",",$value));
             return preg_match($regex_dot,$value);
         }

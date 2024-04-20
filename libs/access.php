@@ -97,7 +97,7 @@
         }
 
         public static function getAll() : array {
-            $sql = "SELECT id, level, name, icon FROM role ORDER BY level DESC";
+            $sql = "SELECT id, level, name, icon FROM role ORDER BY level ASC";
             $pag = new Paginator($sql, itemsPerPage: 5, pageKey: "p");
             return $pag->toArray();
         }
@@ -106,7 +106,7 @@
             if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
 
             $db = DB::getInstance();
-            $role = $db->select("role",["name","description","icon"],"id = ?",[$id], htmlspecialchars: true);
+            $role = $db->select("role",["name","description","icon","level"],"id = ?",[$id], htmlspecialchars: true);
 
             if(!$role) throw new HTTPException("Role with id $id not found", 404);
 
@@ -127,6 +127,58 @@
                 "nodes" => $nodes,
                 "users" => $users
             ];
+        }
+        public static function new(array $data) : int {
+            $values = ["name","description","level","icon"];
+            $filtered = [];
+
+            foreach ($values as $value) {
+                if(!isset($data[$value]))
+                throw new HTTPException("$value is not valid", 422);
+                $exValue = $data[$value];
+                if($value === "level")if(!VALIDATE::float($exValue))
+                throw new HTTPException("$value $exValue is not valid", 422);
+                $filtered[$value] = $exValue;
+            }
+
+            $db = DB::getInstance();
+            if($db->insert("role",$filtered)){
+                return $db->getLastId("role");
+            }
+            throw new HTTPException("saving to database", 500);
+        }
+        public static function edit(array $data) : bool {
+            $values = ["name","description","level","icon"];
+            $filtered = [];
+            
+            $id = $data["id"] ?? null;//int > 1
+            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid or was not provided", 422);
+            
+            foreach ($values as $value) {
+                if(!isset($data[$value]))
+                throw new HTTPException("$value is not valid", 422);
+                $exValue = $data[$value];
+                if($value === "level")if(!VALIDATE::float($exValue))
+                throw new HTTPException("$value $exValue is not valid", 422);;
+                $filtered[$value] = $exValue;
+            }
+
+            $db = DB::getInstance();
+            return $db->update("role", $filtered, "id = ?", [$id]);
+        }
+        public static function delete($id) : bool {
+            if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
+            $db = DB::getInstance();
+            $db->beginTransaction();
+            $db->delete("role_node","role_id = ?",[$id]);
+            $db->delete("user_role","role_id = ?",[$id]);
+            $deleted = $db->delete("role","id = ?",[$id]);
+            if($deleted){
+                $db->commit();
+            }else{
+                $db->rollback();
+            }
+            return $deleted;
         }
     }
 
@@ -151,32 +203,42 @@
 
     //a --> access
     try{
-        switch (URL::decode("a")){
-            case "getRole":
-                if(URL::isGet()){
+        $access = URL::decode("a");
+        if(URL::isGet()){
+            switch ($access){
+                case "getNodes":
+                    JSON::sendJson(Node::getAll());
+                break;
+                case "getRole":
                     if($id = URL::decode("id")){
                         JSON::sendJson(Role::get($id));
                     }else{
                         JSON::sendJson(Role::getAll());
                     }
-                }
-            break;
-            case "getNodes":
-                if(URL::isGet()) JSON::sendJson(Node::getAll());
-            break;
-            case "setRole":
-                if(!URL::isPost()){
-                    throw new HTTPException("unsupported method, you should use POST", 405);
-                }elseif($json = JSON::getJson()){
+                break;
+                default:
+                    //do nothing
+                break;
+            }
+        }elseif(URL::isPost()){
+            if(!$json = JSON::getJson()) throw new HTTPException("json was not provided", 422);
+            switch($access){
+                case "setRoleState":
                     http_response_code(Node::set($json) ? 200 : 304);
-                }else{
-                    throw new HTTPException("json was not provided", 422);
-                }
-            break;
-            default:
-                //var_dump(Node::set(["id"=>1,"key"=>"login","value"=>null]));
-                //do nothing
-            break;
+                break;
+                case "newRole":
+                    JSON::sendJson(["id" => Role::new($json)]);
+                break;
+                case "editRole":
+                    http_response_code(Role::edit($json) ? 200 : 304);
+                break;
+                case "deleteRole":
+                    $id = $json["id"] ?? null;
+                    http_response_code(Role::delete($id) ? 200 : 304);
+                break;
+            }
+        }else{
+            throw new HTTPException("unsupported method", 405);
         }
     }catch(HTTPException $e){
         http_response_code($e->getCode());

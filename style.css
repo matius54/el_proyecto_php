@@ -2,6 +2,8 @@
     color-scheme: light;
     /*color-scheme: dark;*/
 
+    font-size: 100%;
+
     margin: 0;
     padding: 0;
     font-family: Tahoma, Verdana, Arial, sans-serif;
@@ -51,7 +53,10 @@ header.nav {
 
 header.nav h1 {
     white-space: nowrap;
+    max-width: 60vw;
     color: var(--over-main-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fixed {
@@ -146,7 +151,7 @@ input:focus , textarea:focus {
 }
 ::placeholder {
     color: var(--over-main-color);
-    opacity: 50%;
+    opacity: 75%;
 }
 :focus::placeholder {
     color: var(--over-main-color);
@@ -203,11 +208,30 @@ nav.navbar > ul > li > a > span {
     margin-left: 1rem;
     white-space: nowrap;
     user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+nav.navbar span.level {
+    margin-left: auto;
+    margin-right: 1rem;
+    background-color: var(--second-color);
+    color: var(--over-second-color);
+    padding: .25rem;
+    border-radius: 2rem;
+    min-width: 1.25rem;
+    max-width: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    justify-content: center;
+    text-align: center;
+    border: 1.5px var(--main-color) solid;
 }
 
 .viewer {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .button {
@@ -252,8 +276,8 @@ a {
 
 .list > li {
     transition: max-height 200ms;
-    max-height: 40px;
-    min-height: 40px;
+    max-height: 2.8rem;
+    min-height: 2.8rem;
     overflow: hidden;
 }
 
@@ -347,6 +371,15 @@ a {
     background-color: rgba(255,255,255,0.25);
 }
 
+.list .cathegory {
+    background-color: var(--second-color);
+    color: var(--over-second-color);
+    width: min-content;
+    padding: .5rem;
+    margin-bottom: 0;
+    border-radius: 5px;
+}
+
 @media only screen and (min-width: 601px) {
     .navbar {
         width: 6rem;
@@ -364,7 +397,7 @@ a {
     .viewer {
         width: calc(100% - 6rem);
         padding-left: 6rem;
-        height: 100vh;
+        min-height: 100vh;
     }
     nav.navbar > ul {
         min-height: 100vh;
@@ -390,6 +423,11 @@ a {
         transition: none;
         overflow-y: hidden;
         overflow-x: auto;
+    }
+    .viewer {
+        height: calc(100% - 6rem);
+        padding-bottom: 6rem;
+        min-height: 100vh;
     }
     .list {
         max-width: 100%;
@@ -432,8 +470,7 @@ a {
     top: 0;
     background-color: var(--main-color);
     border-radius: 0 0 0 2rem;
-    padding: 1rem;
-    z-index: 2;
+    padding: .5rem;
 }
 
 .left-panel ul {

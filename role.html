@@ -6,7 +6,6 @@
     <title>TCM-CRM-WEB role</title>
     <link rel="stylesheet" href="./style.css">
     <script src="./theme.js"></script>
-    <script defer>const THEME = new ThemeUI;</script>
 </head>
 <body>
     <nav class="navbar">
@@ -22,13 +21,18 @@
     <nav class="left-panel">
         <ul>
             <li>
-                <a title="Nuevo rol" onclick="document.querySelector('dialog.new.role').showModal()">
+                <a title="Nuevo rol" onclick="DIALOG.new()">
                     <img class="icon button" id="new" src="icons/new_dark.svg">
                 </a>
             </li>
             <li>
-                <a title="Editar rol" onclick="document.querySelector('dialog.edit.role').showModal()">
+                <a title="Editar rol" onclick="DIALOG.edit()">
                     <img class="icon button" id="edit" src="icons/edit_dark.svg">
+                </a>
+            </li>
+            <li>
+                <a title="Borrar rol" onclick="DIALOG.delete()">
+                    <img class="icon button" id="delete" src="icons/delete_dark.svg">
                 </a>
             </li>
         </ul>
@@ -47,7 +51,7 @@
             <div class="icons"></div>
             <div class="options">
                 <button type="button" class="button close">Cerrar</button>
-                <button type="button" class="button submit">Guardar</button>
+                <button type="button" class="button submit" onclick="DIALOG.submit()">Guardar</button>
             </div>
         </div>
     </dialog>
@@ -60,11 +64,22 @@
             <div class="icons"></div>
             <div class="options">
                 <button type="button" class="button close">Cerrar</button>
-                <button type="button" class="button submit">Guardar</button>
+                <button type="button" class="button submit" onclick="DIALOG.submit()">Actualizar</button>
+            </div>
+        </div>
+    </dialog>
+    <dialog class="role delete">
+        <div>
+            <h2>Borrar rol</h2>
+            <i>Esta accion es permanente<br>y no se puede revertir</i>
+            <div class="options">
+                <button type="button" class="button">Cancelar</button>
+                <button type="button" class="button close" onclick="DIALOG.submit()">Confirmar</button>
             </div>
         </div>
     </dialog>
 </body>
+<script>const THEME = new ThemeUI;</script>
 <script src="frontend_libs/ajax.js"></script>
 <script src="frontend_libs/list.js"></script>
 <script src="frontend_libs/role.js"></script>

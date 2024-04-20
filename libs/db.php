@@ -114,7 +114,7 @@ class DB
         ?array $args = null
     ): void {
         $this->error = true;
-        if (!isset($this->config["showErrors"]) || $this->config["showErrors"] === false) return;
+        if (!isset($this->config["showErrors"]) || $this->config["showErrors"] === false) throw $e;
         if ($message) echo "<h1>$message.</h1>";
         switch ($e->getCode()) {
             case 2002:

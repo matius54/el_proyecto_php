@@ -3,7 +3,7 @@
     "username":"root",
     "password":"",
     "database":"db_test_2",
-    "showErrors":true,
+    "showErrors":false,
 
     "structure":{
         "file":[

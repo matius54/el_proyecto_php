@@ -57,6 +57,10 @@
             $this->description = $node["description"]; 
         }
 
+        public static function isValid(string $key) : bool {
+            return (bool) (self::getAll()[$key] ?? false);
+        }
+
         public static function set(array $data) : bool {
             $id = $data["id"] ?? null;//int > 1
             if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid or was not provided", 422);
@@ -64,8 +68,7 @@
             if(!array_key_exists("value",$data)) throw new HTTPException("value was not provided", 422);
             
             $key = $data["key"]; //string
-            if(!VALIDATE::string($key) or !(Node::getAll()[$key] ?? null))
-                throw new HTTPException("key $key is not valid", 422);
+            if(!self::isValid($key)) throw new HTTPException("key $key is not valid", 422);
 
             $value = $data["value"]; //bool|null
 
@@ -188,16 +191,48 @@
             
         }
 
-        public function TestNode(string $key, int $user_id) : void {
+        public static function test(string $key, int $user_id) : bool {
             //para obtener si el permiso es valido necesitas tener el (key del permiso, y el usuario)
             //-> obtiene todos los roles asignados a ese usuario,
             //itera sobre todos los nodos de los roles usando el key especificado en el orden de los niveles
-            //$db = DB::getInstance();
+
+            //si el key no se encuentra en la lista de nodes.json no procede
+            if(!Node::isValid($key)) return false;
+            //puede que este en la base de datos pero sino f.
+            
+            $db = DB::getInstance();
+            $sql = "SELECT r.id FROM user_role JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY level ASC";
+            $db->execute($sql, $user_id);
+            $roles = $db->fetchAll();
+            //por defecto si no tiene ningun permiso este sera negado
+            $access = false;
+            foreach ($roles as $value) {
+                $role = $value["id"];
+                $response = $db->select("role_node",["allow"],"role_id = ? AND node_key = ?",[$role, $key]);
+                if(isset($response["allow"])){
+                    $access = $response["allow"];
+                }
+            }
+            return $access;
         }
 
-        public function hasAccess(string $role ,string $key) : bool|null {
-            //buscar una key especifica en la base de datos
-            return null;
+        //usar esta funcion para eliminar todos los key que no existen en
+        //nodes.json pero si existen en la base de datos
+        //en otras palabras, "purgar" los nodos sin uso
+        //devuelve el numero de registros afectados
+        public static function purge() : int {
+            $allNodes = array_keys(Node::getAll());
+            $db = DB::getInstance();
+            $sql = "SELECT DISTINCT `node_key` FROM role_node";
+            $db->execute($sql);
+            $nodeKeys = $db->fetchAll();
+            $remove = [];
+            foreach ($nodeKeys as $value) {
+                $node_key = $value["node_key"];
+                if(!in_array($node_key, $allNodes, true)) $remove[] = $node_key;
+            }
+            $condition = implode(" OR ",array_fill(0, sizeof($remove), "`node_key` = ?"));
+            return $remove ? $db->delete("role_node", $condition, $remove) : 0;
         }
     }
 
@@ -217,7 +252,8 @@
                     }
                 break;
                 default:
-                    //do nothing
+                    //var_dump(Access::test("login",1));
+                    //var_dump(Access::purge());
                 break;
             }
         }elseif(URL::isPost()){
@@ -244,6 +280,7 @@
         http_response_code($e->getCode());
         JSON::sendJson(["error"=>$e->getMessage()]);
     }catch(Exception $e){
+        //throw $e;
         http_response_code(500);
     }
 ?>

@@ -80,6 +80,10 @@ class Node {
         const list = document.createElement("ul");
         list.classList.add("list");
         list.setAttribute("style","display: none;");
+//        const description = document.createElement("section");
+//        description.classList.add("card");
+//        description.innerText = "descripcion del rol";
+//        list.appendChild(description);
         for(let node in this.#allNodes){
             let cathegory;
             if(cathegory = this.#allNodes[node].cathegory)
@@ -318,8 +322,8 @@ class Dialog {
             icon : icon
         };
     }
-    set(id, name, description, level, icon){
-        const dialog = document.querySelector("dialog.role.edit");
+    set(id, name, description, level, icon, dialog){
+        if(!dialog) dialog = document.querySelector("dialog.role.edit");
         const elName = dialog.querySelector("*[name=\"name\"]");
         const elDescription = dialog.querySelector("*[name=\"description\"]");
         const elLevel = dialog.querySelector("*[name=\"level\"]");
@@ -336,9 +340,9 @@ class Dialog {
 
         this.id = id;
     }
-    unset(){
+    unset(dialog){
         this.id = 0;
-        this.set("","","","","edit");
+        this.set("","","","","edit",dialog);
     }
     getIcon(element){
         return element.querySelector(".icons a.selected").title;
@@ -348,6 +352,7 @@ class Dialog {
         dialog.showModal();
 
         this.submit = () => {
+            let error;
             if(this.#busy)return;
             const values = this.getValues(dialog);
             ajax(`${BASE}?a=newRole`, values)
@@ -357,7 +362,8 @@ class Dialog {
                     ROLE.reload();
                     NODE.update(newId);
                     dialog.close();
-                }
+                    this.unset(dialog);
+                }else if(error = status.error) alert(error);
             })
             .finally(()=>{
                 this.#busy = false;

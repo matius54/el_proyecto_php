@@ -17,11 +17,9 @@
         static function initialize(){
             $db = DB::getInstance();
             if(!$db->getLastId("user")){
-                $password = self::$default_user["password"];
-                $hash = "";
-                $salt = "";
-                SC::password($password, $hash, $salt);
-                
+                //create new user
+                //initialize access default
+                //add admin access to user
             }
         }
         static function register(array $data, bool $bypass_validation = false){

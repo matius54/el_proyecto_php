@@ -266,7 +266,8 @@ class Dialog {
         "accordion",
         "adjustments-pause",
         "profile",
-        "login"
+        "login",
+        "eye"
     ];
     INPUTS = ["name","description","level"];
     newDialog;

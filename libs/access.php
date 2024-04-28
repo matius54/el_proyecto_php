@@ -3,6 +3,7 @@
     require_once "utils.php";
     require_once "paginator.php";
     require_once "log.php";
+    require_once "user.php";
 
     class Node {
         
@@ -210,10 +211,16 @@
             
         }
 
-        public static function test(string $key, int $user_id) : bool {
+        public static function test(string $key, int $user_id = 0) : bool {
             //para obtener si el permiso es valido necesitas tener el (key del permiso, y el usuario)
             //-> obtiene todos los roles asignados a ese usuario,
             //itera sobre todos los nodos de los roles usando el key especificado en el orden de los niveles
+
+            //si no haz iniciado sesion o el id del usuario es invalido todos los permisos se evaluaran como false
+
+            //TODO esta logica es mejorable pero asi funciona
+            $user_id = $user_id ? $user_id : User::verify();
+            if(!$user_id) return false;
 
             //si el key no se encuentra en la lista de nodes.json no procede
             if(!Node::isValid($key)) return false;
@@ -253,10 +260,34 @@
             $condition = implode(" OR ",array_fill(0, sizeof($remove), "`node_key` = ?"));
             return $remove ? $db->delete("role_node", $condition, $remove) : 0;
         }
+
+        public static function initialize() : void {
+            $db = DB::getInstance();
+            //si existe algun rol en la base de datos, termina
+            if($db->getLastId("role")) return;
+            //obtiene todos los node
+            $allNodes = array_keys(Node::getAll());
+            //inicializa rol administrador
+            $role_id = Role::new([
+                "name" => "Admin",
+                "description" => "Rol con todos los permisos de administrador",
+                "level" => 1,
+                "icon" => "adjustments-pause"
+            ]);
+            //le da acceso a todos los nodos para el rol de administrador
+            foreach ($allNodes as $node) {
+                Node::set([
+                    "id" => $role_id,
+                    "key" => $node,
+                    "value" => true
+                ]);
+            }
+        }
     }
 
     //a --> access
     try{
+        Access::initialize();
         $access = URL::decode("a");
         if(URL::isGet()){
             switch ($access){

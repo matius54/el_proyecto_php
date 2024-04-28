@@ -544,3 +544,70 @@ textarea {
     max-width: 60vw;
     max-height: 50vh;
 }
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: small;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+table > thead {
+    background-color: #2a5d84;
+    color: white;
+}
+
+table > tbody > tr:nth-child(2n) {
+    background-color: rgba(42, 93, 132, 0.15);
+}
+
+table th {
+    padding: 0.5rem;
+}
+
+.calendar {
+    color: var(--over-main-color);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-color);
+    padding: 1rem;
+    border-radius: 20px;
+    overflow: hidden;
+    gap: 1rem;
+}
+
+.calendar .header {
+    background-color: var(--second-color);
+    width: calc(100% - .5rem);
+    min-height: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0 .5em;
+    gap: .5rem;
+}
+
+.calendar .header span {
+    margin-right: auto;
+}
+
+.calendar .body {
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar .body > * {
+    aspect-ratio: 1/1;
+    padding: auto;
+}
+
+.calendar .body .now {
+    background-color: var(--second-color);
+    border-radius: 5px;
+}

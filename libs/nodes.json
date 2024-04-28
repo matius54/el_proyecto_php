@@ -1,12 +1,28 @@
 {
-    "login":{
+    "user.login":{
         "cathegory":"test",
         "name":"Iniciar sesion",
         "description":"Permite al usuario iniciar su propia sesion en el sistema"
     },
-    "register":{
-        "cathegory":"test2",
+    "user.register":{
         "name":"Registrarse",
-        "description":"permite registrarse en el sistema"
+        "description":"Permite al usuario registrar a otro usuario en el sistema"
+    },
+    "dashboard.access":{
+        "name":"Acceso al panel de control",
+        "description":"Puede ver el panel de control"
+    },
+    "login.access":{
+        "name":"Acceso al panel de control",
+        "description":"Puede ver el panel de control"
+    },
+    "admin.bypass.all":{
+        "cathegory":"Administrativo",
+        "name":"Control total de todos los roles",
+        "description":"simplemente con este rol tendras acceso a todo"
+    },
+    "admin.bypass.levelHierarchy":{
+        "name":"Control total de niveles",
+        "description":"Permite tener acceso a modificar todos los roles, incluso si su nivel es mayor que el tuyo"
     }
 }

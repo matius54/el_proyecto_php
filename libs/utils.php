@@ -21,7 +21,7 @@
             for ($i = 0; $i < $length; $i++) {
                 $arr[$i] = self::hexChar();
             }
-            return implode($arr);
+            return strtoupper(implode($arr));
         }
         public static function randomByteStr($length = 16){
             $arr = [];
@@ -358,4 +358,10 @@
             die();
         }
     } 
+    class SESSION {
+        public static function start() : bool {
+            if(!isset($_SESSION)) return session_start();
+            return false;
+        }
+    }
 ?>

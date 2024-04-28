@@ -79,6 +79,8 @@
             "ci VARCHAR(32)",
             "birthday VARCHAR(32)",
             "color CHAR(6)",
+            "hash BINARY(32) NOT NULL",
+            "salt BINARY(16) NOT NULL",
             "created_at BIGINT UNSIGNED NOT NULL",
             "FOREIGN KEY (profile_img) REFERENCES image(id)",
             "FOREIGN KEY (department_id) REFERENCES department(id)",
@@ -100,11 +102,14 @@
         ],
         "log":[
             "id INT PRIMARY KEY AUTO_INCREMENT",
-            "user_id INT NOT NULL",
+            "user_id INT",
             "ip VARCHAR(64)",
             "agent VARCHAR(1024)",
-            "uri VARCHAR(256)",
-            "action VARCHAR(64)",
+            "uri VARCHAR(256) NOT NULL",
+            "action VARCHAR(256) NOT NULL",
+            "extra TEXT",
+            "level ENUM('info','log','warning','error') NOT NULL",
+            "type ENUM('add','delete','edit')",
             "FOREIGN KEY (user_id) REFERENCES user(id)"
         ],
         "access":[

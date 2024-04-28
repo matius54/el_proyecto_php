@@ -2,6 +2,7 @@
     require_once "db.php";
     require_once "utils.php";
     require_once "paginator.php";
+    require_once "log.php";
 
     class Node {
         
@@ -74,14 +75,30 @@
 
             $db = DB::getInstance();
             if(is_bool($value)){
+                $value_str = $value ? "true" : "false";
                 if($db->select("role_node",condition: "role_id = ? AND node_key = ?", args: [$id, $key])){
                     //si el registro existe, se actualiza
-                    return $db->update("role_node",["allow"=>$value],"role_id = ? AND node_key = ?",[$id, $key]);
+                    if($result = $db->update("role_node",["allow"=>$value],"role_id = ? AND node_key = ?",[$id, $key])){
+                        Logger::log("Node: '$key' actualizado a '$value_str'", LoggerType::EDIT, LoggerLevel::LOG);
+                    }else{
+                        Logger::log("Node: '$key' no actualizado a '$value_str', update error", LoggerType::EDIT, LoggerLevel::WARNING);
+                    }
+                    return $result;
                 }
                 //si no existe se crea
-                return $db->insert("role_node",["role_id" => $id, "node_key" => $key, "allow" => $value]);
+                if($result = $db->insert("role_node",["role_id" => $id, "node_key" => $key, "allow" => $value])){
+                    Logger::log("Node: '$key' actualizado a '$value_str'", LoggerType::ADD, LoggerLevel::LOG);
+                }else{
+                    Logger::log("Node: '$key' no actualizado a '$value_str', insert error", LoggerType::ADD, LoggerLevel::WARNING);
+                }
+                return $result;
             }elseif($value === null){
-                return $db->delete("role_node","role_id = ? AND node_key = ?",[$id, $key]);
+                if($result = $db->delete("role_node","role_id = ? AND node_key = ?",[$id, $key])){
+                    Logger::log("Node: '$key' actualizado a 'unset'", LoggerType::DELETE, LoggerLevel::LOG);
+                }else{
+                    Logger::log("Node: '$key' no actualizado a 'unset', not found", LoggerType::DELETE, LoggerLevel::WARNING);
+                }
+                return $result;
             }
             throw new HTTPException("value $value is not valid", 422);
         }
@@ -146,7 +163,9 @@
 
             $db = DB::getInstance();
             if($db->insert("role",$filtered)){
-                return $db->getLastId("role");
+                $newId = $db->getLastId("role");
+                Logger::log("Role: nuevo rol '".$filtered["name"]."' con id '$newId'", LoggerType::ADD, LoggerLevel::LOG);
+                return $newId;
             }
             throw new HTTPException("saving to database", 500);
         }
@@ -278,9 +297,11 @@
         }
     }catch(HTTPException $e){
         http_response_code($e->getCode());
+        Logger::log("Access controll: Error in $access ".$e->getMessage()." (HTTP ".$e->getCode().")", null, LoggerLevel::ERROR);
         JSON::sendJson(["error"=>$e->getMessage()]);
     }catch(Exception $e){
         //throw $e;
+        Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
         http_response_code(500);
     }
 ?>

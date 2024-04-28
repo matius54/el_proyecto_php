@@ -29,6 +29,7 @@
             return $this->getBytes();
         }
     }
+    
     //TODO adaptar File para funcionar mejor con Bytes
     class File extends Bytes {
         protected String $path;

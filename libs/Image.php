@@ -1,6 +1,6 @@
 <?php
-    require_once "./File.php";
-    class Image extends File {
+    require_once "bytes.php";
+    class Image extends Image {
         public String $alt = "";
 
         public function toHTML() : String {

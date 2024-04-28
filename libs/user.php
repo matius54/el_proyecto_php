@@ -37,7 +37,18 @@
                 var_dump($filtered);
             }
             //$db = DB::getInstance();
-            $all = ["private","hash","salt","user","first_name","last_name","ci","birthday","color","created_at"];
+            $all = [
+                "private",
+                "hash",
+                "salt",
+                "user",
+                "first_name",
+                "last_name",
+                "ci",
+                "birthday",
+                "color",
+                "created_at"
+            ];
             array_merge();
             //$db->insert("user",["private"=>"","user"=>"","first_name"=>"","last_name"=>"","ci"=>"","birthday"=>"","color"=>"","created_at"=>""]);
         }

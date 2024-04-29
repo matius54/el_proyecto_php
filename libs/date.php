@@ -4,7 +4,7 @@
 
     }
     class Chronogram {
-        static function getCalendar(int $month, int $year) : array {
+        public static function getCalendar(int $month, int $year) : array {
             $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             $firstDay = date('Y-m-01', mktime(0, 0, 0, $month, 1, $year));
             $startDay = date('w', strtotime($firstDay));

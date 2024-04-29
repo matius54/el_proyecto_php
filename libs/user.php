@@ -5,16 +5,16 @@
     require_once "bytes.php";
 
     class User {
-        static string $login_key = "login_user";
+        private static string $login_key = "login_user";
 
-        static array $default_user = [
+        private static array $default_user = [
             "username" => "Admin",
             "password" => "123456",
             "first_name" => "The Lord",
             "last_name" => "Administrator"
         ];
 
-        static function initialize(){
+        public static function initialize(){
             $db = DB::getInstance();
             if(!$db->getLastId("user")){
                 //create new user
@@ -22,7 +22,7 @@
                 //add admin access to user
             }
         }
-        static function register(array $data, bool $bypass_validation = false){
+        public static function register(array $data, bool $bypass_validation = false){
             $filtered = [];
             if($id = self::verify() or true){
                 $password = $data["password"] ?? "";
@@ -48,12 +48,16 @@
                 "created_at"
             ];
             array_merge();
+
             //$db->insert("user",["private"=>"","user"=>"","first_name"=>"","last_name"=>"","ci"=>"","birthday"=>"","color"=>"","created_at"=>""]);
         }
-        static function login(array $data){
+        public static function delete(int $id) : bool {
+            return false;
+        }
+        public static function login(array $data){
             self::initialize();
         }
-        static function verify() : int {
+        public static function verify() : int {
             SESSION::start();
             return $_SESSION[self::$login_key] ?? 0;
         }

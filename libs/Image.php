@@ -1,5 +1,6 @@
 <?php
     require_once "bytes.php";
+    //TODO fix this sh!t
     class Image extends Image {
         public String $alt = "";
 

@@ -17,7 +17,7 @@
     }
 
     class Logger {
-        static function log(
+        public static function log(
                 string $action, 
                 ?LoggerType $type = null, 
                 LoggerLevel $level = LoggerLevel::LOG, 

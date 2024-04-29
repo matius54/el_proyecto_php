@@ -1,5 +1,7 @@
 <?php
-    require_once "utils.php";
+    $base = $base ?? "./";
+    require_once $base . "utils.php";
+    
     class Event {
 
     }

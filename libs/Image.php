@@ -1,5 +1,7 @@
 <?php
-    require_once "bytes.php";
+    $base = $base ?? "./";
+    require_once $base . "bytes.php";
+    
     //TODO fix this sh!t
     class Image extends Image {
         public String $alt = "";

@@ -1,5 +1,6 @@
 <?php
-require_once "./bytes.php";
+$base = $base ?? "./";
+require_once $base . "bytes.php";
 /*
     DB es una clase wrapper para la clase PDO de php, su funcion principal es abtraer el proceso de conexion
     e interaccion con la base de datos, ademas de facilitar una forma para automatizar la creacion automatica
@@ -50,6 +51,7 @@ class DB
 
     private function __construct()
     {
+        global $base;
         //se lee y decodifica el archivo de configuracion json en un array asociativo,
         //usando el parametro asociativo en `true` en la llamada de `json_decode()`
         /*
@@ -58,7 +60,7 @@ class DB
             - añadir configuracion por defecto por si falta tambien
             - separar esta logica en otro metodo por ejemplo loadConfig()
         */
-        $this->config = json_decode(json: file_get_contents(filename: $this->configFile), associative: true);
+        $this->config = json_decode(json: file_get_contents(filename: $base . $this->configFile), associative: true);
         try {
             //intenta conectar a la base de datos
             $this->connect();

@@ -1,7 +1,8 @@
 <?php 
-    require_once "db.php";
-    require_once "user.php";
-    require_once "utils.php";
+    $base = $base ?? "./";
+    require_once $base . "db.php";
+    require_once $base . "user.php";
+    require_once $base . "utils.php";
     
     enum LoggerType: int {
         case ADD = 0;
@@ -39,7 +40,13 @@
             
             $db = DB::getInstance();
             $db->insert("log", $log);
+
+            $dir = dirname(__DIR__)."\\logs\\".$levels[$level->value].".txt";
+            $handle = fopen($dir, "a");
+            fwrite($handle, gmdate(DateTime::ATOM, time()).": ".json_encode($log, JSON_UNESCAPED_UNICODE)."\n");
+            fclose($handle);
         }
     }
+    
     //Logger::log("test");
 ?>

@@ -1,9 +1,10 @@
 <?php
-    require_once "db.php";
-    require_once "utils.php";
-    require_once "paginator.php";
-    require_once "log.php";
-    require_once "user.php";
+    $base = $base ?? "./";  
+    require_once $base . "db.php";
+    require_once $base . "utils.php";
+    require_once $base . "paginator.php";
+    require_once $base . "log.php";
+    require_once $base . "user.php";
 
     class Node {
         
@@ -304,6 +305,7 @@
                 default:
                     //var_dump(Access::test("login",1));
                     //var_dump(Access::purge());
+                    var_dump(dirname(__DIR__));
                 break;
             }
         }elseif(URL::isPost()){

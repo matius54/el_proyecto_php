@@ -1,7 +1,7 @@
 <?php
-    $base = $base ?? "./";  
-    require_once $base . "db.php";
-    require_once $base . "utils.php";
+    $base = $base ?? "../";  
+    require_once $base . "libs/db.php";
+    require_once $base . "libs/utils.php";
     
     class Paginator {
         private int $itemsPerPage;

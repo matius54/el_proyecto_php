@@ -1,6 +1,6 @@
 <?php
-$base = $base ?? "./";
-require_once $base . "bytes.php";
+$base = $base ?? "../";
+require_once $base . "libs/bytes.php";
 /*
     DB es una clase wrapper para la clase PDO de php, su funcion principal es abtraer el proceso de conexion
     e interaccion con la base de datos, ademas de facilitar una forma para automatizar la creacion automatica
@@ -21,7 +21,7 @@ class DB
     private static ?DB $instance = null;
 
     //ubicacion del archivo de configuracion
-    private String $configFile = "db.json"; /*----- Cambie la direccion antes era esta ./db.json -----*/
+    private String $configFile = "config/db.json"; /*----- Cambie la direccion antes era esta ./db.json -----*/
 
     //array del archivo de configuracion una vez decodificado del json
     private array $config;

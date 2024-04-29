@@ -1,6 +1,6 @@
 <?php
-    $base = $base ?? "./";
-    require_once $base . "bytes.php";
+    $base = $base ?? "../";
+    require_once $base . "libs/bytes.php";
     
     //TODO fix this sh!t
     class Image extends Image {

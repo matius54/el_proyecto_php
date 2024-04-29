@@ -1,14 +1,15 @@
 <?php
-    $base = $base ?? "./";  
-    require_once $base . "db.php";
-    require_once $base . "utils.php";
-    require_once $base . "paginator.php";
-    require_once $base . "log.php";
-    require_once $base . "user.php";
+    $base = $base ?? "../";  
+    require_once $base . "model/log.php";
+    require_once $base . "model/user.php";
+    
+    require_once $base . "libs/db.php";
+    require_once $base . "libs/utils.php";
+    require_once $base . "libs/paginator.php";
 
     class Node {
         
-        private static string $filename = "nodes.json";
+        private static string $filename = "config/nodes.json";
 
         private string $key;
         private string $name;
@@ -22,8 +23,9 @@
         }
 
         public static function getAll() : array {
+            global $base;
             return json_decode(
-                json: file_get_contents(self::$filename) ?? "{}",
+                json: file_get_contents($base . self::$filename) ?? "{}",
                 associative: true
             ) ?? [];
         }

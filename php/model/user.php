@@ -1,9 +1,10 @@
 <?php
-    $base = $base ?? "./";
-    require_once $base . "utils.php";
-    require_once $base . "db.php";
-    require_once $base . "access.php";
-    require_once $base . "bytes.php";
+    $base = $base ?? "../";
+    require_once $base . "model/access.php";
+    
+    require_once $base . "libs/utils.php";
+    require_once $base . "libs/db.php";
+    require_once $base . "libs/bytes.php";
     
     class User {
         private static string $login_key = "login_user";

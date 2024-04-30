@@ -93,6 +93,12 @@ class ThemeUI {
         document.querySelectorAll(".icon").forEach(e => this.addIcon(e, e.id));
         this.save();
         this.apply();
+        this.addToggleButton();
+        window.addEventListener('visibilitychange', () => {
+            this.load();
+            this.apply();
+            this.syncToggleButton();
+        });
     }
     getAllPropierties(){
         let propierties = [];
@@ -246,7 +252,48 @@ class ThemeUI {
     removeIcon(element) {
         for (const key in this.#icons) {
             const index = this.#icons[key].indexOf(element);
-            if (index !== -1) this.#icons[key].splice(index, 1);
+            if (index !== -1){
+                this.#icons[key].splice(index, 1);
+                return true;
+            }
         }
+        return false;
+    }
+    nextTheme(){
+        //TODO: cuando funcionen los temas auto y custom, descomenta esta linea
+        //const themes = this.#allowedThemes;
+        const themes = ["light","dark"];
+        return themes[(themes.indexOf(this.#theme) + 1) % themes.length];
+    }
+    syncToggleButton(){
+        const img = document.querySelector("header.nav a img");
+        this.removeIcon(img)
+        this.addIcon(img, this.nextTheme());
+    }
+    addToggleButton(){
+        const updateIcon = (a) => {
+            const img = a.querySelector("img");
+            if(this.removeIcon(img)){
+                this.toggleTheme();
+            }
+            img.id = this.nextTheme();
+            this.addIcon(img,img.id);
+        };
+        const header = document.querySelector("header.nav");
+        if(!header) return;
+        const button = document.createElement("a");
+        button.title = "Cambiar tema";
+        const img = document.createElement("img"); 
+        img.classList.add("icon","button");
+        img.setAttribute("src",`icons/dark_dark.svg`);
+        button.appendChild(img);
+        updateIcon(button);
+        button.addEventListener("click",(e)=>updateIcon(e.target.closest("a")));
+        header.appendChild(button);
+    }
+    toggleTheme(){
+        const isDark = this.isDark();
+        this.setTheme(this.nextTheme());
+        return isDark;
     }
 }

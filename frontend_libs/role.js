@@ -270,7 +270,10 @@ class Dialog {
         "profile",
         "profile2",
         "login",
-        "eye"
+        "logout",
+        "eye",
+        "light",
+        "dark"
     ];
     INPUTS = ["name","description","level"];
     newDialog;

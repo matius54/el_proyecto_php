@@ -260,6 +260,7 @@ class Dialog {
     ICONS = [
         "edit",
         "delete",
+        "record",
         "new",
         "check",
         "check-on",
@@ -267,6 +268,7 @@ class Dialog {
         "accordion",
         "adjustments-pause",
         "profile",
+        "profile2",
         "login",
         "eye"
     ];

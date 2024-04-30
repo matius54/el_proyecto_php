@@ -1,4 +1,5 @@
-const BASE = "./php/model/access.php";
+const BASE = "./php/controller/access.php";
+
 class Role {
     #pageKey = "p";
     #InterObs;

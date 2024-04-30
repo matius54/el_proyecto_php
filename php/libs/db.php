@@ -435,7 +435,8 @@ class DB
         int $limit = 1024,
         int $offset = 0,
         bool $all = false,
-        bool $htmlspecialchars = false
+        bool $htmlspecialchars = false,
+        bool $return1 = false
     ): array {
         $sql = "SELECT ";
         $sql .= $columns ? implode(", ", self::quoteBT($columns)) : "*";
@@ -447,7 +448,12 @@ class DB
         if ($all) {
             return $this->fetchAll($htmlspecialchars);
         } else {
-            return $this->fetch($htmlspecialchars);
+            $result = $this->fetch($htmlspecialchars);
+            //si solo hay una columna y un valor en esa columna en lugar de retornar
+            //una lista con 1 solo elemento retorna el valor directamente
+            //return1: asies no se me ocurrio un mejor nombre
+            if($return1 and sizeof($result) === 1) return array_values($result)[0];
+            return $result;
         }
     }
     public function insert(

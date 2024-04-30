@@ -82,24 +82,24 @@
                 if($db->select("role_node",condition: "role_id = ? AND node_key = ?", args: [$id, $key])){
                     //si el registro existe, se actualiza
                     if($result = $db->update("role_node",["allow"=>$value],"role_id = ? AND node_key = ?",[$id, $key])){
-                        Logger::log("Node: '$key' actualizado a '$value_str'", LoggerType::EDIT, LoggerLevel::LOG);
+                        Logger::log("Node[$id]: '$key' actualizado a '$value_str'", LoggerType::EDIT, LoggerLevel::LOG);
                     }else{
-                        Logger::log("Node: '$key' no actualizado a '$value_str', update error", LoggerType::EDIT, LoggerLevel::WARNING);
+                        Logger::log("Node[$id]: '$key' no actualizado a '$value_str', update error", LoggerType::EDIT, LoggerLevel::WARNING);
                     }
                     return $result;
                 }
                 //si no existe se crea
                 if($result = $db->insert("role_node",["role_id" => $id, "node_key" => $key, "allow" => $value])){
-                    Logger::log("Node: '$key' actualizado a '$value_str'", LoggerType::ADD, LoggerLevel::LOG);
+                    Logger::log("Node[$id]: '$key' actualizado a '$value_str'", LoggerType::ADD, LoggerLevel::LOG);
                 }else{
-                    Logger::log("Node: '$key' no actualizado a '$value_str', insert error", LoggerType::ADD, LoggerLevel::WARNING);
+                    Logger::log("Node[$id]: '$key' no actualizado a '$value_str', insert error", LoggerType::ADD, LoggerLevel::WARNING);
                 }
                 return $result;
             }elseif($value === null){
                 if($result = $db->delete("role_node","role_id = ? AND node_key = ?",[$id, $key])){
-                    Logger::log("Node: '$key' actualizado a 'unset'", LoggerType::DELETE, LoggerLevel::LOG);
+                    Logger::log("Node[$id]: '$key' actualizado a 'unset'", LoggerType::DELETE, LoggerLevel::LOG);
                 }else{
-                    Logger::log("Node: '$key' no actualizado a 'unset', not found", LoggerType::DELETE, LoggerLevel::WARNING);
+                    Logger::log("Node[$id]: '$key' no actualizado a 'unset', not found", LoggerType::DELETE, LoggerLevel::WARNING);
                 }
                 return $result;
             }
@@ -170,7 +170,7 @@
                 Logger::log("Role: nuevo rol '".$filtered["name"]."' con id '$newId'", LoggerType::ADD, LoggerLevel::LOG);
                 return $newId;
             }
-            throw new HTTPException("saving to database", 500);
+            throw new HTTPException("nothing was saved to database", 500);
         }
         public static function edit(array $data) : bool {
             $values = ["name","description","level","icon"];
@@ -189,17 +189,21 @@
             }
 
             $db = DB::getInstance();
-            return $db->update("role", $filtered, "id = ?", [$id]);
+            $update = $db->update("role", $filtered, "id = ?", [$id]);
+            Logger::log("Role[$id]: rol ".($update? "" : "no ")."modificado ".json_encode($filtered, JSON_UNESCAPED_UNICODE), LoggerType::EDIT, LoggerLevel::LOG);
+            return $update;
         }
         public static function delete($id) : bool {
             if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
             $db = DB::getInstance();
+            $role_name = $db->select("role",["name"],"id = ?",[$id]);
             $db->beginTransaction();
             $db->delete("role_node","role_id = ?",[$id]);
             $db->delete("user_role","role_id = ?",[$id]);
             $deleted = $db->delete("role","id = ?",[$id]);
             if($deleted){
                 $db->commit();
+                Logger::log("Role[$id]: rol '$role_name' eliminado", LoggerType::EDIT, LoggerLevel::LOG);
             }else{
                 $db->rollback();
             }

@@ -38,6 +38,7 @@
             if($type !== null) $log["type"] = $types[$type->value];
             $log["level"] = $levels[$level->value];
             $log["extra"] = json_encode($extra);
+            $log["created_at"] = TIME::now();
             
             $db = DB::getInstance();
             $db->insert("log", $log);

@@ -45,22 +45,14 @@
             "id INT PRIMARY KEY AUTO_INCREMENT",
             "name VARCHAR(128)",
             "description TEXT",
-            "chronogram_id INT",
+            "role_id INT",
             "d INT",
             "m INT",
             "y INT",
             "rep INT",
             "_count INT",
             "active BOOL",
-            "FOREIGN KEY (chronogram_id) REFERENCES chronogram(id)"
-        ],
-        "department":[
-            "id INT PRIMARY KEY AUTO_INCREMENT",
-            "created_at BIGINT UNSIGNED NOT NULL",
-            "name VARCHAR(64)",
-            "description VARCHAR(256)",
-            "chronogram_id INT NOT NULL",
-            "FOREIGN KEY (chronogram_id) REFERENCES chronogram(id)"
+            "FOREIGN KEY (role_id) REFERENCES role(id)"
         ],
         "2fa":[
             "id INT PRIMARY KEY AUTO_INCREMENT",
@@ -70,7 +62,6 @@
         "user": [
             "id INT PRIMARY KEY AUTO_INCREMENT",
             "profile_img INT",
-            "department_id INT",
             "2fa_id INT",
             "private CHAR(16) NOT NULL UNIQUE",
             "user VARCHAR(64) NOT NULL UNIQUE",
@@ -83,7 +74,6 @@
             "salt BINARY(16) NOT NULL",
             "created_at BIGINT UNSIGNED NOT NULL",
             "FOREIGN KEY (profile_img) REFERENCES image(id)",
-            "FOREIGN KEY (department_id) REFERENCES department(id)",
             "FOREIGN KEY (2fa_id) REFERENCES 2fa(id)"
         ],
         "event": [
@@ -110,6 +100,7 @@
             "extra TEXT",
             "level ENUM('info','log','warning','error') NOT NULL",
             "type ENUM('add','delete','edit')",
+            "created_at BIGINT UNSIGNED NOT NULL",
             "FOREIGN KEY (user_id) REFERENCES user(id)"
         ],
         "access":[

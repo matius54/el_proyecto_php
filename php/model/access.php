@@ -8,7 +8,6 @@
     require_once $base . "libs/paginator.php";
 
     class Node {
-        
         private static string $filename = "config/nodes.json";
 
         private string $key;
@@ -250,6 +249,7 @@
         //en otras palabras, "purgar" los nodos sin uso
         //devuelve el numero de registros afectados
         public static function purge() : int {
+            Logger::log("--- Purge access begins ---",LoggerType::DELETE,LoggerLevel::WARNING);
             $allNodes = array_keys(Node::getAll());
             $db = DB::getInstance();
             $sql = "SELECT DISTINCT `node_key` FROM role_node";
@@ -261,6 +261,8 @@
                 if(!in_array($node_key, $allNodes, true)) $remove[] = $node_key;
             }
             $condition = implode(" OR ",array_fill(0, sizeof($remove), "`node_key` = ?"));
+            Logger::log("nothing to purge",LoggerType::DELETE,LoggerLevel::LOG);
+            Logger::log("--- Purge access ends ---",LoggerType::DELETE,LoggerLevel::WARNING);
             return $remove ? $db->delete("role_node", $condition, $remove) : 0;
         }
 
@@ -268,6 +270,7 @@
             $db = DB::getInstance();
             //si existe algun rol en la base de datos, termina
             if($db->getLastId("role")) return;
+            Logger::log("--- Initialize access begins ---",LoggerType::ADD,LoggerLevel::WARNING);
             //obtiene todos los node
             $allNodes = array_keys(Node::getAll());
             //inicializa rol administrador
@@ -285,6 +288,7 @@
                     "value" => true
                 ]);
             }
+            Logger::log("--- Initialize access ends ---",LoggerType::ADD,LoggerLevel::WARNING);
         }
     }
 ?>

@@ -25,6 +25,7 @@
 
     --blur-config: none;
     /*--blur-config: blur(10px);*/
+    color: var(--over-main-color);
 }
 button:hover {
     filter: brightness(85%);
@@ -554,8 +555,7 @@ table {
 }
 
 table > thead {
-    background-color: #2a5d84;
-    color: white;
+    background-color: var(--main-color);
 }
 
 table > tbody > tr:nth-child(2n) {

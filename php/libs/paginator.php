@@ -10,7 +10,7 @@
         private ?int $lastPage = null;
         private ?int $page = null;
         private ?int $itemCount = null;
-        private array $items = [];
+        public array $items = [];
 
         public function __construct(string $sql, array $args = [], int $itemsPerPage = 10, string $pageKey = "page"){
             $name = self::sqlSelect2tableName($sql);

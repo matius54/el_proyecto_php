@@ -12,7 +12,7 @@
             [
                 "name" => "Registros",
                 "icon" => "record",
-                "href" => "#"
+                "href" => "./logs.php"
             ],
             [
                 "name" => "Mi perfil",

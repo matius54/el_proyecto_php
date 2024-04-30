@@ -3,6 +3,7 @@
     require_once $base . "model/user.php";
     
     require_once $base . "libs/db.php";
+    require_once $base . "libs/paginator.php";
     require_once $base . "libs/utils.php";
     
     enum LoggerType: int {
@@ -49,6 +50,9 @@
             fwrite($handle, gmdate(DateTime::ATOM, time()).": ".json_encode($log, JSON_UNESCAPED_UNICODE)."\n");
             fclose($handle);
             */
+        }
+        public static function getAll(array $filter = []) : Paginator {
+            return new Paginator("SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id` ORDER BY `l`.`id` DESC");
         }
     }
     

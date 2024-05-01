@@ -121,7 +121,8 @@
 
         public static function getAll() : array {
             $sql = "SELECT id, level, name, icon FROM role ORDER BY level ASC";
-            $pag = new Paginator($sql, itemsPerPage: 5, pageKey: "p");
+            $count = "SELECT COUNT(*) FROM role";
+            $pag = new Paginator($sql, $count, itemsPerPage: 5, pageKey: "p");
             return $pag->toArray();
         }
 

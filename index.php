@@ -14,7 +14,7 @@
     <main>
         <div class="card padd">
             <h1>Opciones</h1>
-            <a href="./login.html" class="button">Iniciar sesión</a>
+            <a href="./login_v1.php" class="button">Iniciar sesión</a>
             <a href="./register.html" class="button">Registrarse</a>
             <a href="./dashboard.php" class="button">Panel de control</a>
         </div>

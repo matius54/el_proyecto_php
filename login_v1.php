@@ -12,7 +12,7 @@
         <h1>Iniciar sesión</h1>
     </header>
     <main>
-        <form action="php/controller/user.php" method="post" autocomplete="off" class="card login hidden">
+        <form action="php/controller/user.php?a=login" method="post" autocomplete="off" class="card login hidden">
             <h1>Iniciar sesión</h1>
             <input type="text" name="username" placeholder="Nombre de usuario" match required>
             <input type="password" name="password" placeholder="Contraseña" required>

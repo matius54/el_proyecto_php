@@ -20,14 +20,15 @@
     }
 
     class Logger {
+        public static array $types = ["add","delete","edit"];
+        public static array $levels = ["info","log","warning","error"];
+
         public static function log(
                 string $action, 
                 ?LoggerType $type = null, 
                 LoggerLevel $level = LoggerLevel::LOG, 
                 array $extra = []
             ) : void {
-            $types = ["add","delete","edit"];
-            $levels = ["info","log","warning","error"];
             $log = [];
             $user_id = User::verify();
             if($user_id) $log["user_id"] = $user_id;
@@ -36,8 +37,8 @@
             $log["agent"] = $_SERVER["HTTP_USER_AGENT"] ?? "agent not found";
             $log["uri"] = URL::URI();
             $log["action"] = $action;
-            if($type !== null) $log["type"] = $types[$type->value];
-            $log["level"] = $levels[$level->value];
+            if($type !== null) $log["type"] = self::$types[$type->value];
+            $log["level"] = self::$levels[$level->value];
             $log["extra"] = json_encode($extra);
             $log["created_at"] = TIME::now();
             
@@ -51,8 +52,14 @@
             fclose($handle);
             */
         }
-        public static function getAll(array $filter = []) : Paginator {
-            return new Paginator("SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id` ORDER BY `l`.`id` DESC", itemsPerPage: 25);
+        public static function getAll(string $level, string $type) : Paginator {
+            $filter = [];
+            if(in_array($level, self::$levels)) array_push($filter, "`level` = \"$level\"");
+            if(in_array($type, self::$types)) array_push($filter, "`type` = \"$type\"");
+            return new Paginator(
+                "SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`".($filter ? " WHERE ".implode(" AND ", $filter) : "")." ORDER BY `l`.`id` DESC",
+                itemsPerPage: 25
+            );
         }
     }
     

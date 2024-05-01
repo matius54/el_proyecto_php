@@ -10,49 +10,71 @@
         private static string $login_key = "login_user";
 
         private static array $default_user = [
-            "username" => "Admin",
+            "user" => "Admin",
             "password" => "123456",
             "first_name" => "The Lord",
-            "last_name" => "Administrator"
+            "last_name" => "Administrator",
+            "role_id" => 1
+        ];
+
+        private static array $all = [
+            "pasword",
+            "user",
+            "first_name",
+            "last_name",
+            "ci",
+            "birthday",
+            "color"
         ];
 
         public static function initialize(){
             $db = DB::getInstance();
             if(!$db->getLastId("user")){
-                //create new user
-                //initialize access default
-                //add admin access to user
+                //necesita que los accesos esten inicializados
+                Access::initialize();
+                //registrar el usuario por defecto
+                self::register(self::$default_user);
             }
         }
-        public static function register(array $data, bool $bypass_validation = false){
-            $filtered = [];
-            if($id = self::verify() or true){
-                $password = $data["password"] ?? "";
-                $hash = "";
-                $salt = "";
-                SC::password($password, $hash, $salt);
-                $filtered["hash"] = new Bytes($hash);
-                $filtered["salt"] = new Bytes($salt);
-                $filtered["private"] = SC::randomHexStr(16);
-                var_dump($filtered);
-            }
-            //$db = DB::getInstance();
-            $all = [
-                "private",
-                "hash",
-                "salt",
-                "user",
-                "first_name",
-                "last_name",
-                "ci",
-                "birthday",
-                "color",
-                "created_at"
-            ];
-            array_merge();
+        public static function register(array $data){
 
-            //$db->insert("user",["private"=>"","user"=>"","first_name"=>"","last_name"=>"","ci"=>"","birthday"=>"","color"=>"","created_at"=>""]);
+            //obtener el id del usuario logeado
+            if(!$user_id = self::verify()) return null;
+            
+            $filtered = [];
+            //obtener toda la informacion del post
+            foreach (self::$all as $value) {
+                if(isset($data[$value])) $filtered[$value] = $data[$value];
+            }
+            //obtener la contrase;a y generar el hash y salt
+            $password = $data["password"] ?? "";
+            $hash = "";
+            $salt = "";
+            SC::password($password, $hash, $salt);
+
+            //a;adirlos al filtered listo para insertar
+            $filtered["hash"] = new Bytes($hash);
+            $filtered["salt"] = new Bytes($salt);
+            $filtered["private"] = SC::randomHexStr(16);
+            $filtered["created_at"] = TIME::now();
+
+            //insertar en la base de datos
+            $db = DB::getInstance();
+            if(!$db->insert("user", $filtered)) return null;
+            $new_user_id = $db->getLastId("user");
+            
+            //si envias el rol = register + asignacion de rol
+            if($role_id = $data["role_id"] ?? 0){
+                //TODO asignarle el rol correspondiente al nuevo usuario
+
+                //var_dump($user_id);
+                //var_dump($new_user_id);
+                //var_dump($role_id);
+            }
+
+            return $new_user_id;
         }
+
         public static function delete(int $id) : bool {
             return false;
         }
@@ -63,7 +85,12 @@
             SESSION::start();
             return $_SESSION[self::$login_key] ?? 0;
         }
+        public static function log(int $id){
+            SESSION::start();
+            if(!isset($_SESSION[self::$login_key]))
+            $_SESSION[self::$login_key] = $id;
+        }
     }
-    //User::initialize();
-    //User::register([]);
+    //User::log(1);
+    User::initialize();
 ?>

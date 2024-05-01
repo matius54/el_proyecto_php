@@ -1,5 +1,5 @@
 <?php
-    $title = "Panel de control";
+    $title = "Usuarios";
     $base = "php/";
     require_once "php/model/user.php";
     require_once "php/libs/template.php";
@@ -13,26 +13,6 @@
                 "name" => "Registros",
                 "icon" => "record",
                 "href" => "./logs.php"
-            ],
-            [
-                "name" => "Mi perfil",
-                "icon" => "profile",
-                "href" => "#"
-            ],
-            [
-                "name" => "Roles",
-                "icon" => "edit",
-                "href" => "./role.html"
-            ],
-            [
-                "name" => "Usuarios",
-                "icon" => "profile2",
-                "href" => "./users.php"
-            ],
-            [
-                "name" => "Calendario",
-                "icon" => "profile2",
-                "href" => "#"
             ],
             [
                 "name" => "Cerrar sesion",

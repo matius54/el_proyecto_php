@@ -52,7 +52,7 @@
             */
         }
         public static function getAll(array $filter = []) : Paginator {
-            return new Paginator("SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id` ORDER BY `l`.`id` DESC");
+            return new Paginator("SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id` ORDER BY `l`.`id` DESC", itemsPerPage: 25);
         }
     }
     

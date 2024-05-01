@@ -82,24 +82,24 @@
                 if($db->select("role_node",condition: "role_id = ? AND node_key = ?", args: [$id, $key])){
                     //si el registro existe, se actualiza
                     if($result = $db->update("role_node",["allow"=>$value],"role_id = ? AND node_key = ?",[$id, $key])){
-                        Logger::log("Node[$id]: '$key' actualizado a '$value_str'", LoggerType::EDIT, LoggerLevel::LOG);
+                        Logger::log("Role[$id]: Node['$key'] actualizado a '$value_str'", LoggerType::EDIT, LoggerLevel::LOG);
                     }else{
-                        Logger::log("Node[$id]: '$key' no actualizado a '$value_str', update error", LoggerType::EDIT, LoggerLevel::WARNING);
+                        Logger::log("Role[$id]: Node['$key'] no actualizado a '$value_str', update error", LoggerType::EDIT, LoggerLevel::WARNING);
                     }
                     return $result;
                 }
                 //si no existe se crea
                 if($result = $db->insert("role_node",["role_id" => $id, "node_key" => $key, "allow" => $value])){
-                    Logger::log("Node[$id]: '$key' actualizado a '$value_str'", LoggerType::ADD, LoggerLevel::LOG);
+                    Logger::log("Role[$id]: Node['$key'] actualizado a '$value_str'", LoggerType::ADD, LoggerLevel::LOG);
                 }else{
-                    Logger::log("Node[$id]: '$key' no actualizado a '$value_str', insert error", LoggerType::ADD, LoggerLevel::WARNING);
+                    Logger::log("Role[$id]: Node['$key'] no actualizado a '$value_str', insert error", LoggerType::ADD, LoggerLevel::WARNING);
                 }
                 return $result;
             }elseif($value === null){
                 if($result = $db->delete("role_node","role_id = ? AND node_key = ?",[$id, $key])){
-                    Logger::log("Node[$id]: '$key' actualizado a 'unset'", LoggerType::DELETE, LoggerLevel::LOG);
+                    Logger::log("Role[$id]: Node['$key'] actualizado a 'unset'", LoggerType::DELETE, LoggerLevel::LOG);
                 }else{
-                    Logger::log("Node[$id]: '$key' no actualizado a 'unset', not found", LoggerType::DELETE, LoggerLevel::WARNING);
+                    Logger::log("Role[$id]: Node['$key'] no actualizado a 'unset', not found", LoggerType::DELETE, LoggerLevel::WARNING);
                 }
                 return $result;
             }

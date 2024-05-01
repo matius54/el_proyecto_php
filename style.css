@@ -462,7 +462,7 @@ a {
 }
 
 .navigator .selected {
-    border: 2px white solid;
+    border: 2px var(--over-main-color) solid;
 }
 
 .left-panel {
@@ -610,4 +610,21 @@ table th {
 .calendar .body .now {
     background-color: var(--second-color);
     border-radius: 5px;
+}
+
+header.nav div.options {
+    display: flex;
+    flex-direction: row;
+}
+
+header.nav div.options.left {
+    margin-right: auto;
+    margin-left: 4rem;
+    justify-content: start;
+}
+
+header.nav div.options.right {
+    margin-left: auto;
+    margin-right: 4rem;
+    justify-content: end;
 }

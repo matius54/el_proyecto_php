@@ -266,7 +266,7 @@ class ThemeUI {
         return themes[(themes.indexOf(this.#theme) + 1) % themes.length];
     }
     syncToggleButton(){
-        const img = document.querySelector("header.nav a img");
+        const img = document.querySelector("header.nav img.theme-toggle");
         this.removeIcon(img)
         this.addIcon(img, this.nextTheme());
     }
@@ -279,12 +279,12 @@ class ThemeUI {
             img.id = this.nextTheme();
             this.addIcon(img,img.id);
         };
-        const header = document.querySelector("header.nav");
+        const header = document.querySelector("header.nav div.options:last-child");
         if(!header) return;
         const button = document.createElement("a");
         button.title = "Cambiar tema";
         const img = document.createElement("img"); 
-        img.classList.add("icon","button");
+        img.classList.add("icon","button","theme-toggle");
         img.setAttribute("src",`icons/dark_dark.svg`);
         button.appendChild(img);
         updateIcon(button);

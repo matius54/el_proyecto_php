@@ -16,6 +16,7 @@
                     if ($user_id = user::login($_POST)) {
                         if (access::test("dashboard.access", "user_id")) {
                             //tienes acceso a ver el panel de control
+                            url::redirect("../../login.php");
                         }
                     } else {
                         //devuelve al formulario 

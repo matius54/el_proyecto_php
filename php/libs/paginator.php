@@ -12,12 +12,10 @@
         private ?int $itemCount = null;
         public array $items = [];
 
-        public function __construct(string $sql, array $args = [], int $itemsPerPage = 10, string $pageKey = "page"){
-            $name = self::sqlSelect2tableName($sql);
+        public function __construct(string $sql, string $countSql, array $args = [], int $itemsPerPage = 10, string $pageKey = "page"){
             $this->itemsPerPage = $itemsPerPage;
             $this->pageKey = $pageKey;
-            if($name === null) throw new Exception("paginator: name for the table not found");
-            $this->getTotalPages($name);
+            $this->getTotalPages($countSql, $args);
             $this->getPage();
             $this->items = $this->lastPage ? $this->paginateQuery($sql, $args) : [];
         }
@@ -41,23 +39,15 @@
             return $db->fetchAll(htmlspecialchars: true);
         }
 
-        private function getTotalPages(string $name) : void {
+        private function getTotalPages(string $countSql, array $args) : void {
             $db = DB::getInstance();
-            $db->execute("SELECT COUNT(*) FROM $name");
+            $db->execute($countSql, $args);
             if($response = $db->fetch()){
                 $itemCount = $response["COUNT(*)"];
                 $lastPage = ceil($itemCount / $this->itemsPerPage);
                 $this->itemCount = $itemCount;
                 $this->lastPage = $lastPage;
             }
-        }
-        
-        private static function sqlSelect2tableName($sql) : string|null {
-            $sql = explode(" ",$sql);
-            foreach ($sql as $key => $value) {
-                if(strtoupper($value) === "FROM") return $sql[$key + 1];
-            }
-            return null;
         }
         
         public function toArray() : array {

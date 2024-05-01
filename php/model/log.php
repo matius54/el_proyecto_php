@@ -54,10 +54,14 @@
         }
         public static function getAll(string $level, string $type) : Paginator {
             $filter = [];
-            if(in_array($level, self::$levels)) array_push($filter, "`level` = \"$level\"");
-            if(in_array($type, self::$types)) array_push($filter, "`type` = \"$type\"");
+            if(in_array($level, self::$levels)) $filter["level"] = $level;
+            if(in_array($type, self::$types)) $filter["type"] = $type;
+            $where = $filter ? " WHERE ".implode(" AND ", array_map(function ($val) {return "`$val` = ?";}, array_keys($filter))) : "";
+            var_dump($where);
             return new Paginator(
-                "SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`".($filter ? " WHERE ".implode(" AND ", $filter) : "")." ORDER BY `l`.`id` DESC",
+                "SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`$where ORDER BY `l`.`id` DESC",
+                "SELECT COUNT(*) FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`$where",
+                array_values($filter),
                 itemsPerPage: 25
             );
         }

@@ -22,7 +22,7 @@
                         //devuelve al formulario 
                         url::redirect("../../login.php");
                     }
-                    var_dump($user_id);
+                    
                     break;
                 default:
                     URL::redirect("./");

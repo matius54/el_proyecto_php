@@ -92,5 +92,4 @@
         }
     }
     //User::log(1);
-    User::initialize();
 ?>

@@ -80,9 +80,6 @@
         }
         public static function login(array $data) : int {
             self::initialize();
-            $db = DB::getInstance();
-            $salt = $db->select("user", ["salt"], "`id` = ?",[1], return1: true);
-            var_dump($salt);
             return 1;
         }
         public static function verify() : int {

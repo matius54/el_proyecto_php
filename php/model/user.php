@@ -79,13 +79,17 @@
             return false;
         }
         public static function login(array $data) : int {
+
             self::initialize();
             User::login([]);
             $db = DB::getInstance();
-            $username ["username"]??"";
+            $username = ["username"] ?? "";
             $salt = $db->select("user", ["salt"], "user = ?", [], return1: true);
-            var_dump($salt);
-            return 1;
+            $password = ["password"] ?? "";
+            $hash=null;
+            sc::password($password,$hash,$salt);
+
+            return $user_id;
         }
         public static function verify() : int {
             SESSION::start();

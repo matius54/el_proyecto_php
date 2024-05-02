@@ -437,7 +437,7 @@ class DB
         bool $all = false,
         bool $htmlspecialchars = false,
         bool $return1 = false
-    ): array {
+    ): array|string|int|float {
         $sql = "SELECT ";
         $sql .= $columns ? implode(", ", self::quoteBT($columns)) : "*";
         $sql .= " FROM `$table`";

@@ -78,18 +78,25 @@
         public static function delete(int $id) : bool {
             return false;
         }
-        public static function login(array $data) : int {
-
+        public static function login(array $data) : int|null {
+            //inicializar user
             self::initialize();
-            User::login([]);
-            $db = DB::getInstance();
-            $username = ["username"] ?? "";
-            $salt = $db->select("user", ["salt"], "user = ?", [], return1: true);
-            $password = ["password"] ?? "";
-            $hash=null;
-            sc::password($password,$hash,$salt);
 
-            return $user_id;
+            //obtener los datos del $_POST
+            $username = $data["username"] ?? "";
+            $password = $data["password"] ?? "";
+            $hash = null;
+            
+            $db = DB::getInstance();
+            list($user_id, $salt) = array_values($db->select("user", ["id", "salt"], "`user` = ?",["Admin"]));
+            SC::password($password, $hash, $salt);
+            $db->execute("SELECT `hash` = ? AS `v` FROM `user` WHERE `id` = ?", [new Bytes($hash), $user_id]);
+
+            if($db->fetch()["v"] ?? null){
+                //esta validado
+                return $user_id;
+            }
+            return null;
         }
         public static function verify() : int {
             SESSION::start();
@@ -101,5 +108,5 @@
             $_SESSION[self::$login_key] = $id;
         }
     }
-    User::login([]);
+    var_dump(User::login(["username"=>"Admin","password"=>"123456"]));
 ?>

@@ -88,7 +88,7 @@
             $hash = null;
             
             $db = DB::getInstance();
-            list($user_id, $salt) = array_values($db->select("user", ["id", "salt"], "`user` = ?",["Admin"]));
+            list($user_id, $salt) = array_values($db->select("user", ["id", "salt"], "`user` = ?",["username"]));
             SC::password($password, $hash, $salt);
             $db->execute("SELECT `hash` = ? AS `v` FROM `user` WHERE `id` = ?", [new Bytes($hash), $user_id]);
 

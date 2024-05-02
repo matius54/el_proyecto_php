@@ -14,13 +14,15 @@
                 case "login":
                     // user::login(($_POST));
                     if ($user_id = user::login($_POST)) {
-                        if (access::test("dashboard.access", "user_id")) {
+                        if (access::test("dashboard.access", $user_id)) {
                             //tienes acceso a ver el panel de control
-                            url::redirect("../../login.php");
+
                         }
                     } else {
                         //devuelve al formulario 
+                        url::redirect("../../login.php");
                     }
+                    var_dump($user_id);
                     break;
                 default:
                     URL::redirect("./");
@@ -39,4 +41,5 @@
         Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
         http_response_code(500);
     }
+    echo "";
 ?>

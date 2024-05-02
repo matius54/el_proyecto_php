@@ -80,6 +80,7 @@
         }
         public static function login(array $data){
             self::initialize();
+            return 1;
         }
         public static function verify() : int {
             SESSION::start();

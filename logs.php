@@ -12,6 +12,7 @@
     Template::render("header",["title" => $title]);
     Template::render("navbar",[
         "back" => "./dashboard.php",
+        "name" => "Volver al panel del control",
         "items" => [
             [
                 "name" => "Informacion",

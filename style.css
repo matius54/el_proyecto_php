@@ -530,7 +530,7 @@ dialog .icons a:hover, dialog .icons a.selected {
     background-color: rgba(0, 0, 0, 0.35);
 }
 
-input , textarea {
+input , textarea, select {
     background-color: var(--second-color);
     color: var(--over-second-color);
     font-size: 1.5rem;
@@ -619,7 +619,7 @@ header.nav div.options {
 
 header.nav div.options.left {
     margin-right: auto;
-    margin-left: 4rem;
+    margin-left: 6rem;
     justify-content: start;
 }
 

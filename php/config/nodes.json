@@ -12,9 +12,10 @@
         "name":"Acceso al panel de control",
         "description":"Puede ver el panel de control"
     },
-    "login.access":{
-        "name":"Acceso al panel de control",
-        "description":"Puede ver el panel de control"
+    "test.test":{
+        "cathegory":"",
+        "name":"",
+        "description":""
     },
     "admin.bypass.all":{
         "cathegory":"Administrativo",

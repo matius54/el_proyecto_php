@@ -12,22 +12,23 @@
         if(URL::isPost()){
             switch($access){
                 case "login":
-                    // user::login(($_POST));
-                    if ($user_id = user::login($_POST)) {
-                        if (access::test("dashboard.access", $user_id)) {
-                            //tienes acceso a ver el panel de control
-
-                        }
-                    } else {
-                        //devuelve al formulario 
-                        url::redirect("../../login.php");
-                    }
-                    
-                    break;
+                    user::login($_POST);
+                break;
+                case "register":
+                    user::register($_POST);
+                    die();
+                break;
                 default:
-                    URL::redirect("./");
-
-                    break;
+                    //XD
+                break;
+            }
+            URL::redirect("../../");
+        }elseif(URL::isGet()){
+            switch($access){
+                case "logout":
+                    user::logout();
+                    URL::redirect("../../login.php");
+                break;
             }
         }else{
             throw new HTTPException("unsupported method", 405);
@@ -39,7 +40,7 @@
     }catch(Exception $e) {
         //throw $e;
         Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
+        URL::redirect("../../");
         http_response_code(500);
     }
-    echo "";
 ?>

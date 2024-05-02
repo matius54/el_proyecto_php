@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAAA</title>
+</head>
+<body>
+    <div class="clock">
+
+    </div>
+</body>
+<script>
+    const clock = document.querySelector(".clock");
+    class Clock {
+        element;
+        constructor (element){
+            this.element = document.createElement("h1");
+            element.appendChild(element);
+            setInterval(()=>{
+                const date = new Date;
+                const hour = date.getHours();
+                const mins = date.getMinutes();
+                const secs = date.getSeconds();
+                const pm = hour > 12;
+                element.innerText = `${hour % 12}:${mins}:${secs} ${pm ? "pm" : "am"}`;
+            }, 1000);
+        }
+
+    }
+    const CLOCK = new Clock(clock);
+</script>
+</html>

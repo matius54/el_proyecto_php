@@ -10,18 +10,16 @@
     Template::render("navbar",[
         "items" => [
             [
-                "name" => "Registros",
-                "icon" => "record",
-                "href" => "./logs.php"
-            ],
-            [
-                "name" => "Cerrar sesion",
-                "icon" => "logout",
-                "href" => "#",
+                "name" => "Nuevo usuario",
+                "icon" => "new",
+                "href" => "./register.php",
                 "last" => true
-            ],
+            ]
         ]
     ]);
     Template::render("nav",["title" => $title]);
+    $users = User::getAll();
+    echo HTML::matrix2table($users->items);
+    echo $users->htmlMenu();
     Template::render("footer");
 ?>

@@ -57,7 +57,6 @@
             if(in_array($level, self::$levels)) $filter["level"] = $level;
             if(in_array($type, self::$types)) $filter["type"] = $type;
             $where = $filter ? " WHERE ".implode(" AND ", array_map(function ($val) {return "`$val` = ?";}, array_keys($filter))) : "";
-            var_dump($where);
             return new Paginator(
                 "SELECT `l`.`id`, `user`, `action`, `level`, `type` FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`$where ORDER BY `l`.`id` DESC",
                 "SELECT COUNT(*) FROM `log` as `l` LEFT JOIN `user` as `u` ON `user_id` = `u`.`id`$where",

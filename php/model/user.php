@@ -5,13 +5,14 @@
     require_once $base . "libs/utils.php";
     require_once $base . "libs/db.php";
     require_once $base . "libs/bytes.php";
+    require_once $base . "libs/paginator.php";
     
     class User {
         private static string $login_key = "login_user";
 
         private static array $default_user = [
             "user" => "Admin",
-            "password" => "123456",
+            "password" => "12345678",
             "first_name" => "The Lord",
             "last_name" => "Administrator",
             "role_id" => 1
@@ -30,6 +31,7 @@
         public static function initialize(){
             $db = DB::getInstance();
             if(!$db->getLastId("user")){
+                self::logout();
                 //necesita que los accesos esten inicializados
                 Access::initialize();
                 //registrar el usuario por defecto
@@ -37,7 +39,6 @@
             }
         }
         public static function register(array $data, bool $bypassVerify = false){
-
             //obtener el id del usuario logeado
             if(!$bypassVerify and !($user_id = self::verify())) return null;
             
@@ -48,6 +49,7 @@
             }
             //obtener la contrase;a y generar el hash y salt
             $password = $data["password"] ?? "";
+            if($password !== $data["password2"] ?? "") throw new HTTPException("Las contrase;as no coinciden", 401);
             $hash = "";
             $salt = "";
             SC::password($password, $hash, $salt);
@@ -66,12 +68,11 @@
             //si envias el rol = register + asignacion de rol
             if($role_id = $data["role_id"] ?? 0){
                 //TODO asignarle el rol correspondiente al nuevo usuario
-
+                Access::setRole($role_id, $new_user_id);
                 //var_dump($user_id);
                 //var_dump($new_user_id);
                 //var_dump($role_id);
             }
-
             return $new_user_id;
         }
 
@@ -82,31 +83,50 @@
             //inicializar user
             self::initialize();
 
+            if(self::verify()) throw new HTTPException("Ya has iniciado sesion", 401);
+
             //obtener los datos del $_POST
             $username = $data["username"] ?? "";
             $password = $data["password"] ?? "";
             $hash = null;
             
             $db = DB::getInstance();
-            list($user_id, $salt) = array_values($db->select("user", ["id", "salt"], "`user` = ?",["username"]));
+            $response = $db->select("user", ["id", "salt"], "`user` = ?",[$username]);
+            if(!$response) throw new HTTPException("Usuario no encontrado", 401);
+            list($user_id, $salt) = array_values($response);
+            if(!Access::test("user.login", $user_id)) throw new HTTPException("No tienes acceso", 401);
             SC::password($password, $hash, $salt);
             $db->execute("SELECT `hash` = ? AS `v` FROM `user` WHERE `id` = ?", [new Bytes($hash), $user_id]);
 
             if($db->fetch()["v"] ?? null){
                 //esta validado
+                self::log($user_id);
                 return $user_id;
             }
+            throw new HTTPException("Contrasena incorrecta", 401);
             return null;
         }
         public static function verify() : int {
             SESSION::start();
-            return $_SESSION[self::$login_key] ?? 0;
+            $user_id = $_SESSION[self::$login_key] ?? 0;
+            $db = DB::getInstance();
+            $validation = $db->select("user",[],"`id` = ?",[$user_id], return1: true);
+            return $validation ? $user_id : 0;
         }
         public static function log(int $id){
             SESSION::start();
             if(!isset($_SESSION[self::$login_key]))
             $_SESSION[self::$login_key] = $id;
         }
+        public static function logout(){
+            SESSION::start();
+            unset($_SESSION[self::$login_key]);
+        }
+        public static function getAll() : Paginator {
+            $sql = "SELECT `id`, `user`, `first_name`, `last_name`, `birthday` FROM `user`";
+            $count = "SELECT COUNT(*) FROM `user`";
+            return new Paginator($sql, $count);
+        }
     }
-    var_dump(User::login(["username"=>"Admin","password"=>"123456"]));
+    //var_dump(User::login(["username"=>"Admin","password"=>"123456"]));
 ?>

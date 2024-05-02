@@ -2,9 +2,12 @@
     $title = "Panel de control";
     $base = "php/";
     require_once "php/model/user.php";
+    require_once "php/model/access.php";
     require_once "php/libs/template.php";
 
-    $user_id = User::verify();
+    
+    if(!$user_id = User::verify()) URL::redirect("./login.php");
+    if(!Access::test("dashboard.access", $user_id)) die("No tienes acceso para ver esta pagina");
     
     Template::render("header",["title" => $title]);
     Template::render("navbar",[
@@ -37,7 +40,7 @@
             [
                 "name" => "Cerrar sesion",
                 "icon" => "logout",
-                "href" => "#",
+                "href" => "php/controller/user.php?a=logout",
                 "last" => true
             ],
         ]

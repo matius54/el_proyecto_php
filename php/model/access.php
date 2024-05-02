@@ -126,6 +126,16 @@
             return $pag->toArray();
         }
 
+        public static function getAllkv() : array {
+            $db = DB::getInstance();
+            $result = $db->select("role", ["id", "name"], all: true, htmlspecialchars: true);
+            $kvList = [];
+            foreach($result as $row){
+                $kvList[$row["id"]] = $row["name"];
+            }
+            return $kvList;
+        }
+
         public static function get($id) : array {
             if(!VALIDATE::id($id)) throw new HTTPException("id $id is not valid", 422);
 
@@ -218,15 +228,13 @@
             
         }
 
-        public static function test(string $key, int $user_id = 0) : bool {
+        public static function test(string $key, int $user_id) : bool {
             //para obtener si el permiso es valido necesitas tener el (key del permiso, y el usuario)
             //-> obtiene todos los roles asignados a ese usuario,
             //itera sobre todos los nodos de los roles usando el key especificado en el orden de los niveles
 
             //si no haz iniciado sesion o el id del usuario es invalido todos los permisos se evaluaran como false
 
-            //TODO esta logica es mejorable pero asi funciona
-            $user_id = $user_id ? $user_id : User::verify();
             if(!$user_id) return false;
 
             //si el key no se encuentra en la lista de nodes.json no procede
@@ -294,6 +302,22 @@
                 ]);
             }
             Logger::log("--- Initialize access ends ---",LoggerType::ADD,LoggerLevel::WARNING);
+        }
+        
+        public static function setRole(int $role_id, int $user_id = 0){
+            $curr_user_id = User::verify();
+            if(!$curr_user_id and !$user_id) return;
+            if(!$user_id) $user_id = $curr_user_id;
+            if($user_id === $curr_user_id){
+                //
+            }else{
+                //
+            }
+            $db = DB::getInstance();
+            $db->insert("user_role",[
+                "user_id" => $user_id,
+                "role_id" => $role_id]
+            );
         }
     }
 ?>

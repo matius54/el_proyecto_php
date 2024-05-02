@@ -33,13 +33,13 @@
                 //necesita que los accesos esten inicializados
                 Access::initialize();
                 //registrar el usuario por defecto
-                self::register(self::$default_user);
+                self::register(self::$default_user, true);
             }
         }
-        public static function register(array $data){
+        public static function register(array $data, bool $bypassVerify = false){
 
             //obtener el id del usuario logeado
-            if(!$user_id = self::verify()) return null;
+            if(!$bypassVerify and !($user_id = self::verify())) return null;
             
             $filtered = [];
             //obtener toda la informacion del post
@@ -78,8 +78,12 @@
         public static function delete(int $id) : bool {
             return false;
         }
-        public static function login(array $data){
+        public static function login(array $data) : int {
             self::initialize();
+            $db = DB::getInstance();
+            $salt = $db->select("user", ["salt"], "`id` = ?",[1], return1: true);
+            var_dump($salt);
+            return 1;
         }
         public static function verify() : int {
             SESSION::start();
@@ -91,5 +95,5 @@
             $_SESSION[self::$login_key] = $id;
         }
     }
-    //User::log(1);
+    User::login([]);
 ?>

@@ -16,7 +16,7 @@
         element;
         constructor (element){
             this.element = document.createElement("h1");
-            element.appendChild(element);
+            element.appendChild(this.element);
             setInterval(()=>{
                 const date = new Date;
                 const hour = date.getHours();

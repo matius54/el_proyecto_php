@@ -6,6 +6,23 @@
     require_once "php/libs/template.php";
     Template::render("header",["title" => $title]);
     Template::render("nav",["title" => $title]);
-    var_dump(User::verify());
+    Template::render("card", [
+        "title" => "quetal",
+        "items" => [
+            [
+                "href" => "./",
+                "name" => "hmm1"
+            ],
+            [
+                "href" => "./",
+                "name" => "hmm2"
+            ],
+            [
+                "href" => "./",
+                "name" => "hmm3"
+            ]
+        ]
+    ]);
+    //var_dump(User::verify());
     Template::render("footer");
 ?>

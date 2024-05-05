@@ -41,7 +41,7 @@
                 "name" => "Cerrar sesion",
                 "icon" => "logout",
                 "href" => "php/controller/user.php?a=logout",
-                "last" => true
+                "class" => ["last"]
             ],
         ]
     ]);

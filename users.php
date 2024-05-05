@@ -12,8 +12,7 @@
             [
                 "name" => "Nuevo usuario",
                 "icon" => "new",
-                "href" => "./register.php",
-                "last" => true
+                "href" => "./register.php"
             ]
         ]
     ]);

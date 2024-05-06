@@ -7,30 +7,9 @@
     <title>Prueba de generador de pdf </title>
 </head>
 <body>
-    <h1></h1>
+  <table></table>
+</body>
 <script src="./frontend_libs/external/jspdf.umd.min.js"></script>
 <script src="./frontend_libs/external/jspdf.plugin.autotable.js"></script>
-
-<script>
-    const doc = new jsPDF();
-
-        autotable(doc,{ html:'#my_tabla'});
-        
-        autotable(doc,{
-            head: [['Name', 'Email', 'Country']],
-     body: [
-         ['David', 'david@example.com', 'Sweden'],
-         ['Castille', 'castille@example.com', 'Spain'],
-  
-     ],
-})
-
-autoTable.default(doc, { html: '#my-table' });
-
-doc.save('table.pdf');
-
-</script>
-
-
-</body>
+<script src="./frontend_libs/table2pdf.js"></script>
 </html>

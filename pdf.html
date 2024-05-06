@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de generador de pdf </title>
+</head>
+<body>
+    <h1></h1>
+<script src="./frontend_libs/external/jspdf.umd.min.js"></script>
+<script src="./frontend_libs/external/jspdf.plugin.autotable.js"></script>
+
+<script>
+    const doc = new jsPDF();
+
+        autotable(doc,{ html:'#my_tabla'});
+        
+        autotable(doc,{
+            head: [['Name', 'Email', 'Country']],
+     body: [
+         ['David', 'david@example.com', 'Sweden'],
+         ['Castille', 'castille@example.com', 'Spain'],
+  
+     ],
+})
+
+autoTable.default(doc, { html: '#my-table' });
+
+doc.save('table.pdf');
+
+</script>
+
+
+</body>
+</html>

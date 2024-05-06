@@ -25,14 +25,14 @@ class ThemeUI {
         mainColor:{
             css:"--main-color",
             light:"#FFFFFF",
-            dark:"#8a2be2",
+            dark:"#1d6fb8",
             hex:true,
             rgb:true
         },
         secondColor:{
             css:"--second-color",
             light:"#c8c8ff",
-            dark:"#3f1f7a",
+            dark:"#144d80",
             hex:true,
             rgb:true
         },

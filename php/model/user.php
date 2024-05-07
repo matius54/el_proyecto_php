@@ -19,13 +19,13 @@
         ];
 
         private static array $all = [
-            "pasword",
             "user",
             "first_name",
             "last_name",
             "ci",
             "birthday",
-            "color"
+            "color",
+            "address"
         ];
 
         public static function initialize(){
@@ -48,11 +48,22 @@
                 if(isset($data[$value])) $filtered[$value] = $data[$value];
             }
             //obtener la contrase;a y generar el hash y salt
+
             $password = $data["password"] ?? "";
+            //si esta $bypassVerify se autoasigna password2
+            if($bypassVerify)$data["password2"] = $password;
+            
             if($password !== $data["password2"] ?? "") throw new HTTPException("Las contrase;as no coinciden", 401);
             $hash = "";
             $salt = "";
             SC::password($password, $hash, $salt);
+
+            $ci = ($data["ci-type"] ?? "V") . "-" . ($data["ci"] ?? "0");
+            if(VALIDATE::ci($ci)){
+                $filtered["ci"] = $ci;
+            }else{
+                throw new HTTPException("Cedula '$ci' invalida", 309);
+            }
 
             //a;adirlos al filtered listo para insertar
             $filtered["hash"] = new Bytes($hash);

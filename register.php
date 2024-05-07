@@ -12,7 +12,7 @@
     Template::render("header",["title" => $title]);
     Template::render("nav",["title" => $title]);
 ?>
-
+<img class="icon fundacite-logo" src="./icons/fundacite_min.svg" id="fundacite">
 <form action="php/controller/user.php?a=register" method="post" autocomplete="off" class="card register">
     <h1>Registrarse</h1>
     <?php
@@ -24,6 +24,14 @@
     <input type="password" name="password" placeholder="Contraseña" required>
     <input type="password" name="password2" placeholder="Confirmar contraseña" required same="password">
     <input type="email" name="email" placeholder="Correo" required>
+    <div class="ci">
+        <select name="ci-type">
+            <option>V</option>
+            <option>E</option>
+        </select>
+        <input type="number" name="ci" placeholder="Cedula" required>
+    </div>
+    <textarea name="address" placeholder="Direccion"></textarea>
     <label>Fecha de nacimiento</label>
     <input type="date">
     <div class="options">

@@ -107,7 +107,25 @@ header.nav h1 {
     width: 80%;
     padding: 0.5rem;
     background-color: transparent;
+
 }
+
+.card .ci {
+    max-width: 80%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.card .ci select {
+    width: 20%;
+}
+
+.card .ci input {
+    width: 90%;
+}
+
+
 .card .status {
     background-color: black;
     padding: 1em;
@@ -627,4 +645,12 @@ header.nav div.options.right {
     margin-left: auto;
     margin-right: 4rem;
     justify-content: end;
+}
+
+.icon.fundacite-logo  {
+    width: 70%;
+    height: unset;
+    max-height: unset;
+    max-width: unset;
+    cursor: not-allowed;
 }

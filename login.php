@@ -1,5 +1,5 @@
 <?php
-    $title = "Iniciar sesion";
+    $title = "Programa de supervision de usuarios";
 
     $base = "php/";
     require_once "php/model/user.php";
@@ -12,6 +12,7 @@
     Template::render("header",["title" => $title]);
     Template::render("nav",["title" => $title]);
 ?>
+<img class="icon fundacite-logo" src="./icons/fundacite_min.svg" id="fundacite">
 <form action="php/controller/user.php?a=login" method="post" autocomplete="off" class="card login">
     <h1>Iniciar sesión</h1>
     <input type="text" name="username" placeholder="Nombre de usuario" match required>

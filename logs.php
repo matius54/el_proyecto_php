@@ -39,7 +39,7 @@
                 "class" => [$level === "error" ? "selected" : ""]
             ],
             [
-                "name" => "A;adir",
+                "name" => "Añadir",
                 "icon" => "new",
                 "href" => URL::URIquery(["type"=>"add"], unset: ["level"]),
                 "class" => [$type === "add" ? "selected" : "", "last"]

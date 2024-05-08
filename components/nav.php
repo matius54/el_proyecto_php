@@ -7,11 +7,9 @@
 ?>
 <header class="nav">
     <div class="options left">
-        <?php if(isset($user_id)): ?>
-        <a title="Cerrar sesion" href="<?= $base ?>/controller/user.php?a=logout">
-            <img class="icon button" id="logout" src="icons/logout.svg">
+        <a title="Volver" onclick="history.back()">
+            <img class="icon button" id="accordion" src="icons/accordion.svg" style="transform: rotate(90deg);">
         </a>
-        <?php endif; ?>
     </div>
     <h1><?= $title ?? "Titulo" ?></h1>
     <div class="options right">

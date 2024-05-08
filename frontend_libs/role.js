@@ -273,7 +273,8 @@ class Dialog {
         "logout",
         "eye",
         "light",
-        "dark"
+        "dark",
+        "pdf"
     ];
     INPUTS = ["name","description","level"];
     newDialog;

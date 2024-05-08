@@ -13,12 +13,12 @@
     Template::render("navbar",[
         "items" => [
             [
-                "name" => "Registros",
+                "name" => "Auditoria",
                 "icon" => "record",
                 "href" => "./logs.php"
             ],
             [
-                "name" => "Mi perfil",
+                "name" => "Perfil",
                 "icon" => "profile",
                 "href" => "#"
             ],
@@ -33,8 +33,8 @@
                 "href" => "./users.php"
             ],
             [
-                "name" => "Calendario",
-                "icon" => "profile2",
+                "name" => "Reporte",
+                "icon" => "pdf",
                 "href" => "#"
             ],
             [

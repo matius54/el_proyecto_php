@@ -25,5 +25,42 @@
     "admin.bypass.levelHierarchy":{
         "name":"Control total de niveles",
         "description":"Permite tener acceso a modificar todos los roles, incluso si su nivel es mayor que el tuyo"
+    },
+    "form.register.username":{
+        "cathegory":"Registrar usuario",
+        "name":"Formulario Nombre de usuario",
+        "description":"Te da acceso a tener un usuario en el sistema"
+    },
+    "form.register.firstname":{
+        "name":"Formulario Nombre",
+        "description":"Te da acceso a tener un nombre en el sistema"
+    },
+    "form.register.lastname":{
+        "name":"Formulario Apellido",
+        "description":"Te da acceso a tener un apellido en el sistema"
+    },
+    "form.register.password":{
+        "name":"Formulario contrase;a",
+        "description":"Te da acceso a tener una contrase;a en el sistema"
+    },
+    "form.register.email":{
+        "name":"Formulario Correo Electronico",
+        "description":"Te da acceso a tener un correo en el sistema"
+    },
+    "form.register.ci":{
+        "name":"Formulario Cedula de Identidad",
+        "description":"Te da acceso a tener una cedula en el sistema"
+    },
+    "form.register.address":{
+        "name":"Formulario de direccion",
+        "description":"Te da acceso a tener una direccion en el sistema"
+    },
+    "form.register.birthday":{
+        "name":"Formulario Fecha de nacimiento",
+        "description":"Te da acceso a tener una fecha de nacimiento en el sistema"
+    },
+    "form.register.photo":{
+        "name":"Formulario de perfil",
+        "description":"Te da acceso a tener un perfil en el sistema"
     }
 }

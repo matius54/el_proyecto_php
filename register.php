@@ -33,7 +33,7 @@
     </div>
     <textarea name="address" placeholder="Direccion"></textarea>
     <label>Fecha de nacimiento</label>
-    <input type="date">
+    <input type="date" name="birthday">
     <div class="options">
         <button type="submit">Registrarse</button>
         <button type="reset">Limpiar campos</button>

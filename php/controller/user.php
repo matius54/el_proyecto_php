@@ -16,7 +16,6 @@
                 break;
                 case "register":
                     user::register($_POST);
-                    die();
                 break;
                 default:
                     //XD
@@ -40,7 +39,6 @@
     }catch(Exception $e) {
         //throw $e;
         Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
-        URL::redirect("../../");
         http_response_code(500);
     }
 ?>

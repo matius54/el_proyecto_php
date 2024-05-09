@@ -333,7 +333,12 @@ a {
     flex-direction: row;
     overflow: hidden;
     border-radius: 1rem;
+    gap: .5rem;
     min-width: fit-content;
+}
+
+.list .options.role {
+    gap: unset;
 }
 
 .list .options a[id] {

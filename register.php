@@ -18,18 +18,18 @@
     <?php
         echo HTML::array2list(Role::getAllkv(), ["name"=>"role_id"]);
     ?>
-    <input type="text" name="user" placeholder="Nombre de usuario" match required>
-    <input type="text" name="first_name" placeholder="Nombres" required>
-    <input type="text" name="last_name" placeholder="Apellidos" required>
-    <input type="password" name="password" placeholder="Contraseña" required>
-    <input type="password" name="password2" placeholder="Confirmar contraseña" required same="password">
-    <input type="email" name="email" placeholder="Correo" required>
+    <input type="text" name="user" placeholder="Nombre de usuario" match>
+    <input type="text" name="first_name" placeholder="Nombres">
+    <input type="text" name="last_name" placeholder="Apellidos">
+    <input type="password" name="password" placeholder="Contraseña">
+    <input type="password" name="password2" placeholder="Confirmar contraseña" same="password">
+    <input type="email" name="email" placeholder="Correo">
     <div class="ci">
         <select name="ci-type">
             <option>V</option>
             <option>E</option>
         </select>
-        <input type="number" name="ci" placeholder="Cedula" required>
+        <input type="number" name="ci" placeholder="Cedula">
     </div>
     <textarea name="address" placeholder="Direccion"></textarea>
     <label class="date">Fecha de nacimiento</label>

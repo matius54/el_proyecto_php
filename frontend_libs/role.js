@@ -145,7 +145,7 @@ class Node {
         title.innerText = json.name;
         
         const options = document.createElement("div");
-        options.classList.add("options");
+        options.classList.add("options","role");
 
         const no = document.createElement("a");
         no.innerText = "X";

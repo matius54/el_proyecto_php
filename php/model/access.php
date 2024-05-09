@@ -329,9 +329,11 @@
                 //
             }
             $db = DB::getInstance();
-            $db->insert("user_role",[
-                "user_id" => $user_id,
-                "role_id" => $role_id]
+            $db->insert("user_role",
+                [
+                    "user_id" => $user_id,
+                    "role_id" => $role_id
+                ]
             );
         }
 

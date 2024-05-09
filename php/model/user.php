@@ -68,11 +68,15 @@
             }
 
             //a;adirlos al filtered listo para insertar
-            $filtered["hash"] = new Bytes($hash);
-            $filtered["salt"] = new Bytes($salt);
+            if($password){
+                $filtered["hash"] = new Bytes($hash);
+                $filtered["salt"] = new Bytes($salt);
+            }
             $filtered["private"] = SC::randomHexStr(16);
             $filtered["created_at"] = TIME::now();
 
+
+            if(!($filtered["user"] ?? "")) $filtered["user"] = $filtered["first_name"];
             //insertar en la base de datos
             $db = DB::getInstance();
             if(!$db->insert("user", $filtered)) return null;
@@ -82,9 +86,6 @@
             if($role_id = $data["role_id"] ?? 0){
                 //TODO asignarle el rol correspondiente al nuevo usuario
                 Access::setRole($role_id, $new_user_id);
-                //var_dump($user_id);
-                //var_dump($new_user_id);
-                //var_dump($role_id);
             }
             return $new_user_id;
         }
@@ -135,6 +136,12 @@
             SESSION::start();
             unset($_SESSION[self::$login_key]);
         }
+        public static function get(int $id) : array {
+            if(!VALIDATE::id($id)) return [];
+            $db = DB::getInstance();
+            $db->execute(self::$select_user . " WHERE `id` = ?", $id);
+            return $db->fetch(true);
+        }
         public static function getAll() : Paginator {
             $sql = self::$select_user;
             $count = "SELECT COUNT(*) FROM `user`";
@@ -143,7 +150,7 @@
         public static function search(string $string) : Paginator{
             //campos en los cuales se buscaran coincidencias
             $search = ["user","first_name","last_name","birthday","ci","color","private"];
-            
+
             $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0";}, $search);
             $search_like = array_map(function ($v) {return "`$v` LIKE ?";}, $search);
             $sql = " WHERE " . implode(" OR ", array_merge($search_instr, $search_like));

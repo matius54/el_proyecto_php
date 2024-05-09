@@ -7,6 +7,7 @@
         "nodes":{
             "user.login":true,
             "user.register":true,
+            "crm.exit":true,
             "admin.bypass.all":true,
             "admin.bypass.levelHierarchy":true,
             "form.register.username":true,
@@ -26,6 +27,7 @@
         "level":2,
         "icon":"check-on",
         "nodes":{
+            "crm.exit":true,
             "form.register.username":false,
             "form.register.firstname":true,
             "form.register.lastname":true,

@@ -2,37 +2,28 @@
     $base = $base ?? "../";  
     
     require_once $base . "libs/utils.php";
+
     require_once $base . "model/access.php";
-    require_once $base . "model/user.php";
+    require_once $base . "model/crm.php";
 
     //a --> access
     try{
         User::initialize();
         $access = URL::decode("a");
-        if(URL::isPost()){
+        if(URL::isGet()){
             switch($access){
-                case "login":
-                    user::login($_POST);
-                break;
-                case "register":
-                    user::register($_POST);
-                break;
-                default:
-                    //XD
-                break;
-            }
-            URL::redirect("../../");
-        }elseif(URL::isGet()){
-            switch($access){
-                case "logout":
-                    user::logout();
-                    URL::redirect("../../login.php");
+                case "enter":
+                    $id = URL::decode("id");
+                    $exit = URL::decode("exit");
+                    Event::register($id, $exit);
+                    URL::redirect("../../enter.php?id=$id");
                 break;
             }
         }else{
             throw new HTTPException("unsupported method", 405);
         }
     }catch(HTTPException $e) {
+        throw $e;
         http_response_code($e->getCode());
         Logger::log("Access controll: Error in $access ".$e->getMessage()." (HTTP ".$e->getCode().")", null, LoggerLevel::ERROR);
         SESSION::start();

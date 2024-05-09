@@ -8,13 +8,16 @@
         <a title="Expandir">
             <?php Template::render("icon",["icon" => "accordion", "button" => 1]) ?>
         </a>
-        <h2><?= $user ?? "" ?></h2>
+        <h2><?= $user ? $user : ($first_name ? $first_name : $ci) ?></h2>
         <div class="options">
-        <a title="Borrar">
+        <a title="Borrar" href="#">
             <?php Template::render("icon",["icon" => "delete", "button" => 1]) ?>
         </a>
-        <a title="Editar">
+        <a title="Editar" href="#">
             <?php Template::render("icon",["icon" => "edit", "button" => 1]) ?>
+        </a>
+        <a title="Registrar Entrada - Salida" href="./enter.php?id=<?= $id ?>">
+            <?php Template::render("icon",["icon" => "login", "button" => 1]) ?>
         </a>
         </div>
     </div>

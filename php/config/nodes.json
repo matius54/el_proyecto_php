@@ -1,4 +1,9 @@
 {
+    "crm.exit":{
+        "cathegory":"Misc",
+        "name":"Registrar salida",
+        "description":"Permite al usuario registrar salidas"
+    },
     "user.login":{
         "cathegory":"Accesos",
         "name":"Iniciar sesion",

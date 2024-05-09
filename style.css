@@ -265,6 +265,11 @@ nav.navbar span.level {
     cursor: pointer;
 }
 
+.button.small {
+    font-size: 1rem;
+    padding: .5rem;
+}
+
 .button:hover {
     background-color: rgba(255,255,255,0.25);
 }
@@ -638,6 +643,7 @@ table th {
 header.nav div.options {
     display: flex;
     flex-direction: row;
+    gap: .5rem;
 }
 
 header.nav div.options.left {

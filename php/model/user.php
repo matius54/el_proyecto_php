@@ -11,7 +11,7 @@
         private static string $login_key = "login_user";
 
         private static array $default_user = [
-            "user" => "Admin",
+            "user" => "admin",
             "password" => "12345678",
             "first_name" => "The Lord",
             "last_name" => "Administrator",

@@ -41,6 +41,10 @@
                     $id = $json["id"] ?? null;
                     http_response_code(Role::delete($id) ? 200 : 304);
                 break;
+                case "getInputsForm":
+                    $id = $json["id"] ?? 1;
+                    JSON::sendJson(Access::getInputsForm($id));
+                break;
             }
         }else{
             throw new HTTPException("unsupported method", 405);

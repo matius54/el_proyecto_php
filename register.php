@@ -32,7 +32,7 @@
         <input type="number" name="ci" placeholder="Cedula" required>
     </div>
     <textarea name="address" placeholder="Direccion"></textarea>
-    <label>Fecha de nacimiento</label>
+    <label class="date">Fecha de nacimiento</label>
     <input type="date" name="birthday">
     <div class="options">
         <button type="submit">Registrarse</button>
@@ -44,3 +44,36 @@
 <?php
     Template::render("footer");
 ?>
+<script src="./frontend_libs/ajax.js"></script>
+<script>
+    const registerInputs = {
+        "register.username" : "input[name='user']",
+        "register.firstname" : "input[name='first_name']",
+        "register.lastname" : "input[name='last_name']",
+        "register.password" : "input[type='password']",
+        "register.email" : "input[name='email']",
+        "register.ci" : "div.ci select , div.ci input",
+        "register.address" : "textarea[name='address']",
+        "register.birthday" : "input[name='birthday'] , label.date",
+        "register.photo" : "button[type='button']"
+    }
+    const updateInputs = () => {
+        const element = document.querySelector("select[name='role_id']");
+        const id = parseInt(element.value);
+        ajax("./php/controller/access.php?a=getInputsForm", {id : id})
+        .then(json => {
+            for(const rinputs in registerInputs){
+                const active = json[rinputs];
+                const input = document.querySelectorAll(registerInputs[rinputs]);
+                if(active){
+                    input.forEach(e => e.removeAttribute("hidden"));
+                }else{
+                    input.forEach(e => e.setAttribute("hidden","hidden"));
+                }
+            }
+        });
+
+    };
+    document.querySelector("select[name='role_id']").addEventListener("input", updateInputs);
+    updateInputs();
+</script>

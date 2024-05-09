@@ -228,23 +228,28 @@
             
         }
 
-        public static function test(string $key, int $user_id) : bool {
+        public static function test(string $key, int $user_id, int $role_id = 0) : bool {
             //para obtener si el permiso es valido necesitas tener el (key del permiso, y el usuario)
             //-> obtiene todos los roles asignados a ese usuario,
             //itera sobre todos los nodos de los roles usando el key especificado en el orden de los niveles
 
             //si no haz iniciado sesion o el id del usuario es invalido todos los permisos se evaluaran como false
 
-            if(!$user_id) return false;
+            if(!$user_id and !$role_id) return false;
 
             //si el key no se encuentra en la lista de nodes.json no procede
             if(!Node::isValid($key)) return false;
             //puede que este en la base de datos pero sino f.
             
             $db = DB::getInstance();
-            $sql = "SELECT r.id FROM user_role JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY level DESC";
-            $db->execute($sql, $user_id);
-            $roles = $db->fetchAll();
+            if($role_id){
+                //si el role id es suministrado se salta el paso de obtenerlo a travez del user_id
+                $roles = [["id" => $role_id]];
+            }else{
+                $sql = "SELECT r.id FROM user_role JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY level DESC";
+                $db->execute($sql, $user_id);
+                $roles = $db->fetchAll();
+            }
             //por defecto si no tiene ningun permiso este sera negado
             $access = false;
             foreach ($roles as $value) {
@@ -284,23 +289,33 @@
             //si existe algun rol en la base de datos, termina
             if($db->getLastId("role")) return;
             Logger::log("--- Initialize access begins ---",LoggerType::ADD,LoggerLevel::WARNING);
-            //obtiene todos los node
-            $allNodes = array_keys(Node::getAll());
-            //inicializa rol administrador
-            $role_id = Role::new([
-                "name" => "Admin",
-                "description" => "Rol con todos los permisos de administrador",
-                "level" => 1,
-                "icon" => "adjustments-pause"
-            ]);
-            //le da acceso a todos los nodos para el rol de administrador
-            foreach ($allNodes as $node) {
-                Node::set([
-                    "id" => $role_id,
-                    "key" => $node,
-                    "value" => true
+
+            global $base;
+            $defaultRoles = json_decode(
+                json: file_get_contents($base . "config/default_roles.json") ?? "{}",
+                associative: true
+            ) ?? [];
+            
+            foreach ($defaultRoles as $value) {
+                //inicializa rol
+                $role_id = Role::new([
+                    "name" => $value["name"],
+                    "description" => $value["description"],
+                    "level" => $value["level"],
+                    "icon" => $value["icon"]
                 ]);
+
+                //le da acceso a todos los nodos configurados
+                foreach ($value["nodes"] ?? [] as $key => $value) {
+                    Node::set([
+                        "id" => $role_id,
+                        "key" => $key,
+                        "value" => $value
+                    ]);
+                }
             }
+            
+            
             Logger::log("--- Initialize access ends ---",LoggerType::ADD,LoggerLevel::WARNING);
         }
         
@@ -318,6 +333,22 @@
                 "user_id" => $user_id,
                 "role_id" => $role_id]
             );
+        }
+
+        public static function getInputsForm(int $role_id) : array {
+            $allNodes = array_keys(Node::getAll());
+            $allNodes = array_filter($allNodes, function ($value) {return str_starts_with($value, "form.");});
+            $allNodes = array_values($allNodes);
+            $nodeAccess = [];
+            foreach ($allNodes as $node) {
+                $access = self::test($node, 0, $role_id);
+                $values = explode(".", $node);
+                unset($values[0]);
+                $values = array_values($values);
+                $node = implode(".",$values);
+                $nodeAccess[$node] = $access;
+            }
+            return $nodeAccess;
         }
     }
 ?>

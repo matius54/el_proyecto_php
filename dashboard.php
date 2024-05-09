@@ -46,5 +46,8 @@
         ]
     ]);
     Template::render("nav",["title" => $title]);
+    ?>
+    <img class="icon fundacite-logo" src="./icons/fundacite_min.svg" id="fundacite">
+    <?php
     Template::render("footer");
 ?>

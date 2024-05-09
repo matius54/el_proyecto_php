@@ -276,7 +276,7 @@
             return [];
         }
         public static function sendJson(array $response) : void {
-            $json = json_encode($response);
+            $json = json_encode($response, JSON_UNESCAPED_UNICODE);
             header("Content-Type: application/json; charset=utf-8");
             echo $json;
             die();

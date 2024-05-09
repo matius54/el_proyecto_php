@@ -65,6 +65,7 @@
             for(const rinputs in registerInputs){
                 const active = json[rinputs];
                 const input = document.querySelectorAll(registerInputs[rinputs]);
+                if(!input) continue;
                 if(active){
                     input.forEach(e => e.removeAttribute("hidden"));
                 }else{

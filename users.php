@@ -17,8 +17,22 @@
         ]
     ]);
     Template::render("nav",["title" => $title]);
-    $users = User::getAll();
-    echo HTML::matrix2table($users->items);
+    echo "<main class='viewer'>";
+    ?>
+    <form>
+        <input type="text" placeholder="buscar" name="search">
+        <button class="button">Buscar</button>
+    </form>
+    <?php
+    $search = URL::decode("search");
+    if($search){
+        $users = User::search($search);
+    }else{
+        $users = User::getAll();
+    }
+    Template::render("user",["users"=>$users->items]);
     echo $users->htmlMenu();
+    echo "</main>";
     Template::render("footer");
 ?>
+<script src="./frontend_libs/list.js"></script>

@@ -62,8 +62,14 @@
         }
     
         public function htmlMenu() : string {
-            if($this->lastPage === 0) return "<i>Lista vacía.</i>";
-            $html = "<i>Mostrando página ".$this->page." de ".$this->lastPage;
+            $style = "
+                width: 100%;
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            ";
+            if($this->lastPage === 0) return "<i style='$style'>Lista vacía.</i>";
+            $html = "<i style='$style'>Mostrando página ".$this->page." de ".$this->lastPage;
             if($this->itemCount !== null) $html .= ", con un total de ".$this->itemCount." elementos";
             $html .= ".</i>";
             $html .= "<ul class=\"navigator\">";

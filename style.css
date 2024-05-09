@@ -336,7 +336,7 @@ a {
     min-width: fit-content;
 }
 
-.list .options a {
+.list .options a[id] {
     padding: 0.4rem 1rem;
     user-select: none;
     cursor: pointer;
@@ -344,18 +344,18 @@ a {
     background-color: rgba(1,1,1,0.25);
 }
 
-.list .options a:first-child:hover ,
-.list .options a:first-child.selected {
+.list .options a[id='1']:hover ,
+.list .options a[id='1'].selected {
     background-color: rgba(256, 0, 0, 0.5);
 }
 
-.list .options a:hover ,
-.list .options a.selected {
+.list .options a[id='2']:hover ,
+.list .options a[id='2'].selected {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.list .options a:last-child:hover ,
-.list .options a:last-child.selected
+.list .options a[id='3']:hover ,
+.list .options a[id='3'].selected
 {
     background-color: rgba(0, 256, 0, 0.5);
 }

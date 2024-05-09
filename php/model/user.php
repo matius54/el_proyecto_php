@@ -8,6 +8,7 @@
     require_once $base . "libs/paginator.php";
     
     class User {
+        private static string $select_user = "SELECT `id`, `user`, `ci`, `first_name`, `last_name`, `birthday` FROM `user`";
         private static string $login_key = "login_user";
 
         private static array $default_user = [
@@ -135,9 +136,20 @@
             unset($_SESSION[self::$login_key]);
         }
         public static function getAll() : Paginator {
-            $sql = "SELECT `id`, `user`, `first_name`, `last_name`, `birthday` FROM `user`";
+            $sql = self::$select_user;
             $count = "SELECT COUNT(*) FROM `user`";
             return new Paginator($sql, $count);
+        }
+        public static function search(string $string) : Paginator{
+            //campos en los cuales se buscaran coincidencias
+            $search = ["user","first_name","last_name","birthday","ci","color","private"];
+            
+            $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0";}, $search);
+            $search_like = array_map(function ($v) {return "`$v` LIKE ?";}, $search);
+            $sql = " WHERE " . implode(" OR ", array_merge($search_instr, $search_like));
+            $args = array_fill(0, sizeof($search) * 2, $string);
+            $count = "SELECT COUNT(*) FROM `user`$sql";
+            return new Paginator(self::$select_user . $sql, $count, $args);
         }
     }
     //var_dump(User::login(["username"=>"Admin","password"=>"123456"]));

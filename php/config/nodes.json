@@ -1,6 +1,6 @@
 {
     "user.login":{
-        "cathegory":"test",
+        "cathegory":"Accesos",
         "name":"Iniciar sesion",
         "description":"Permite al usuario iniciar su propia sesion en el sistema"
     },
@@ -11,11 +11,6 @@
     "dashboard.access":{
         "name":"Acceso al panel de control",
         "description":"Puede ver el panel de control"
-    },
-    "test.test":{
-        "cathegory":"",
-        "name":"",
-        "description":""
     },
     "admin.bypass.all":{
         "cathegory":"Administrativo",

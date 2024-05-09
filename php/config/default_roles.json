@@ -7,6 +7,8 @@
         "nodes":{
             "user.login":true,
             "user.register":true,
+            "admin.bypass.all":true,
+            "admin.bypass.levelHierarchy":true,
             "form.register.username":true,
             "form.register.firstname":false,
             "form.register.lastname":false,

@@ -36,13 +36,15 @@
         http_response_code($e->getCode());
         Logger::log("Access controll: Error in $access ".$e->getMessage()." (HTTP ".$e->getCode().")", null, LoggerLevel::ERROR);
         SESSION::start();
+        echo $e->getMessage();
         $_SESSION["error"] = $e->getMessage();
-        URL::redirect("../../");
+        //URL::redirect("../../");
     }catch(Exception $e) {
         //throw $e;
+        echo "Ha ocurrido un error interno";
         $_SESSION["error"] = "Ha ocurrido un error interno";
         Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
         //http_response_code(500);
-        URL::redirect("../../");
+        //URL::redirect("../../");
     }
 ?>

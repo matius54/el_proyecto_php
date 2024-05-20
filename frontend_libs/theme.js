@@ -2,6 +2,7 @@
 
 class ThemeUI {
     //falta probar mas esto, no se si funciona los temas auto y si los custom over colors se actualizan correctamente
+    #baseURL = "https://raw.githubusercontent.com/matius54/el_proyecto_php/main/icons/";
     #localStorageKey = "_themeUI";
     #allowedThemes = ["light","dark","auto","custom"];
     #theme = "auto";
@@ -237,7 +238,7 @@ class ThemeUI {
         for(let icon in this.#icons){
             const dark = this.isDark();
             this.#icons[icon].forEach(element => {
-                element.setAttribute("src",`icons/${icon}${dark ? "_dark" : ""}.svg`);
+                element.setAttribute("src",`${this.#baseURL}${icon}${dark ? "_dark" : ""}.svg`);
             });
         }
     }
@@ -245,7 +246,7 @@ class ThemeUI {
         return this.getValue("theme") === "dark";
     }
     addIcon(element, key){
-        element.setAttribute("src",`icons/${key}${this.isDark() ? "_dark" : ""}.svg`);
+        element.setAttribute("src",`${this.#baseURL}${key}${this.isDark() ? "_dark" : ""}.svg`);
         if(!this.#icons[key]) this.#icons[key] = [];
         this.#icons[key].push(element);
     }

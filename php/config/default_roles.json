@@ -7,6 +7,7 @@
         "nodes":{
             "user.login":true,
             "user.register":true,
+            "dashboard.access":true,
             "crm.exit":true,
             "admin.bypass.all":true,
             "admin.bypass.levelHierarchy":true,

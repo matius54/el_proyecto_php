@@ -63,8 +63,24 @@ class DB
         $this->config = json_decode(json: file_get_contents(filename: $base . $this->configFile), associative: true);
         try {
             //intenta conectar a la base de datos
-            $this->connect();
             //si no hay errores
+            //verifica que todas las tablas existan
+            //nueva conexion sin usar el nombre de la base de datos `$dbname`
+            $conn = new PDO("mysql:host=" . $this->config["host"] . ";dbname=" . $this->config["database"], $this->config["username"], $this->config["password"]);
+            foreach (array_keys($this->config["structure"] ?? []) as $value) {
+                //usa el metodo `exec()` para crear la base de datos
+                try{
+                    $prep = $conn->prepare("SELECT COUNT(*) FROM `$value`");
+                    $prep->execute();
+                    $prep->fetchAll();
+                }catch(PDOException $e){
+                    if($e->getCode() !== "42S02")throw $e;
+                    $conn->exec("CREATE TABLE IF NOT EXISTS `$value` (" . implode(",", $this->config["structure"][$value]) . ")");
+                }
+                //cierra la conexion
+            }
+            $conn = null;
+            $this->connect();
             $this->error = false;
         } catch (PDOException $e) {
             if ($e->getCode() !== 1049) {

@@ -1,12 +1,12 @@
+<?php 
+    $title = "role";
+
+    $base = "php/";
+    require_once "php/libs/template.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCM-CRM-WEB - role</title>
-    <link rel="stylesheet" href="./style.css">
-    <script src="frontend_libs/theme.js"></script>
-</head>
+<?php Template::render("header",["title" => $title]) ?>
 <body>
     <nav class="navbar">
         <ul>
@@ -38,15 +38,7 @@
         </ul>
     </nav>
     <main class="viewer">
-        <header class="nav">
-            <div class="options left">
-        
-            </div>
-            <h1>Roles</h1>
-            <div class="options right">
-        
-            </div>
-        </header>
+    <?php Template::render("nav",["title" => $title]) ?>
     </main>
     <dialog class="role new">
         <div>

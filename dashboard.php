@@ -20,12 +20,12 @@
             [
                 "name" => "Perfil",
                 "icon" => "profile",
-                "href" => "#"
+                "href" => "./profile.php"
             ],
             [
                 "name" => "Roles",
                 "icon" => "edit",
-                "href" => "./role.html"
+                "href" => "./role.php"
             ],
             [
                 "name" => "Usuarios",
@@ -33,9 +33,9 @@
                 "href" => "./users.php"
             ],
             [
-                "name" => "Reporte",
+                "name" => "Reportes",
                 "icon" => "pdf",
-                "href" => "#"
+                "href" => "./reports.php"
             ],
             [
                 "name" => "Cerrar sesion",

@@ -40,8 +40,8 @@
         "description":"Te da acceso a tener un apellido en el sistema"
     },
     "form.register.password":{
-        "name":"Formulario contrase;a",
-        "description":"Te da acceso a tener una contrase;a en el sistema"
+        "name":"Formulario contraseña",
+        "description":"Te da acceso a tener una contraseña en el sistema"
     },
     "form.register.email":{
         "name":"Formulario Correo Electronico",

@@ -39,6 +39,7 @@
                 self::register(self::$default_user, true);
             }
         }
+
         public static function register(array $data, bool $bypassVerify = false){
             //obtener el id del usuario logeado
             if(!$bypassVerify and !($user_id = self::verify())) return null;
@@ -93,6 +94,7 @@
         public static function delete(int $id) : bool {
             return false;
         }
+
         public static function login(array $data) : int|null {
             //inicializar user
             self::initialize();
@@ -120,6 +122,7 @@
             throw new HTTPException("Contrasena incorrecta", 401);
             return null;
         }
+
         public static function verify() : int {
             SESSION::start();
             $user_id = $_SESSION[self::$login_key] ?? 0;
@@ -127,31 +130,41 @@
             $validation = $db->select("user",[],"`id` = ?",[$user_id], return1: true);
             return $validation ? $user_id : 0;
         }
+
         public static function log(int $id){
             SESSION::start();
             if(!isset($_SESSION[self::$login_key]))
             $_SESSION[self::$login_key] = $id;
         }
+
         public static function logout(){
             SESSION::start();
             unset($_SESSION[self::$login_key]);
         }
+
         public static function get(int $id) : array {
             if(!VALIDATE::id($id)) return [];
             $db = DB::getInstance();
             $db->execute(self::$select_user . " WHERE `id` = ?", $id);
-            return $db->fetch(true);
+            $user = $db->fetch(true);
+            $db->execute("SELECT r.name FROM user_role AS ur JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY r.level DESC ", $id);
+            $roles = $db->fetchAll(true);
+            $roles = array_map(function ($e){return $e["name"] ?? "";}, $roles);
+            return [...$user, "roles" => $roles];
         }
+
         public static function getAll() : Paginator {
             $sql = self::$select_user;
             $count = "SELECT COUNT(*) FROM `user`";
             return new Paginator($sql, $count);
         }
+
         public static function search(string $string) : Paginator{
             //campos en los cuales se buscaran coincidencias
             $search = ["user","first_name","last_name","birthday","ci","color","private"];
 
-            $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0";}, $search);
+            $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0";}
+            , $search);
             $search_like = array_map(function ($v) {return "`$v` LIKE ?";}, $search);
             $sql = " WHERE " . implode(" OR ", array_merge($search_instr, $search_like));
             $args = array_fill(0, sizeof($search) * 2, $string);

@@ -354,7 +354,8 @@
             return self::decode("HTTP_REFERER",$_SERVER);
         }
         public static function redirect($link){
-            header("Location: $link");
+            echo "<script>window.location.replace('$link')</script>";
+            //header("Location: $link");
             die();
         }
     } 

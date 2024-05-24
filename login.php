@@ -10,7 +10,8 @@
     $user_id = User::verify();
     //if(!Access::test("user.register", $user_id)) die("No tienes acceso para ver esta pagina");
     Template::render("header",["title" => $title]);
-    Template::render("nav",["title" => $title]);
+    Template::render("nav",["title" => $title, "hidden_back" => true]);
+    Template::render("error");
 ?>
 <img class="icon fundacite-logo" src="./icons/fundacite_min.svg" id="fundacite">
 <form action="php/controller/user.php?a=login" method="post" autocomplete="off" class="card login">

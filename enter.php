@@ -6,7 +6,7 @@
     require_once "php/model/crm.php";
     require_once "php/libs/template.php";
     Template::render("header",["title" => $title]);
-    Template::render("nav",["title" => $title]);
+    Template::render("nav",["title" => $title, "href" => "./users.php"]);
     $id = intval($_GET["id"] ?? "0");
     $user = User::get($id);
 

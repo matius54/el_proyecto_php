@@ -11,6 +11,7 @@
     if(!Access::test("user.register", $user_id)) die("No tienes acceso para ver esta pagina");
     Template::render("header",["title" => $title]);
     Template::render("nav",["title" => $title]);
+    Template::render("error");
 ?>
 <img class="icon fundacite-logo" src="./icons/fundacite_min.svg" id="fundacite">
 <form action="php/controller/user.php?a=register" method="post" autocomplete="off" class="card register">
@@ -37,7 +38,6 @@
     <div class="options">
         <button type="submit">Registrarse</button>
         <button type="reset">Limpiar campos</button>
-        <button type="button">Añadir Foto</button>
     </div>
 </form>
 

@@ -10,8 +10,15 @@
 
     Template::render("header",["title" => $title]);
     Template::render("nav",["title" => $title]);
-    
+    ?>
+    <div class="card">
+    <h1>Perfil</h1>
+    <?php
     Template::render("profile", User::get($user_id));
+    ?>
+    </div>
+    <?php
+    /*
     Template::render("card", [
         "title" => "Opciones",
         "items" => [
@@ -29,6 +36,6 @@
             ]
         ]
     ]);
-    
+    */
     Template::render("footer");
 ?>

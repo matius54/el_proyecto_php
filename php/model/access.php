@@ -118,12 +118,17 @@
             $result = $db->select(table: "role", condition: "id = ?", args: [$role_id]);
             */
         }
-
+        private static string $sql = "SELECT id, level, name, icon FROM role ORDER BY level ASC";
         public static function getAll() : array {
-            $sql = "SELECT id, level, name, icon FROM role ORDER BY level ASC";
             $count = "SELECT COUNT(*) FROM role";
-            $pag = new Paginator($sql, $count, itemsPerPage: 5, pageKey: "p");
+            $pag = new Paginator(self::$sql, $count, itemsPerPage: 5, pageKey: "p");
             return $pag->toArray();
+        }
+
+        public static function getAll_u() : array {
+            $db = DB::getInstance();
+            $db->execute(self::$sql);
+            return $db->fetchAll(true);
         }
 
         public static function getAllkv() : array {
@@ -319,7 +324,7 @@
             Logger::log("--- Initialize access ends ---",LoggerType::ADD,LoggerLevel::WARNING);
         }
         
-        public static function setRole(int $role_id, int $user_id = 0){
+        public static function setRole(int $role_id, int $user_id = 0, bool $set = true){
             $curr_user_id = User::verify();
             if(!$curr_user_id and !$user_id) return;
             if(!$user_id) $user_id = $curr_user_id;
@@ -329,7 +334,9 @@
                 //
             }
             $db = DB::getInstance();
-            $db->insert("user_role",
+            if(!$set) return $db->delete("user_role","user_id = ? AND role_id = ?",[$user_id, $role_id]);
+            
+            return $db->insert("user_role",
                 [
                     "user_id" => $user_id,
                     "role_id" => $role_id

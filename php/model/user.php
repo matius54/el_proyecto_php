@@ -147,9 +147,10 @@
             $db = DB::getInstance();
             $db->execute(self::$select_user . " WHERE `id` = ?", $id);
             $user = $db->fetch(true);
-            $db->execute("SELECT r.name FROM user_role AS ur JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY r.level DESC ", $id);
+            if(!$user) return [];
+            $db->execute("SELECT r.id, r.name FROM user_role AS ur JOIN role AS r ON role_id = r.id WHERE user_id = ? ORDER BY r.level DESC ", $id);
             $roles = $db->fetchAll(true);
-            $roles = array_map(function ($e){return $e["name"] ?? "";}, $roles);
+            //$roles = array_map(function ($e){return $e["name"] ?? "";}, $roles);
             return [...$user, "roles" => $roles];
         }
 

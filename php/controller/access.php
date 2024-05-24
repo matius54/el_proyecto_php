@@ -19,10 +19,16 @@
                         JSON::sendJson(Role::getAll());
                     }
                 break;
+                case "setRole":
+                    $role_id = URL::decode("role_id") ?? "0";
+                    $user_id = URL::decode("user_id") ?? "0";
+                    $set = URL::decode("set") ?? "0";
+                    Access::setRole(intval($role_id), intval($user_id), $set);
+                    URL::redirect("../../userRole.php?id=$user_id");
+                break;
                 default:
                     //var_dump(Access::test("login",1));
                     //var_dump(Access::purge());
-                    var_dump(dirname(__DIR__));
                 break;
             }
         }elseif(URL::isPost()){
@@ -51,11 +57,15 @@
         }
     }catch(HTTPException $e){
         http_response_code($e->getCode());
+        SESSION::start();
+        $_SESSION["error"] = $e->getMessage();
         Logger::log("Access controll: Error in $access ".$e->getMessage()." (HTTP ".$e->getCode().")", null, LoggerLevel::ERROR);
-        JSON::sendJson(["error"=>$e->getMessage()]);
+        URL::redirect("../../");
     }catch(Exception $e){
         //throw $e;
+        SESSION::start();
+        $_SESSION["error"] = $e->getMessage();
         Logger::log("Access controll: Severe error in $access".$e->getMessage(), null, LoggerLevel::ERROR);
-        http_response_code(500);
+        URL::redirect("../../");
     }
 ?>

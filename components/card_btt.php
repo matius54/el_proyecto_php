@@ -1,1 +1,1 @@
-<a href="<?= $href ?? "" ?>" class="button"><?= $name ?? "Button" ?></a>
+<a onclick="<?= "window.location.replace('$href')" ?? "" ?>" class="button"><?= $name ?? "Button" ?></a>

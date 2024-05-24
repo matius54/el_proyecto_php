@@ -3,26 +3,24 @@
 
     $base = "php/";
     require_once "php/model/user.php";
+    require_once "php/model/reports.php";
     require_once "php/libs/template.php";
+
     Template::render("header",["title" => $title]);
-    Template::render("nav",["title" => $title]);
-    Template::render("card", [
-        "title" => "Reportes",
-        "items" => [
-            [
-                "href" => "./",
-                "name" => "Reporte 1"
-            ],
-            [
-                "href" => "./",
-                "name" => "Reporte 2"
-            ],
-            [
-                "href" => "./",
-                "name" => "reporte 3"
-            ]
-        ]
-    ]);
+    $report = URL::decode("report") ?? "";
+    if($report){
+        Template::render("nav",["title" => $title, "href" => "./reports.php"]);
+        $rep = Report::get($report);
+        echo HTML::matrix2table($rep);
+    }else{
+        Template::render("nav",["title" => $title]);
+        $reports = Report::getAll();
+        $reports = array_map(function ($r){return ["href" => "./reports.php?report=$r", "name" => $r];}, $reports);
+        Template::render("card", [
+            "title" => "Reportes",
+            "items" => $reports
+        ]);
+    }
     //var_dump(User::verify());
     Template::render("footer");
 ?>

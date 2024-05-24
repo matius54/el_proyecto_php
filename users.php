@@ -6,7 +6,7 @@
 
     $user_id = User::verify();
     
-    Template::render("header",["title" => $title]);
+    Template::render("header",["title" => $title, "href" => "./"]);
     Template::render("navbar",[
         "items" => [
             [

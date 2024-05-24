@@ -1,22 +1,30 @@
 <?php
     $base = $base ?? "../";
+    require_once $base . "model/access.php";
     require_once $base . "libs/utils.php";
     require_once $base . "libs/db.php";
-    require_once $base . "libs/paginator.php";
+    
 
     class Report {
-        static private array $reports = [
-            "test (roles)" => "SELECT * FROM role"
-        ];
+        private $reports = [];
 
-        public static function getAll() : array {
-            return array_keys(self::$reports);
+        public function __construct() {
+            $roles = Role::getAll_u();
+            foreach($roles as $role){
+                $id = $role["id"];
+                $name = $role["name"];
+                $this->reports["Reporte de $name"] = "SELECT u.user, u.ci, r.name AS role FROM `user` AS u JOIN `user_role` AS ru ON u.id = user_id JOIN `role` AS r ON ru.role_id = r.id WHERE r.id = $id";
+            }
         }
 
-        public static function get(string $report) : array {
+        public function getAll() : array {
+            return array_keys($this->reports);
+        }
+
+        public function get(string $report) : array {
             if(!in_array($report, self::getAll())) return [];
             $db = DB::getInstance();
-            $db->execute(self::$reports[$report]);
+            $db->execute($this->reports[$report]);
             return $db->fetchAll(true);
         }
     }

@@ -107,7 +107,7 @@
             $hash = null;
             
             $db = DB::getInstance();
-            $response = $db->select("user", ["id", "salt"], "`user` = ?",[$username]);
+            $response = $db->select("user", ["id", "salt"], "`user` = BINARY ?",[$username]);
             if(!$response) throw new HTTPException("Usuario no encontrado", 401);
             list($user_id, $salt) = array_values($response);
             if(!Access::test("user.login", $user_id)) throw new HTTPException("No tienes acceso", 401);
@@ -164,12 +164,13 @@
             //campos en los cuales se buscaran coincidencias
             $search = ["user","first_name","last_name","birthday","ci","color","private"];
 
-            $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0";}
+            $search_instr = array_map(function ($v) {return "INSTR(`$v`,?) > 0 ";}
             , $search);
             $search_like = array_map(function ($v) {return "`$v` LIKE ?";}, $search);
             $sql = " WHERE " . implode(" OR ", array_merge($search_instr, $search_like));
             $args = array_fill(0, sizeof($search) * 2, $string);
             $count = "SELECT COUNT(*) FROM `user`$sql";
+            var_dump($sql);
             return new Paginator(self::$select_user . $sql, $count, $args);
         }
     }
